@@ -48,12 +48,17 @@ Time *criar_time(int id, char *nome) {
     return time;
 }
 
+void imprimir_time(Time *time) {
+    printf("Imprimir time\n");
+    printf("Id: %d, Nome: %s\n", time->id, time->nome);
+}
+
 // ----- Relacionados a BDTime -----
 #define _QUANT_TIMES 10
 Time *_times[_QUANT_TIMES];
 
 char *_filtro_maiusculas(char *string) {
-    char *string_filt;
+    char *string_filt = (char*)malloc(15 * sizeof(char));
     int i = 0, j = 0;
 
     while (string[i] != '\0') {
@@ -68,7 +73,7 @@ char *_filtro_maiusculas(char *string) {
 }
 
 void carregar_dados_times() {
-    FILE *arquivo = fopen("times.csv", 'r');
+    FILE *arquivo = fopen("times.csv", "r");
     
     if (arquivo == NULL) {
         // Implementação de erro, baseada em perror()
@@ -76,7 +81,7 @@ void carregar_dados_times() {
 
     for (int i = 0; i < _QUANT_TIMES; i++) {
         int id = 0;
-        char nome[15];
+        char *nome = (char*)malloc(sizeof(15 * sizeof(char)));
 
         fscanf(arquivo, " %d,%s", &id, nome);
 
@@ -89,7 +94,8 @@ void carregar_dados_times() {
 Time *consultar_time(const char *nome) {
     for (int i = 0; i < _QUANT_TIMES; i++) {
         if (
-            strcmp(_times[i]->nome, nome) == 0 || _filtro_maiusculas(_times[i]->nome) == nome
+            strcmp(_times[i]->nome, nome) == 0 
+            || strcmp(_filtro_maiusculas(_times[i]->nome), nome) == 0
         ) {
             return _times[i];
         }
@@ -125,8 +131,10 @@ Partida *consultar_partida() {
 }
 
 void apagar_partida(Partida *partida) {
-    apaga_time(partida->time1);
-    apaga_time(partida->time2);
+    // apaga_time(partida->time1);
+    // apaga_time(partida->time2);
+    free(partida->time1);
+    free(partida->time2);
     free(partida);
 }
 
@@ -135,6 +143,24 @@ Partida *partidas[20];
 
 // ----- Execução -----
 int main() {
+    carregar_dados_times();
+    // for (int i = 0; i < _QUANT_TIMES; i++) {
+    //     printf("%d - %s\n", _times[i]->id, _times[i]->nome);
+    // }
+    
+    // char entrada[15];
+    char *entrada = "JAVAlis";
+    // printf("Entrada: ");
+    // scanf(" %s", entrada);
+    // for (int i = 0; i < strlen(entrada); i++) {
+    //     printf("%c", entrada[i]);
+    // }
+    // printf("\n");
+
+    Time *time = consultar_time(entrada);
+    imprimir_time(time);
+
+    /*
     char escolha = '0';
 
     while (escolha != 'Q' && escolha != 'q') {
@@ -168,6 +194,6 @@ int main() {
                 break;
         }
     }
-
+    */
     return 0;
 }
