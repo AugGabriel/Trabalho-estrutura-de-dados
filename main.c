@@ -11,7 +11,11 @@
 // DONE
 
 
-// ----- Relacionados a Time -----
+// ==========================
+//  Relacionados a Time
+// ==========================
+
+// Estrutura de time
 typedef struct time {
     int id;
     char *nome;
@@ -24,15 +28,18 @@ typedef struct time {
     int gols_sofridos;
 } Time;
 
+// Propriedade de time, que determina os pontos ganhos
 int pontos_ganhos(Time *time) {
-    int valor_vitoria, valor_empate;
-    return time->vitorias * valor_vitoria + time->empates * valor_empate;
+    int VALOR_VITORIA, VALOR_EMPATE;    // Ainda preciso descobrir o valor
+    return time->vitorias * VALOR_VITORIA + time->empates * VALOR_EMPATE;
 }
 
+// Propriedade de time, que determina o saldo de gols
 int saldo_de_gols(Time *time) {
     return time->gols_marcados - time->gols_sofridos;
 }
 
+// Construtor de time
 Time *criar_time(int id, char *nome) {
     Time *time = (Time*)malloc(sizeof(Time));
 
@@ -48,15 +55,23 @@ Time *criar_time(int id, char *nome) {
     return time;
 }
 
+// Função para imprimir dados do time
 void imprimir_time(Time *time) {
     printf("Imprimir time\n");
     printf("Id: %d, Nome: %s\n", time->id, time->nome);
 }
 
-// ----- Relacionados a BDTime -----
-#define _QUANT_TIMES 10
-Time *_times[_QUANT_TIMES];
+// ==========================
+//  Relacionados a BDTime 
+// ==========================
 
+// Macro para definir a quantidade de times
+#define _QUANT_TIMES 10
+
+// Lista interna com os times carregados do arquivo de texto
+static Time *_times[_QUANT_TIMES];
+
+// Função interna, usada para encontrar o nome do time a partir do seu apelido
 char *_filtro_maiusculas(char *string) {
     char *string_filt = (char*)malloc(15 * sizeof(char));
     int i = 0, j = 0;
@@ -72,6 +87,7 @@ char *_filtro_maiusculas(char *string) {
     return string_filt;
 }
 
+// Função que traz os dados do arquivo de texto para a lista _times
 void carregar_dados_times() {
     FILE *arquivo = fopen("times.csv", "r");
     
@@ -91,6 +107,7 @@ void carregar_dados_times() {
     fclose(arquivo);
 }
 
+// Funcionalidade do sistema, para consultar time a partir do nome ou do apelido
 Time *consultar_time(const char *nome) {
     for (int i = 0; i < _QUANT_TIMES; i++) {
         if (
@@ -103,7 +120,11 @@ Time *consultar_time(const char *nome) {
     return NULL;
 }
 
-// ----- Relacionados a Partida -----
+// ==========================
+//  Relacionados a Partida
+// ==========================
+
+// Estrutura de partida
 typedef struct partida {
     int id;
 
@@ -114,6 +135,7 @@ typedef struct partida {
     int gols_time2;
 } Partida;
 
+// Construtor de partida
 Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2) {
     static int cont = 0;
 
@@ -126,6 +148,7 @@ Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2)
     return partida;
 }
 
+// Funcionalidade de consultar partida
 Partida *consultar_partida() {
 
 }
@@ -138,10 +161,14 @@ void apagar_partida(Partida *partida) {
     free(partida);
 }
 
-// ----- Relacionados a BDPartidas -----
+// ==========================
+//  Relacionados a BDPartidas 
+// ==========================
 Partida *partidas[20];
 
-// ----- Execução -----
+// ==========================
+//  Execução 
+// ==========================
 int main() {
     carregar_dados_times();
     // for (int i = 0; i < _QUANT_TIMES; i++) {
