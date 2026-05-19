@@ -4,18 +4,6 @@
 
 // Funções usadas como propriedade são nomeadas como substantivos, funções que realizam operação nomeadas como verbo
 
-// TO DO
-// Adicionar 'const' nos parâmetros das funções
-// Inicializar strings
-// Cuidar com entrada de strings
-// Freeeee
-// Id começando do 0 ou do 1?
-// consultar_dados_times lista todos os times se entrada for string vazia
-// consultar_dados_times não está tabulando corretamente (dados desalinhados)
-
-// DONE
-
-
 // ==========================
 //  Relacionados a Time
 // ==========================
@@ -109,6 +97,7 @@ void carregar_dados_times() {
     fclose(arquivo);
 }
 
+// Função auxiliar para montar prefixo, para consulta de time
 char *_monta_prefixo(char *nome, int tamanho) {
     char *prefixo = (char*)malloc((tamanho + 1) * sizeof(char));
 
@@ -149,6 +138,15 @@ void consultar_time(const char *nome) {
     printf("\n");
 }
 
+Time *retorna_time(const char *nome) {
+    for (int i = 0; i < _QUANT_TIMES; i++) {
+        if (strcmp(_times[i]->nome, nome)) {
+            return _times[i];
+        }
+    }
+    return NULL;
+}
+
 // ==========================
 //  Relacionados a Partida
 // ==========================
@@ -178,8 +176,12 @@ Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2)
 }
 
 // Funcionalidade de consultar partida
-Partida *consultar_partida() {
+Partida *consultar_partida(char *nome) {
+    Time *time = retorna_time(nome);
 
+    if (time == NULL) { 
+        // Validação
+    }
 }
 
 void apagar_partida(Partida *partida) {
