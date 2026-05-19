@@ -7,6 +7,11 @@
 // TO DO
 // Adicionar 'const' nos parâmetros das funções
 // Inicializar strings
+// Cuidar com entrada de strings
+// Freeeee
+// Id começando do 0 ou do 1?
+// consultar_dados_times lista todos os times se entrada for string vazia
+// consultar_dados_times não está tabulando corretamente (dados desalinhados)
 
 // DONE
 
@@ -30,7 +35,7 @@ typedef struct time {
 
 // Propriedade de time, que determina os pontos ganhos
 int pontos_ganhos(Time *time) {
-    int VALOR_VITORIA, VALOR_EMPATE;    // Ainda preciso descobrir o valor
+    int VALOR_VITORIA = 3, VALOR_EMPATE = 1;    // Não tenho certeza dos valores
     return time->vitorias * VALOR_VITORIA + time->empates * VALOR_EMPATE;
 }
 
@@ -42,6 +47,11 @@ int saldo_de_gols(Time *time) {
 // Construtor de time
 Time *criar_time(int id, char *nome) {
     Time *time = (Time*)malloc(sizeof(Time));
+
+    if (time == NULL) {
+        printf("Não foi possível alocar memória para o time\n");
+        return NULL;
+    }
 
     time->id = id;
     time->nome = nome;
@@ -57,8 +67,16 @@ Time *criar_time(int id, char *nome) {
 
 // Função para imprimir dados do time
 void imprimir_time(Time *time) {
-    printf("Imprimir time\n");
-    printf("Id: %d, Nome: %s\n", time->id, time->nome);
+    if (time == NULL) { 
+        printf("Time com valor nulo\n");
+        return;
+    }
+
+    printf("Id: %d \nNome: %s \nVitórias: %d \nEmpates: %d \nDerrotas: %d \
+        \nGols marcados: %d \nGols sofridos: %d \nSaldo de gols: %d \nPontos ganhos: %d\n", 
+        time->id, time->nome, time->vitorias, time->empates, time->derrotas, 
+        time->gols_marcados, time->gols_sofridos, saldo_de_gols(time), pontos_ganhos(time)
+    );
 }
 
 // ==========================
@@ -70,22 +88,6 @@ void imprimir_time(Time *time) {
 
 // Lista interna com os times carregados do arquivo de texto
 static Time *_times[_QUANT_TIMES];
-
-// Função interna, usada para encontrar o nome do time a partir do seu apelido
-char *_filtro_maiusculas(char *string) {
-    char *string_filt = (char*)malloc(15 * sizeof(char));
-    int i = 0, j = 0;
-
-    while (string[i] != '\0') {
-        if (string[i] >= 65 && string[i] <= 90) {
-            string_filt[j++] = string[i];
-        }
-        i++;
-    }
-    string_filt[++j] = '\0';
-
-    return string_filt;
-}
 
 // Função que traz os dados do arquivo de texto para a lista _times
 void carregar_dados_times() {
@@ -107,17 +109,44 @@ void carregar_dados_times() {
     fclose(arquivo);
 }
 
-// Funcionalidade do sistema, para consultar time a partir do nome ou do apelido
-Time *consultar_time(const char *nome) {
+char *_monta_prefixo(char *nome, int tamanho) {
+    char *prefixo = (char*)malloc((tamanho + 1) * sizeof(char));
+
+    for (int i = 0; i < tamanho; i++) {
+        prefixo[i] = nome[i];
+    }
+    prefixo[tamanho] = '\0';
+
+    return prefixo;
+}
+
+// Funcionalidade do sistema, para consultar time a partir do nome ou do prefixo (início do nome)
+void consultar_time(const char *nome) {
+    int encontrou = 0;
+
     for (int i = 0; i < _QUANT_TIMES; i++) {
+        char *prefixo = _monta_prefixo(_times[i]->nome, strlen(nome));
+
         if (
-            strcmp(_times[i]->nome, nome) == 0 
-            || strcmp(_filtro_maiusculas(_times[i]->nome), nome) == 0
+            strcmp(_times[i]->nome, nome) == 0          // Entrada bate com o nome
+            || strcmp(prefixo, nome) == 0               // Entrada bate com o prefixo
         ) {
-            return _times[i];
+            if (encontrou == 0) {
+                printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
+                encontrou = 1;
+            }
+
+            Time *time = _times[i];
+            printf("%d\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
+                    time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
+                    saldo_de_gols(time), pontos_ganhos(time));
         }
     }
-    return NULL;
+
+    if (encontrou == 0) {
+        printf("Não foi possível encontrar nenhum time\n");
+    }
+    printf("\n");
 }
 
 // ==========================
@@ -171,56 +200,59 @@ Partida *partidas[20];
 // ==========================
 int main() {
     carregar_dados_times();
+
     // for (int i = 0; i < _QUANT_TIMES; i++) {
     //     printf("%d - %s\n", _times[i]->id, _times[i]->nome);
     // }
     
     // char entrada[15];
-    char *entrada = "JAVAlis";
+    // char *entrada = "JAVAlis";
     // printf("Entrada: ");
     // scanf(" %s", entrada);
-    // for (int i = 0; i < strlen(entrada); i++) {
-    //     printf("%c", entrada[i]);
+
+    char *entrada = "S";
+    consultar_time(entrada);
+
+    // char escolha = '0';
+    // // char entrada[15];
+
+    // while (escolha != 'Q' && escolha != 'q') {
+    //     printf("Faça sua escolha: \
+    //         \n\t1) Consultar time \
+    //         \n\t2) Consultar partidas \
+    //         \n\t3) Atualizar partida \
+    //         \n\t4) Remover partida \
+    //         \n\t5) Inserir partida \
+    //         \n\t6) Imprimir tabela de classificação \
+    //         \n\tQ) Sair\n");
+    //     scanf(" %c", &escolha);
+
+    //     switch(escolha) {
+    //         case '1':
+    //             printf("Digite o nome ou o apelido do time: ");
+    //             scanf(" %s", entrada);
+
+    //             Time *time = consultar_time(entrada);
+    //             imprimir_time(time);
+
+    //             break;
+    //         case '2':
+    //             break;
+    //         case '3':
+    //             break;
+    //         case '4':
+    //             break;
+    //         case '5':
+    //             break;
+    //         case '6':
+    //             break;
+    //         case 'Q':
+    //         case 'q':
+    //             break;
+    //         default:
+    //             break;
+    //     }
     // }
-    // printf("\n");
 
-    Time *time = consultar_time(entrada);
-    imprimir_time(time);
-
-    /*
-    char escolha = '0';
-
-    while (escolha != 'Q' && escolha != 'q') {
-        printf("Faça sua escolha: \
-            \n\t1) Consultar time \
-            \n\t2) Consultar partidas \
-            \n\t3) Atualizar partida \
-            \n\t4) Remover partida \
-            \n\t5) Inserir partida \
-            \n\t6) Imprimir tabela de classificação \
-            \n\tQ) Sair\n");
-        scanf(" %c", &escolha);
-
-        switch(escolha) {
-            case '1':
-                break;
-            case '2':
-                break;
-            case '3':
-                break;
-            case '4':
-                break;
-            case '5':
-                break;
-            case '6':
-                break;
-            case 'Q':
-            case 'q':
-                break;
-            default:
-                break;
-        }
-    }
-    */
     return 0;
 }
