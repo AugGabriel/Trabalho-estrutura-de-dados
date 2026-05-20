@@ -1,6 +1,8 @@
 Sinceramente, só Deus na causa kkkkk
 
 TO DO
+Continuar implementação de consultar partidas
+
 Adicionar 'const' nos parâmetros das funções
 Inicializar strings
 Cuidar com entrada de strings

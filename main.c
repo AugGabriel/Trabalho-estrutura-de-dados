@@ -260,48 +260,71 @@ Partida **_inicializa_lista_partidas() {
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
 Partida **retornar_partidas(Time **times, int modo) {
     Partida **partidas = _inicializa_lista_partidas();
+    int k = 0;
 
     for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
         for (int j = 0; j < _QUANT_TIMES && _times[j] != NULL; j++) {       // Mesma ideia aqui, considera que passa a ser nulo
-            if (modo == TIME_MANDANTE && )
+            if (
+                (modo != TIME_VISITANTE && _partidas[i]->time1 == _times[j])    // Time mandante na partida
+                || (modo != TIME_MANDANTE && _partidas[i]->time2 == _times[j])  // Time visitante na partida
+            ) {
+                partidas[k++] = _partidas[j];
+            }
         }
     }
+
+    return partidas;
 }
 
 // Funcionalidade de consultar partida
-Partida *consultar_partidas(char *nome) {
+void consultar_partidas(char *nome) {
     Time **times = retornar_times(nome);
 
     if (times[0] == NULL) { 
         printf("Time não encontrado\n");
-        return NULL;
+        return;
     }
 
     int escolha;
     printf("Escolha o modo de consulta: \
-        \n\t1)Por time mandante \
+        \n\t1) Por time mandante \
         \n\t2) Por time visitante \
         \n\t3) Por time mandante ou visitante \
         \n\t4) Retornar ao menu principal\n");
     scanf(" %d", &escolha);
 
+    int modo;
     switch(escolha) {
         case 1:
+            modo = TIME_MANDANTE;
             break;
         case 2:
+            modo = TIME_VISITANTE;
             break;
         case 3:
+            modo = AMBOS;
             break;
         case 4: 
-            break;
+            return;
         default:
-            break;
+            printf("Opção inválida\n");
+            return;
     }
 
-
-
-
+    Partida **partidas = retornar_partidas(times, modo);
     free(times);
+
+    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+        Partida *partida = partidas[i];
+        printf(
+            "%d %d %d %d %d\n",
+            partida->id,
+            partida->time1,
+            partida->time2,
+            partida->gols_time1,
+            partida->gols_time2
+        );
+    }
 }
 
 // ==========================
@@ -321,7 +344,7 @@ int main() {
     // scanf(" %s", entrada);
 
     char *entrada = "J";
-    consultar_times(entrada);
+    consultar_partidas(entrada);
 
     // char escolha = '0';
     // // char entrada[15];
