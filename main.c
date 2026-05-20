@@ -67,6 +67,11 @@ void imprimir_time(Time *time) {
     );
 }
 
+// Função para liberar memória alocada para time
+void apagar_time(Time *time) {
+    free(time);
+}
+
 // ==========================
 //  Relacionados a BDTime 
 // ==========================
@@ -192,7 +197,7 @@ Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2)
 }
 
 // Funcionalidade de consultar partida
-Partida *consultar_partida(char *nome) {
+Partida *consultar_partidas(char *nome) {
     Time **times = retornar_times(nome);
 
     if (times == NULL) { 
@@ -204,11 +209,10 @@ Partida *consultar_partida(char *nome) {
     free(times);
 }
 
+// Função para liberar memória alocada para partida
 void apagar_partida(Partida *partida) {
-    // apaga_time(partida->time1);
-    // apaga_time(partida->time2);
-    free(partida->time1);
-    free(partida->time2);
+    // apagar_time(partida->time1);
+    // apagar_time(partida->time2);
     free(partida);
 }
 
