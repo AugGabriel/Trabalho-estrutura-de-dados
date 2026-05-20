@@ -282,12 +282,12 @@ void consultar_partidas(char *nome) {
 
     if (times[0] == NULL) { 
         printf("Time não encontrado\n");
-        return NULL;
+        return;
     }
 
     int escolha;
     printf("Escolha o modo de consulta: \
-        \n\t1)Por time mandante \
+        \n\t1) Por time mandante \
         \n\t2) Por time visitante \
         \n\t3) Por time mandante ou visitante \
         \n\t4) Retornar ao menu principal\n");
@@ -305,16 +305,26 @@ void consultar_partidas(char *nome) {
             modo = AMBOS;
             break;
         case 4: 
-            return NULL;
+            return;
         default:
             printf("Opção inválida\n");
-            return NULL;
+            return;
     }
 
     Partida **partidas = retornar_partidas(times, modo);
     free(times);
 
-    // Printar partidas
+    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+        Partida *partida = partidas[i];
+        printf(
+            "%d %d %d %d %d\n",
+            partida->id,
+            partida->time1,
+            partida->time2,
+            partida->gols_time1,
+            partida->gols_time2
+        );
+    }
 }
 
 // ==========================
