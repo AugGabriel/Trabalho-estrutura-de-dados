@@ -97,6 +97,15 @@ void carregar_dados_times() {
     fclose(arquivo);
 }
 
+// Função auxiliar usada para criar e inicializar lista vazia de times
+Time **_inicializa_lista_times() {
+    Time **times = (Time**)malloc(_QUANT_TIMES * sizeof(Time*));
+    for (int i = 0; i < _QUANT_TIMES; i++) {
+        times[i] = NULL;
+    }
+    return times;
+}
+
 // Função auxiliar para montar prefixo, para consulta de time
 char *_monta_prefixo(char *nome, int tamanho) {
     char *prefixo = (char*)malloc((tamanho + 1) * sizeof(char));
@@ -109,9 +118,10 @@ char *_monta_prefixo(char *nome, int tamanho) {
     return prefixo;
 }
 
-// Funcionalidade do sistema, para consultar time a partir do nome ou do prefixo (início do nome)
-void consultar_time(const char *nome) {
-    int encontrou = 0;
+// Função usada para montar lista de times a partir do nome ou do prefixo
+Time **retornar_times(const char *nome) {
+    Time **times = _inicializa_lista_times();
+    int j = 0;
 
     for (int i = 0; i < _QUANT_TIMES; i++) {
         char *prefixo = _monta_prefixo(_times[i]->nome, strlen(nome));
@@ -120,31 +130,37 @@ void consultar_time(const char *nome) {
             strcmp(_times[i]->nome, nome) == 0          // Entrada bate com o nome
             || strcmp(prefixo, nome) == 0               // Entrada bate com o prefixo
         ) {
-            if (encontrou == 0) {
-                printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
-                encontrou = 1;
-            }
-
-            Time *time = _times[i];
-            printf("%d\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
-                    time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
-                    saldo_de_gols(time), pontos_ganhos(time));
+            times[j++] = _times[i];
         }
+
+        free(prefixo);
     }
 
-    if (encontrou == 0) {
-        printf("Não foi possível encontrar nenhum time\n");
-    }
-    printf("\n");
+    return times;
 }
 
-Time *retorna_time(const char *nome) {
-    for (int i = 0; i < _QUANT_TIMES; i++) {
-        if (strcmp(_times[i]->nome, nome)) {
-            return _times[i];
-        }
+// Funcionalidade essencial, para consultar e imprimir os times a partir do nome ou prefixo
+void consultar_times(const char *nome) {
+    Time **times = retornar_times(nome);
+
+    if (times[0] == NULL) {
+        printf("Nenhum time encontrado\n");
+        return;
     }
-    return NULL;
+
+    printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
+    
+    for (int i = 0; times[i] != NULL && i < _QUANT_TIMES; i++) {
+        Time *time = times[i];
+        printf(
+            "%d\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
+            time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
+            saldo_de_gols(time), pontos_ganhos(time)
+        );
+    }
+
+    printf("\n");
+    free(times);
 }
 
 // ==========================
@@ -177,11 +193,15 @@ Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2)
 
 // Funcionalidade de consultar partida
 Partida *consultar_partida(char *nome) {
-    Time *time = retorna_time(nome);
+    Time **times = retornar_times(nome);
 
-    if (time == NULL) { 
-        // Validação
+    if (times == NULL) { 
+        printf("Time não encontrado\n");
+        return NULL;
     }
+
+
+    free(times);
 }
 
 void apagar_partida(Partida *partida) {
@@ -212,8 +232,8 @@ int main() {
     // printf("Entrada: ");
     // scanf(" %s", entrada);
 
-    char *entrada = "S";
-    consultar_time(entrada);
+    char *entrada = "J";
+    consultar_times(entrada);
 
     // char escolha = '0';
     // // char entrada[15];

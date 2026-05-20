@@ -1,12 +1,10 @@
 Sinceramente, só Deus na causa kkkkk
-Tô mto cansado, mas que a gente complete todas as coisas dessas próximas semanas
-Boa sorte pra tu
 
 TO DO
 Adicionar 'const' nos parâmetros das funções
 Inicializar strings
 Cuidar com entrada de strings
-Freeeee
+Freeeee (desalocar memória de todas as partes onde for alocado dinamicamente)
 Id começando do 0 ou do 1?
 consultar_dados_times lista todos os times se entrada for string vazia
 consultar_dados_times não está tabulando corretamente (dados desalinhados)
