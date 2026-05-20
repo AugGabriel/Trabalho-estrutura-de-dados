@@ -5,9 +5,10 @@ Adicionar 'const' nos parâmetros das funções
 Inicializar strings
 Cuidar com entrada de strings
 Freeeee (desalocar memória de todas as partes onde for alocado dinamicamente)
-Id começando do 0 ou do 1?
 consultar_dados_times lista todos os times se entrada for string vazia
 consultar_dados_times não está tabulando corretamente (dados desalinhados)
-
+Ids talvez sejam desnecessários, porque eles serão adicionados na lista na ordem, portanto sua posição na lista corresponde ao seu id
+Olhar todos os comentários. Alguns são pontos de correção ou melhoria
 
 DONE
+Id começando do 0

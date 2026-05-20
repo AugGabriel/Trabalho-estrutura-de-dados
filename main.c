@@ -4,9 +4,9 @@
 
 // Funções usadas como propriedade são nomeadas como substantivos, funções que realizam operação nomeadas como verbo
 
-// ==========================
+// ====================
 //  Relacionados a Time
-// ==========================
+// ====================
 
 // Estrutura de time
 typedef struct time {
@@ -72,9 +72,9 @@ void apagar_time(Time *time) {
     free(time);
 }
 
-// ==========================
-//  Relacionados a BDTime 
-// ==========================
+// ======================
+//  Relacionados a BDTime
+// ======================
 
 // Macro para definir a quantidade de times
 #define _QUANT_TIMES 10
@@ -91,8 +91,8 @@ void carregar_dados_times() {
     }
 
     for (int i = 0; i < _QUANT_TIMES; i++) {
-        int id = 0;
-        char *nome = (char*)malloc(sizeof(15 * sizeof(char)));
+        int id;
+        char *nome = (char*)malloc(sizeof(15 * sizeof(char)));  // Inicialização?
 
         fscanf(arquivo, " %d,%s", &id, nome);
 
@@ -168,9 +168,9 @@ void consultar_times(const char *nome) {
     free(times);
 }
 
-// ==========================
+// =======================
 //  Relacionados a Partida
-// ==========================
+// =======================
 
 // Estrutura de partida
 typedef struct partida {
@@ -184,29 +184,18 @@ typedef struct partida {
 } Partida;
 
 // Construtor de partida
-Partida *criar_partida(Time *time1, Time *time2, int gols_time1, int gols_time2) {
+Partida *criar_partida(int id, int id_time1, int id_time2, int gols_time1, int gols_time2) {
     static int cont = 0;
 
     Partida *partida = (Partida*)malloc(sizeof(Partida));
-    partida->time1 = time1;
-    partida->time2 = time2;
+
+    partida->id = id;
+    partida->time1 = _times[id_time1];
+    partida->time2 = _times[id_time2];
     partida->gols_time1 = gols_time1;
     partida->gols_time2 = gols_time2;
 
     return partida;
-}
-
-// Funcionalidade de consultar partida
-Partida *consultar_partidas(char *nome) {
-    Time **times = retornar_times(nome);
-
-    if (times == NULL) { 
-        printf("Time não encontrado\n");
-        return NULL;
-    }
-
-
-    free(times);
 }
 
 // Função para liberar memória alocada para partida
@@ -219,13 +208,108 @@ void apagar_partida(Partida *partida) {
 // ==========================
 //  Relacionados a BDPartidas 
 // ==========================
-Partida *partidas[20];
+#define _MAX_PARTIDAS 20
+Partida *_partidas[_MAX_PARTIDAS];
+
+enum filtro_pesquisa_partida {
+    TIME_MANDANTE = 0,
+    TIME_VISITANTE = 1,
+    AMBOS = 2,
+} FILTRO_PESQUISA_PARTIDA;
+
+void carregar_dados_partidas() {
+    FILE *arquivo = fopen("partidas.csv", "r");
+
+    if (arquivo == NULL) {
+        // Implementação de erro, baseada em perror()
+    }
+
+    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+        int id;
+        int id_mandante, id_visitante;
+        int gols_mand, gols_visit;
+
+        if (fscanf(
+            arquivo, 
+            " %d,%d,%d,%d,%d", 
+            &id, 
+            &id_mandante, 
+            &id_visitante, 
+            &gols_mand, 
+            &gols_visit
+        ) == EOF) {
+            return;
+        }
+
+        _partidas[i] = criar_partida(id, id_mandante, id_visitante, gols_mand, gols_visit);
+    }
+
+    fclose(arquivo);
+}
+
+// Função auxiliar usada para criar e inicializar lista vazia de partidas
+Partida **_inicializa_lista_partidas() {
+    Partida **partidas = (Partida**)malloc(_MAX_PARTIDAS * sizeof(Partida*));
+    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+        partidas[i] = NULL;
+    }
+    return partidas;
+}
+
+// Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
+// Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
+Partida **retornar_partidas(Time **times, int modo) {
+    Partida **partidas = _inicializa_lista_partidas();
+
+    for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
+        for (int j = 0; j < _QUANT_TIMES && _times[j] != NULL; j++) {       // Mesma ideia aqui, considera que passa a ser nulo
+            if (modo == TIME_MANDANTE && )
+        }
+    }
+}
+
+// Funcionalidade de consultar partida
+Partida *consultar_partidas(char *nome) {
+    Time **times = retornar_times(nome);
+
+    if (times[0] == NULL) { 
+        printf("Time não encontrado\n");
+        return NULL;
+    }
+
+    int escolha;
+    printf("Escolha o modo de consulta: \
+        \n\t1)Por time mandante \
+        \n\t2) Por time visitante \
+        \n\t3) Por time mandante ou visitante \
+        \n\t4) Retornar ao menu principal\n");
+    scanf(" %d", &escolha);
+
+    switch(escolha) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4: 
+            break;
+        default:
+            break;
+    }
+
+
+
+
+    free(times);
+}
 
 // ==========================
 //  Execução 
 // ==========================
 int main() {
     carregar_dados_times();
+    carregar_dados_partidas();
 
     // for (int i = 0; i < _QUANT_TIMES; i++) {
     //     printf("%d - %s\n", _times[i]->id, _times[i]->nome);
