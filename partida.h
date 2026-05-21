@@ -23,7 +23,6 @@ Partida *criar_partida(
             const int id_time1, const int id_time2, 
             const int gols_time1, const int gols_time2
     ) {
-    static int cont = 0;
 
     // Alocação de memória
     Partida *partida = (Partida*)malloc(sizeof(Partida));

@@ -17,9 +17,7 @@ Time **lista_times() { return _times; }
 
 // Função que traz os dados do arquivo de texto para a lista _times
 void carregar_dados_times() {
-    char *caminho;
-    strcpy(caminho, CAMINHO_ARQUIVOS_TEXTO);
-    FILE *arquivo = fopen(strcat(caminho, NOME_ARQUIVO_TIMES), "r");
+    FILE *arquivo = fopen("tabelas/times.csv", "r");
     
     // Validação do arquivo
     if (arquivo == NULL) {

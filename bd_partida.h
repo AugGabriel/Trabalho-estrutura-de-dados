@@ -23,9 +23,7 @@ enum filtro_pesquisa_partida {
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
 void carregar_dados_partidas() {
-    char *caminho;
-    strcpy(caminho, CAMINHO_ARQUIVOS_TEXTO);
-    FILE *arquivo = fopen(strcat(caminho, NOME_ARQUIVO_PARTIDAS), "r");
+    FILE *arquivo = fopen("tabelas/partidas.csv", "r");
 
     // Validação do arquivo
     if (arquivo == NULL) {
