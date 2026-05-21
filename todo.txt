@@ -14,6 +14,7 @@ Olhar todos os comentários. Alguns são pontos de correção ou melhoria
 Mudar a forma como o número de partidas é implementado, senão espaço excessivo da memória vai ser usado à toa
 Alinhamento das tabelas
 Validações nas funções de carregamento, para garantir que arquivos não estão vazios
+Arrumar a ordem das funções
 
 DONE
 Id começando do 0

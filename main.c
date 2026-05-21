@@ -130,6 +130,7 @@ Time **retornar_times(const char *nome) {
     return times;
 }
 
+// Função para imprimir vários times em sequência, com cabeçalho
 void imprimir_times(Time **times) {
     printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
     
@@ -145,17 +146,27 @@ void imprimir_times(Time **times) {
     printf("\n");
 }
 
-// Funcionalidade essencial, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(const char *nome) {
+// Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
+void consultar_times() {
+
+    // Entrada do usuário
+    char nome[15];
+    printf("Digite o nome ou o apelido do time: ");
+    scanf(" %s", nome);
+    
+    // Retorno da lista de ponteiros para times
     Time **times = retornar_times(nome);
 
+    // Validação da lista
     if (times[0] == NULL) {
         printf("Nenhum time encontrado\n");
         return;
     }
 
+    // Impressão da lista
     imprimir_times(times);
 
+    // Liberação de memória da lista alocada dinamicamente
     free(times);
 }
 
@@ -200,6 +211,7 @@ void apagar_partida(Partida *partida) {
 //  Relacionados a BDPartidas 
 // ==========================
 #define _MAX_PARTIDAS 100
+
 Partida *_partidas[_MAX_PARTIDAS];
 
 enum filtro_pesquisa_partida {
@@ -255,7 +267,7 @@ Partida **retornar_partidas(Time **times, int modo) {
     int k = 0;
 
     for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
-        for (int j = 0; j < _QUANT_TIMES && times[j] != NULL; j++) {       // Mesma ideia aqui, considera que passa a ser nulo
+        for (int j = 0; j < _QUANT_TIMES && times[j] != NULL; j++) {        // Mesma ideia aqui, considera que passa a ser nulo
             if (
                 (modo != TIME_VISITANTE && _partidas[i]->time1 == times[j])    // Time mandante na partida
                 || (modo != TIME_MANDANTE && _partidas[i]->time2 == times[j])  // Time visitante na partida
@@ -365,56 +377,45 @@ int main() {
     carregar_dados_times();
     carregar_dados_partidas();
     calcular_resultados();
-    
-    // char entrada[15];
-    // char *entrada = "JAVAlis";
-    // printf("Entrada: ");
-    // scanf(" %s", entrada);
 
-    // char *entrada = "J";
-    // consultar_partidas(entrada);
-    imprimir_tabela_classificacao();
+    // Variáveis de entrada do usuário
+    char escolha = '0';
 
-    // char escolha = '0';
-    // // char entrada[15];
+    while (escolha != 'Q' && escolha != 'q') {
+        printf("Faça sua escolha: \
+            \n\t1) Consultar time \
+            \n\t2) Consultar partidas \
+            \n\t3) Atualizar partida \
+            \n\t4) Remover partida \
+            \n\t5) Inserir partida \
+            \n\t6) Imprimir tabela de classificação \
+            \n\tQ) Sair\n");
+        scanf(" %c", &escolha);
 
-    // while (escolha != 'Q' && escolha != 'q') {
-    //     printf("Faça sua escolha: \
-    //         \n\t1) Consultar time \
-    //         \n\t2) Consultar partidas \
-    //         \n\t3) Atualizar partida \
-    //         \n\t4) Remover partida \
-    //         \n\t5) Inserir partida \
-    //         \n\t6) Imprimir tabela de classificação \
-    //         \n\tQ) Sair\n");
-    //     scanf(" %c", &escolha);
+        switch(escolha) {
+            case '1':
+                consultar_times();
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                break;
+            case 'Q':
+            case 'q':
+                break;
+            default:
+                break;
+        }
+    }
 
-    //     switch(escolha) {
-    //         case '1':
-    //             printf("Digite o nome ou o apelido do time: ");
-    //             scanf(" %s", entrada);
-
-    //             Time *time = consultar_time(entrada);
-    //             imprimir_time(time);
-
-    //             break;
-    //         case '2':
-    //             break;
-    //         case '3':
-    //             break;
-    //         case '4':
-    //             break;
-    //         case '5':
-    //             break;
-    //         case '6':
-    //             break;
-    //         case 'Q':
-    //         case 'q':
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
+    apagar_times();
+    apagar_();
 
     return 0;
 }
