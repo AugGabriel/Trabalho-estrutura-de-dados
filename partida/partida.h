@@ -7,7 +7,15 @@
 #include "bd_time.h"
 
 // Estrutura de partida
-typedef struct partida Partida;
+typedef struct partida {
+    int id;
+
+    Time* time1;
+    Time* time2;
+
+    int gols_time1;
+    int gols_time2;
+} Partida;
 
 // Construtor de partida
 Partida *criar_partida(

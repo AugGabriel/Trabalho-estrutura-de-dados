@@ -5,7 +5,17 @@
 #include <stdio.h>
 
 // Estrutura de time
-typedef struct time Time;
+typedef struct time {
+   int id;
+   char *nome;
+
+   int vitorias;
+   int empates;
+   int derrotas;
+
+   int gols_marcados;
+   int gols_sofridos;
+} Time;
 
 // Propriedade de time, que determina os pontos ganhos
 int pontos_ganhos(const Time *time);
