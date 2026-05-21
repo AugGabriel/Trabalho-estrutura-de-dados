@@ -12,6 +12,8 @@ consultar_dados_times não está tabulando corretamente (dados desalinhados)
 Ids talvez sejam desnecessários, porque eles serão adicionados na lista na ordem, portanto sua posição na lista corresponde ao seu id
 Olhar todos os comentários. Alguns são pontos de correção ou melhoria
 Mudar a forma como o número de partidas é implementado, senão espaço excessivo da memória vai ser usado à toa
+Alinhamento das tabelas
+Validações nas funções de carregamento, para garantir que arquivos não estão vazios
 
 DONE
 Id começando do 0

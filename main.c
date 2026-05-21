@@ -53,20 +53,6 @@ Time *criar_time(int id, char *nome) {
     return time;
 }
 
-// Função para imprimir dados do time
-void imprimir_time(Time *time) {
-    if (time == NULL) { 
-        printf("Time com valor nulo\n");
-        return;
-    }
-
-    printf("Id: %d \nNome: %s \nVitórias: %d \nEmpates: %d \nDerrotas: %d \
-        \nGols marcados: %d \nGols sofridos: %d \nSaldo de gols: %d \nPontos ganhos: %d\n", 
-        time->id, time->nome, time->vitorias, time->empates, time->derrotas, 
-        time->gols_marcados, time->gols_sofridos, saldo_de_gols(time), pontos_ganhos(time)
-    );
-}
-
 // Função para liberar memória alocada para time
 void apagar_time(Time *time) {
     free(time);
@@ -144,15 +130,7 @@ Time **retornar_times(const char *nome) {
     return times;
 }
 
-// Funcionalidade essencial, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(const char *nome) {
-    Time **times = retornar_times(nome);
-
-    if (times[0] == NULL) {
-        printf("Nenhum time encontrado\n");
-        return;
-    }
-
+void imprimir_times(Time **times) {
     printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
     
     for (int i = 0; times[i] != NULL && i < _QUANT_TIMES; i++) {
@@ -165,6 +143,19 @@ void consultar_times(const char *nome) {
     }
 
     printf("\n");
+}
+
+// Funcionalidade essencial, para consultar e imprimir os times a partir do nome ou prefixo
+void consultar_times(const char *nome) {
+    Time **times = retornar_times(nome);
+
+    if (times[0] == NULL) {
+        printf("Nenhum time encontrado\n");
+        return;
+    }
+
+    imprimir_times(times);
+
     free(times);
 }
 
@@ -330,24 +321,59 @@ void consultar_partidas(char *nome) {
     printf("\n");
 }
 
+void calcular_resultados() {
+    for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {
+        Partida *partida = _partidas[i];
+
+        Time *time1 = partida->time1;
+        Time *time2 = partida->time2;
+
+        // Gols marcados
+        time1->gols_marcados += partida->gols_time1;
+        time2->gols_marcados += partida->gols_time2;
+
+        // Gols sofridos
+        time1->gols_sofridos += partida->gols_time2;
+        time2->gols_sofridos += partida->gols_time1;
+
+        if (partida->gols_time1 == partida->gols_time2) {       // Empate
+            time1->empates++;
+            time2->empates++;
+        }
+        else if (partida->gols_time1 > partida->gols_time2) {   // Vitória do time 1
+            time1->vitorias++;
+            time2->derrotas++;
+        }
+        else {                                                  // Vitória do time 2
+            time1->derrotas++;
+            time2->vitorias++;
+        }
+    }
+}
+
+// Funcionalidade de tabela de classificação
+void imprimir_tabela_classificacao() {
+    printf("Imprimindo classificação: \n");
+    imprimir_times(_times);
+}
+
 // ==========================
 //  Execução 
 // ==========================
 int main() {
+    // Funções de inicialização do sistema
     carregar_dados_times();
     carregar_dados_partidas();
-
-    // for (int i = 0; i < _QUANT_TIMES; i++) {
-    //     printf("%d - %s\n", _times[i]->id, _times[i]->nome);
-    // }
+    calcular_resultados();
     
     // char entrada[15];
     // char *entrada = "JAVAlis";
     // printf("Entrada: ");
     // scanf(" %s", entrada);
 
-    char *entrada = "J";
-    consultar_partidas(entrada);
+    // char *entrada = "J";
+    // consultar_partidas(entrada);
+    imprimir_tabela_classificacao();
 
     // char escolha = '0';
     // // char entrada[15];
