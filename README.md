@@ -6,7 +6,7 @@ Trabalho da matéria de Estrutura de Dados, curso de Bacharelado de Sistemas de 
 
 ## EXECUÇÃO
 
-O método de execução recomendado e usado durante o desenvolvimento do projeto é:
+O método de execução recomendado e que foi usado durante o desenvolvimento do projeto é:
 1. Abra um terminal Ubuntu (versão 24.04 recomendada), nativo ou via WSL (Subsistema do Windows para Linux).
 2. Navegue até o diretório raiz do projeto e digite `make`.
 3. A partir desse momento, o sistema será compilado e executado. Basta seguir as instruções apresentadas nas saídas do terminal.
@@ -36,4 +36,4 @@ Os principais TADs (Tipo Abstrato de Dados) utilizados foram:
 
 Durante a implementação do sistema, a reutilização de código foi uma prioridade, uma vez que a segunda funcionalidade utiliza funções já implementadas pela primeira, e o mesmo acontece da terceira para a quarta. Outras boas práticas da programação também foram base, como a não repetição de funcionalidades, agrupamento de responsabilidades e modularização.
 
-A estrutura de pastas do projeto foi pensada para agrupar funcionalidades relacionadas, além de manter arquivos .h próximos dos .c correspondentes. Dessa forma, fica mais organizado e fácil de navegar. O Makefile foi configurado para incluir corretamente as subpastas na compilação, além de despejar todos os fragmentos .o e .d numa outra, de nome .build, mantendo o espaço de trabalho limpo.
+A estrutura de pastas do projeto foi pensada para agrupar funcionalidades relacionadas, além de manter arquivos `.h` próximos dos `.c` correspondentes. Dessa forma, fica mais organizado e fácil de navegar. O Makefile foi configurado para incluir corretamente as subpastas na compilação, além de despejar todos os fragmentos .o e .d numa outra, de nome .build, mantendo o espaço de trabalho limpo.
