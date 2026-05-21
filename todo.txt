@@ -1,6 +1,7 @@
 Sinceramente, só Deus na causa kkkkk
 
 TO DO
+Consertar modularização dos .h
 Verificar pontuações nas intruções do Paixão
 Mudar a forma como o número de partidas é implementado, senão espaço excessivo da memória vai ser usado à toa
 
