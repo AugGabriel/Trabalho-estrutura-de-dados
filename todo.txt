@@ -13,6 +13,7 @@ Mudar a forma como o número de partidas é implementado, senão espaço excessi
 Alinhamento das tabelas
 Validações nas funções de carregamento, para garantir que arquivos não estão vazios
 Arrumar a ordem das funções
+Funções usadas como propriedade são nomeadas como substantivos, funções que realizam operação nomeadas como verbo
 
 DONE
 Id começando do 0
