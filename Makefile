@@ -4,11 +4,17 @@ CC = gcc
 # Compiler flags
 CFLAGS = -Wall
 
+# Define the directories
+INCDIRS = auxiliares partida tabela_classificacao tabelas time
+
+# Automatically add -I before each directory
+INC_FLAGS = $(addprefix -I,$(INCDIRS))
+
 # Source files
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard *.c) $(wildcard $(addsuffix /*.c, $(INCDIRS))) 
 
 # Object files
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst %.c,%.o,$(SRCS))
 
 # Executable name
 TARGET = main
@@ -32,7 +38,7 @@ clean:
 
 # Compile source files into object files
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 # Link object files to create the executable
 $(TARGET): $(OBJS)
