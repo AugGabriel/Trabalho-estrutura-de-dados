@@ -4,6 +4,17 @@
 
 // Funções usadas como propriedade são nomeadas como substantivos, funções que realizam operação nomeadas como verbo
 
+// ===================
+//  Auxiliares globais
+// ===================
+#define TAMANHO_MAX_ENTRADA 15
+
+void inicializa_string(char *string, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        string[i] = '\0';
+    }
+}
+
 // ====================
 //  Relacionados a Time
 // ====================
@@ -150,7 +161,9 @@ void imprimir_times(Time **times) {
 void consultar_times() {
 
     // Entrada do usuário
-    char nome[15];
+    char nome[TAMANHO_MAX_ENTRADA];
+    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
+
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
     
@@ -168,6 +181,13 @@ void consultar_times() {
 
     // Liberação de memória da lista alocada dinamicamente
     free(times);
+}
+
+// Funcionalidade para desalocar todos os times
+void apagar_times() {
+    for (int i = 0; i < _QUANT_TIMES; i++) {
+        apagar_time(_times[i]);
+    }
 }
 
 // =======================
@@ -284,7 +304,9 @@ Partida **retornar_partidas(Time **times, int modo) {
 void consultar_partidas() {
 
     // Entrada do usuário
-    char nome[15];
+    char nome[TAMANHO_MAX_ENTRADA];
+    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
+    
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
 
@@ -375,6 +397,13 @@ void imprimir_tabela_classificacao() {
     imprimir_times(_times);
 }
 
+// Função para desalocar a memória de todas as partidas
+void apagar_partidas() {
+    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+        apagar_partida(_partidas[i]);
+    }
+}
+
 // ==========================
 //  Execução 
 // ==========================
@@ -416,17 +445,19 @@ int main() {
                 printf("Estamos em obras para poder te atender melhor :)\n\n");
                 break;
             case '6':
+                imprimir_tabela_classificacao();
                 break;
             case 'Q':
             case 'q':
-                break;
+                printf("Obrigado pela preferência, volte sempre!\n");
+                return 0;
             default:
                 break;
         }
     }
 
-    // apagar_times();
-    // apagar_();
+    apagar_times();
+    apagar_partidas();
 
     return 0;
 }
