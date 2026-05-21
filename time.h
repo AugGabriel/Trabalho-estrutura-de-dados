@@ -18,44 +18,15 @@ typedef struct time {
 } Time;
 
 // Propriedade de time, que determina os pontos ganhos
-int pontos_ganhos(const Time *time) {
-    int VALOR_VITORIA = 3, VALOR_EMPATE = 1;    // Não tenho certeza dos valores
-    return time->vitorias * VALOR_VITORIA + time->empates * VALOR_EMPATE;
-}
+int pontos_ganhos(const Time *time);
 
 // Propriedade de time, que determina o saldo de gols
-int saldo_de_gols(const Time *time) {
-    return time->gols_marcados - time->gols_sofridos;
-}
+int saldo_de_gols(const Time *time);
 
 // Construtor de time
-Time *criar_time(const int id, char *nome) {
-    // Alocação de memória
-    Time *time = (Time*)malloc(sizeof(Time));
-
-    // Validação da alocação de memória
-    if (time == NULL) {
-        perror("Alocação de memória falhou");
-        exit(EXIT_FAILURE);
-    }
-
-    // Inicialização
-    time->id = id;
-    time->nome = nome;
-
-    time->vitorias = 0;
-    time->empates = 0;
-    time->derrotas = 0;
-    time->gols_marcados = 0;
-    time->gols_sofridos = 0;
-
-    return time;
-}
+Time *criar_time(const int id, char *nome);
 
 // Função para liberar memória alocada para time
-void apagar_time(Time *time) {
-    free(time->nome);
-    free(time);
-}
+void apagar_time(Time *time);
 
 #endif

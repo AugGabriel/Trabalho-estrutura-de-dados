@@ -1,7 +1,9 @@
 #ifndef _BD_PARTIDA_H
 #define _BD_PARTIDA_H
 
+#include "time.h"
 #include "partida.h"
+#include "bd_time.h"
 
 // Quantidade máxima de partidas permitida
 #define MAX_PARTIDAS 100
