@@ -25,7 +25,8 @@ void carregar_dados_times() {
 
     for (int i = 0; i < _QUANT_TIMES; i++) {
         int id;
-        char *nome = (char*)malloc(sizeof(15 * sizeof(char)));  // Inicialização?
+        char *nome = (char*)malloc(sizeof(15 * sizeof(char)));
+        inicializa_string(nome, 15);
 
         fscanf(arquivo, " %d,%s", &id, nome);
 
@@ -102,6 +103,7 @@ void consultar_times() {
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
+    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
     
     // Retorno da lista de ponteiros para times
     Time **times = retornar_times(nome);

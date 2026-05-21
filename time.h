@@ -51,6 +51,7 @@ Time *criar_time(const int id, char *nome) {
 
 // Função para liberar memória alocada para time
 void apagar_time(Time *time) {
+    free(time->nome);
     free(time);
 }
 

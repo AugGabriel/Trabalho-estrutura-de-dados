@@ -86,6 +86,7 @@ void consultar_partidas() {
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
+    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
 
     Time **times = retornar_times(nome);
 

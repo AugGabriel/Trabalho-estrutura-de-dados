@@ -1,10 +1,6 @@
 Sinceramente, só Deus na causa kkkkk
 
 TO DO
-Inicializar strings
-Adicionar 'const' nos parâmetros das funções
-Cuidar com entrada de strings
-Freeeee (desalocar memória de todas as partes onde for alocado dinamicamente)
 consultar_dados_times lista todos os times se entrada for string vazia
 consultar_dados_times não está tabulando corretamente (dados desalinhados)
 Ids talvez sejam desnecessários, porque eles serão adicionados na lista na ordem, portanto sua posição na lista corresponde ao seu id
@@ -14,6 +10,11 @@ Alinhamento das tabelas
 Validações nas funções de carregamento, para garantir que arquivos não estão vazios
 Arrumar a ordem das funções
 Funções usadas como propriedade são nomeadas como substantivos, funções que realizam operação nomeadas como verbo
+Verificar pontuações nas intruções do Paixão
 
 DONE
 Id começando do 0
+Adicionar 'const' nos parâmetros das funções
+Inicializar strings
+Validação de entrada de strings
+Freeeee (desalocar memória de todas as partes onde for alocado dinamicamente)
