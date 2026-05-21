@@ -2,6 +2,19 @@
 #include <stdio.h>
 #include "time.h"
 
+// Estrutura de time
+struct time {
+   int id;
+   char *nome;
+
+   int vitorias;
+   int empates;
+   int derrotas;
+
+   int gols_marcados;
+   int gols_sofridos;
+};
+
 // Propriedade de time, que determina os pontos ganhos
 int pontos_ganhos(const Time *time) {
     int VALOR_VITORIA = 3, VALOR_EMPATE = 1;    // Não tenho certeza dos valores

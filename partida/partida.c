@@ -1,5 +1,16 @@
 #include "partida.h"
 
+// Estrutura de partida
+struct partida {
+    int id;
+
+    Time* time1;
+    Time* time2;
+
+    int gols_time1;
+    int gols_time2;
+};
+
 // Construtor de partida
 Partida *criar_partida(
             const int id, 
