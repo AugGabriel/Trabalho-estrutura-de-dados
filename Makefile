@@ -1,45 +1,56 @@
-# Compiler
+# Compilador
 CC = gcc
 
-# Compiler flags
+# Flags de compilação
 CFLAGS = -Wall
 
-# Define the directories
+# Flags de tracking de dependências
+DEPFLAGS = -MMD -MP
+
+# Diretórios de include
 INCDIRS = auxiliares partida tabela_classificacao tabelas time
 
-# Automatically add -I before each directory
+# Adiciona automaticamente -I antes de cada diretório
 INC_FLAGS = $(addprefix -I,$(INCDIRS))
 
-# Source files
+# Diretório de build (onde ficarão os arquivos .o e .d)
+BUILD_DIR = .build
+
+# Arquivos fonte (todos os .c na raiz + pastas do INCDIRS)
 SRCS = $(wildcard *.c) $(wildcard $(addsuffix /*.c, $(INCDIRS))) 
 
-# Object files
-OBJS = $(patsubst %.c,%.o,$(SRCS))
+# Seleção de arquivos objeto e dependências correspondentes
+OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRCS))
+DEPS = $(patsubst %.c,$(BUILD_DIR)/%.d,$(SRCS))
 
-# Executable name
+# Nome do executável final
 TARGET = main
 
 # Phony targets
 .PHONY: all compile run clean
 
-# Default target (compile and run)
+# Default target (Compile and run)
 all: compile run
 
-# Explicit compile target (produces the target program)
+# Explicit compile target
 compile: $(TARGET)
 
 # Run the executable
 run: $(TARGET)
 	./$(TARGET)
 
-# Clean up
+# Limpa a pasta de build e o executável
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)
 
 # Compile source files into object files
-%.o: %.c
-	$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INC_FLAGS) $(DEPFLAGS) -c $< -o $@
 
 # Link object files to create the executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+
+# Inclui os arquivos de dependências, para o Make saber sobre mudanças nos headers (.h)
+-include $(DEPS)
