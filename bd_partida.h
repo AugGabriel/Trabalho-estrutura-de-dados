@@ -49,15 +49,17 @@ void carregar_dados_partidas() {
 // Função auxiliar usada para criar e inicializar lista vazia de partidas
 Partida **_inicializa_lista_partidas() {
     Partida **partidas = (Partida**)malloc(_MAX_PARTIDAS * sizeof(Partida*));
+
     for (int i = 0; i < _MAX_PARTIDAS; i++) {
         partidas[i] = NULL;
     }
+
     return partidas;
 }
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
-Partida **retornar_partidas(Time **times, int modo) {
+Partida **retornar_partidas(Time **times, const int modo) {
     Partida **partidas = _inicializa_lista_partidas();
     int k = 0;
 
@@ -122,7 +124,7 @@ void consultar_partidas() {
     free(times);
 
     printf("ID\tTime1\t\t\tTime2\n");
-    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+    for (int i = 0; i < _MAX_PARTIDAS && partidas[i] != NULL; i++) {
         Partida *partida = partidas[i];
         printf(
             "%d\t%s\t%d\tx\t%d\t%s\n",

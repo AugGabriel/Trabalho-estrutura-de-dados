@@ -18,7 +18,11 @@ typedef struct partida {
 } Partida;
 
 // Construtor de partida
-Partida *criar_partida(int id, int id_time1, int id_time2, int gols_time1, int gols_time2) {
+Partida *criar_partida(
+            const int id, 
+            const int id_time1, const int id_time2, 
+            const int gols_time1, const int gols_time2
+    ) {
     static int cont = 0;
 
     Partida *partida = (Partida*)malloc(sizeof(Partida));

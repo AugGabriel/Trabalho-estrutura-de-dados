@@ -45,7 +45,7 @@ Time **_inicializa_lista_times() {
 }
 
 // Função auxiliar para montar prefixo, para consulta de time
-char *_monta_prefixo(char *nome, int tamanho) {
+char *_monta_prefixo(char *nome, const int tamanho) {
     char *prefixo = (char*)malloc((tamanho + 1) * sizeof(char));
 
     for (int i = 0; i < tamanho; i++) {
