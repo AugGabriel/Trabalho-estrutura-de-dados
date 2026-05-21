@@ -208,7 +208,7 @@ void apagar_partida(Partida *partida) {
 // ==========================
 //  Relacionados a BDPartidas 
 // ==========================
-#define _MAX_PARTIDAS 20
+#define _MAX_PARTIDAS 100
 Partida *_partidas[_MAX_PARTIDAS];
 
 enum filtro_pesquisa_partida {
@@ -218,7 +218,8 @@ enum filtro_pesquisa_partida {
 } FILTRO_PESQUISA_PARTIDA;
 
 void carregar_dados_partidas() {
-    FILE *arquivo = fopen("partidas.csv", "r");
+    // FILE *arquivo = fopen("partidas.csv", "r");
+    FILE *arquivo = fopen("partidas_completo.csv", "r");
 
     if (arquivo == NULL) {
         // Implementação de erro, baseada em perror()
@@ -263,12 +264,12 @@ Partida **retornar_partidas(Time **times, int modo) {
     int k = 0;
 
     for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
-        for (int j = 0; j < _QUANT_TIMES && _times[j] != NULL; j++) {       // Mesma ideia aqui, considera que passa a ser nulo
+        for (int j = 0; j < _QUANT_TIMES && times[j] != NULL; j++) {       // Mesma ideia aqui, considera que passa a ser nulo
             if (
-                (modo != TIME_VISITANTE && _partidas[i]->time1 == _times[j])    // Time mandante na partida
-                || (modo != TIME_MANDANTE && _partidas[i]->time2 == _times[j])  // Time visitante na partida
+                (modo != TIME_VISITANTE && _partidas[i]->time1 == times[j])    // Time mandante na partida
+                || (modo != TIME_MANDANTE && _partidas[i]->time2 == times[j])  // Time visitante na partida
             ) {
-                partidas[k++] = _partidas[j];
+                partidas[k++] = _partidas[i];
             }
         }
     }
@@ -314,17 +315,19 @@ void consultar_partidas(char *nome) {
     Partida **partidas = retornar_partidas(times, modo);
     free(times);
 
+    printf("ID\tTime1\t\t\tTime2\n");
     for (int i = 0; i < _MAX_PARTIDAS; i++) {
         Partida *partida = partidas[i];
         printf(
-            "%d %d %d %d %d\n",
+            "%d\t%s\t%d\tx\t%d\t%s\n",
             partida->id,
-            partida->time1,
-            partida->time2,
+            partida->time1->nome,
             partida->gols_time1,
-            partida->gols_time2
+            partida->gols_time2,
+            partida->time2->nome
         );
     }
+    printf("\n");
 }
 
 // ==========================
