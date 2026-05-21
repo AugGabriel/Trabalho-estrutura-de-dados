@@ -159,7 +159,7 @@ void consultar_times() {
 
     // Validação da lista
     if (times[0] == NULL) {
-        printf("Nenhum time encontrado\n");
+        printf("\nNenhum time encontrado\n\n");
         return;
     }
 
@@ -280,12 +280,18 @@ Partida **retornar_partidas(Time **times, int modo) {
     return partidas;
 }
 
-// Funcionalidade de consultar partida
-void consultar_partidas(char *nome) {
+// Funcionalidade 2, para consultar partidas a partir do nome de um time
+void consultar_partidas() {
+
+    // Entrada do usuário
+    char nome[15];
+    printf("Digite o nome ou o apelido do time: ");
+    scanf(" %s", nome);
+
     Time **times = retornar_times(nome);
 
     if (times[0] == NULL) { 
-        printf("Time não encontrado\n");
+        printf("\nTime não encontrado\n\n");
         return;
     }
 
@@ -363,7 +369,7 @@ void calcular_resultados() {
     }
 }
 
-// Funcionalidade de tabela de classificação
+// Funcionalidade 3, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao() {
     printf("Imprimindo classificação: \n");
     imprimir_times(_times);
@@ -373,6 +379,7 @@ void imprimir_tabela_classificacao() {
 //  Execução 
 // ==========================
 int main() {
+
     // Funções de inicialização do sistema
     carregar_dados_times();
     carregar_dados_partidas();
@@ -397,12 +404,16 @@ int main() {
                 consultar_times();
                 break;
             case '2':
+                consultar_partidas();
                 break;
             case '3':
+                printf("Estamos em obras para poder te atender melhor :)\n\n");
                 break;
             case '4':
+                printf("Estamos em obras para poder te atender melhor :)\n\n");
                 break;
             case '5':
+                printf("Estamos em obras para poder te atender melhor :)\n\n");
                 break;
             case '6':
                 break;
@@ -414,8 +425,8 @@ int main() {
         }
     }
 
-    apagar_times();
-    apagar_();
+    // apagar_times();
+    // apagar_();
 
     return 0;
 }
