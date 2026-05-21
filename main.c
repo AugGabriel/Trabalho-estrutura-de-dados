@@ -60,6 +60,7 @@ int main() {
         }
     }
 
+    // Liberação de memória
     apagar_times();
     apagar_partidas();
 

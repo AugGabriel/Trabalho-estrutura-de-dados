@@ -30,13 +30,16 @@ int saldo_de_gols(const Time *time) {
 
 // Construtor de time
 Time *criar_time(const int id, char *nome) {
+    // Alocação de memória
     Time *time = (Time*)malloc(sizeof(Time));
 
+    // Validação da alocação de memória
     if (time == NULL) {
-        printf("Não foi possível alocar memória para o time\n");
-        return NULL;
+        perror("Alocação de memória falhou");
+        exit(EXIT_FAILURE);
     }
 
+    // Inicialização
     time->id = id;
     time->nome = nome;
 

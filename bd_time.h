@@ -19,10 +19,13 @@ Time **lista_times() { return _times; }
 void carregar_dados_times() {
     FILE *arquivo = fopen("times.csv", "r");
     
+    // Validação do arquivo
     if (arquivo == NULL) {
-        // Implementação de erro, baseada em perror()
+        perror("Alocação de memória falhou");
+        exit(EXIT_FAILURE);
     }
 
+    // Cria um Time para cada linha do arquivo de texto
     for (int i = 0; i < _QUANT_TIMES; i++) {
         int id;
         char *nome = (char*)malloc(sizeof(15 * sizeof(char)));
@@ -33,6 +36,7 @@ void carregar_dados_times() {
         _times[i] = criar_time(id, nome);
     }
 
+    // Fecha o arquivo
     fclose(arquivo);
 }
 
@@ -80,12 +84,12 @@ Time **retornar_times(const char *nome) {
 
 // Função para imprimir vários times em sequência, com cabeçalho
 void imprimir_times(Time **times) {
-    printf("ID\tTime\t\tV\tE\tD\tGM\tGS\tS\tPG\n");
+    printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
     
     for (int i = 0; times[i] != NULL && i < _QUANT_TIMES; i++) {
         Time *time = times[i];
         printf(
-            "%d\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
+            "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
             time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
             saldo_de_gols(time), pontos_ganhos(time)
         );
@@ -105,6 +109,12 @@ void consultar_times() {
     scanf(" %s", nome);
     nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
     
+    // Validação da entrada
+    if (nome[0] == '\0') {
+        printf("Você não digitou nada...\n");
+        return;
+    }
+
     // Retorno da lista de ponteiros para times
     Time **times = retornar_times(nome);
 

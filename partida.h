@@ -25,8 +25,16 @@ Partida *criar_partida(
     ) {
     static int cont = 0;
 
+    // Alocação de memória
     Partida *partida = (Partida*)malloc(sizeof(Partida));
 
+    // Validação da alocação de memória
+    if (partida == NULL) {
+        perror("Alocação de memória falhou");
+        exit(EXIT_FAILURE);
+    }
+
+    // Inicialização
     partida->id = id;
     partida->time1 = lista_times()[id_time1];
     partida->time2 = lista_times()[id_time2];

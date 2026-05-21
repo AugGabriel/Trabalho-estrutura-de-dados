@@ -3,26 +3,34 @@
 
 #include "partida.h"
 
+// Quantidade máxima de partidas permitida
 #define _MAX_PARTIDAS 100
 
+// Lista interna de partidas
 Partida *_partidas[_MAX_PARTIDAS];
 
+// Função para acesso à lista de partidas, por parte dos outros módulos
 Partida **lista_partidas() { return _partidas; }
 
+// Enumerate para modos de pesquisa de time, na funcionalidade 2
 enum filtro_pesquisa_partida {
     TIME_MANDANTE = 0,
     TIME_VISITANTE = 1,
     AMBOS = 2,
 } FILTRO_PESQUISA_PARTIDA;
 
+// Função para carregar os dados do arquivo de texto para a lista de partidas
 void carregar_dados_partidas() {
-    // FILE *arquivo = fopen("partidas.csv", "r");
-    FILE *arquivo = fopen("partidas_completo.csv", "r");
+    FILE *arquivo = fopen("partidas.csv", "r");
+    // FILE *arquivo = fopen("partidas_completo.csv", "r");
 
+    // Validação do arquivo
     if (arquivo == NULL) {
-        // Implementação de erro, baseada em perror()
+        perror("Alocação de memória falhou");
+        exit(EXIT_FAILURE);
     }
 
+    // Cria uma Partida para cada linha do arquivo de texto
     for (int i = 0; i < _MAX_PARTIDAS; i++) {
         int id;
         int id_mandante, id_visitante;
@@ -43,6 +51,7 @@ void carregar_dados_partidas() {
         _partidas[i] = criar_partida(id, id_mandante, id_visitante, gols_mand, gols_visit);
     }
 
+    // Fecha o arquivo
     fclose(arquivo);
 }
 
@@ -88,13 +97,21 @@ void consultar_partidas() {
     scanf(" %s", nome);
     nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
 
+    // Validação da entrada
+    if (nome[0] == '\0') {
+        printf("Você não digitou nada...\n");
+        return;
+    }
+
     Time **times = retornar_times(nome);
 
+    // Validação da lista de times
     if (times[0] == NULL) { 
         printf("\nTime não encontrado\n\n");
         return;
     }
 
+    // Nova entrada do usuário
     int escolha;
     printf("Escolha o modo de consulta: \
         \n\t1) Por time mandante \
@@ -103,6 +120,7 @@ void consultar_partidas() {
         \n\t4) Retornar ao menu principal\n");
     scanf(" %d", &escolha);
 
+    // Escolhe o modo de filtro
     int modo;
     switch(escolha) {
         case 1:
@@ -121,14 +139,16 @@ void consultar_partidas() {
             return;
     }
 
+    // Chama a função de retornar partidas
     Partida **partidas = retornar_partidas(times, modo);
     free(times);
 
-    printf("ID\tTime1\t\t\tTime2\n");
+    // Imprime os dados formatados em tabela
+    printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
     for (int i = 0; i < _MAX_PARTIDAS && partidas[i] != NULL; i++) {
         Partida *partida = partidas[i];
         printf(
-            "%d\t%s\t%d\tx\t%d\t%s\n",
+            "%d\t%9s\t%d\tx\t%d\t%9s\n",
             partida->id,
             partida->time1->nome,
             partida->gols_time1,

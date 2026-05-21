@@ -37,7 +37,7 @@ void calcular_resultados() {
 
 // Funcionalidade 3, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao() {
-    printf("Imprimindo classificação: \n");
+    printf("\nImprimindo classificação: \n");
     imprimir_times(_times);
 }
 
