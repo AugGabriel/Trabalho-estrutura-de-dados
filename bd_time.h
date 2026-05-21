@@ -7,10 +7,10 @@
 #include "auxiliares_globais.h"
 
 // Macro para definir a quantidade de times
-#define _QUANT_TIMES 10
+#define QUANT_TIMES 10
 
 // Lista interna com os times carregados do arquivo de texto
-static Time *_times[_QUANT_TIMES];
+static Time *_times[QUANT_TIMES];
 
 // Função para acessar valores da lista privada
 Time **lista_times() { return _times; }
@@ -26,7 +26,7 @@ void carregar_dados_times() {
     }
 
     // Cria um Time para cada linha do arquivo de texto
-    for (int i = 0; i < _QUANT_TIMES; i++) {
+    for (int i = 0; i < QUANT_TIMES; i++) {
         int id;
         char *nome = (char*)malloc(sizeof(15 * sizeof(char)));
         inicializa_string(nome, 15);
@@ -42,8 +42,8 @@ void carregar_dados_times() {
 
 // Função auxiliar usada para criar e inicializar lista vazia de times
 Time **_inicializa_lista_times() {
-    Time **times = (Time**)malloc(_QUANT_TIMES * sizeof(Time*));
-    for (int i = 0; i < _QUANT_TIMES; i++) {
+    Time **times = (Time**)malloc(QUANT_TIMES * sizeof(Time*));
+    for (int i = 0; i < QUANT_TIMES; i++) {
         times[i] = NULL;
     }
     return times;
@@ -66,7 +66,7 @@ Time **retornar_times(const char *nome) {
     Time **times = _inicializa_lista_times();
     int j = 0;
 
-    for (int i = 0; i < _QUANT_TIMES; i++) {
+    for (int i = 0; i < QUANT_TIMES; i++) {
         char *prefixo = _monta_prefixo(_times[i]->nome, strlen(nome));
 
         if (
@@ -86,7 +86,7 @@ Time **retornar_times(const char *nome) {
 void imprimir_times(Time **times) {
     printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
     
-    for (int i = 0; times[i] != NULL && i < _QUANT_TIMES; i++) {
+    for (int i = 0; times[i] != NULL && i < QUANT_TIMES; i++) {
         Time *time = times[i];
         printf(
             "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
@@ -133,7 +133,7 @@ void consultar_times() {
 
 // Funcionalidade para desalocar todos os times
 void apagar_times() {
-    for (int i = 0; i < _QUANT_TIMES; i++) {
+    for (int i = 0; i < QUANT_TIMES; i++) {
         apagar_time(_times[i]);
     }
 }

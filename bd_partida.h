@@ -4,10 +4,10 @@
 #include "partida.h"
 
 // Quantidade máxima de partidas permitida
-#define _MAX_PARTIDAS 100
+#define MAX_PARTIDAS 100
 
 // Lista interna de partidas
-Partida *_partidas[_MAX_PARTIDAS];
+Partida *_partidas[MAX_PARTIDAS];
 
 // Função para acesso à lista de partidas, por parte dos outros módulos
 Partida **lista_partidas() { return _partidas; }
@@ -31,7 +31,7 @@ void carregar_dados_partidas() {
     }
 
     // Cria uma Partida para cada linha do arquivo de texto
-    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+    for (int i = 0; i < MAX_PARTIDAS; i++) {
         int id;
         int id_mandante, id_visitante;
         int gols_mand, gols_visit;
@@ -57,9 +57,9 @@ void carregar_dados_partidas() {
 
 // Função auxiliar usada para criar e inicializar lista vazia de partidas
 Partida **_inicializa_lista_partidas() {
-    Partida **partidas = (Partida**)malloc(_MAX_PARTIDAS * sizeof(Partida*));
+    Partida **partidas = (Partida**)malloc(MAX_PARTIDAS * sizeof(Partida*));
 
-    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+    for (int i = 0; i < MAX_PARTIDAS; i++) {
         partidas[i] = NULL;
     }
 
@@ -72,8 +72,8 @@ Partida **retornar_partidas(Time **times, const int modo) {
     Partida **partidas = _inicializa_lista_partidas();
     int k = 0;
 
-    for (int i = 0; i < _MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
-        for (int j = 0; j < _QUANT_TIMES && times[j] != NULL; j++) {        // Mesma ideia aqui, considera que passa a ser nulo
+    for (int i = 0; i < MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
+        for (int j = 0; j < QUANT_TIMES && times[j] != NULL; j++) {        // Mesma ideia aqui, considera que passa a ser nulo
             if (
                 (modo != TIME_VISITANTE && _partidas[i]->time1 == times[j])    // Time mandante na partida
                 || (modo != TIME_MANDANTE && _partidas[i]->time2 == times[j])  // Time visitante na partida
@@ -143,9 +143,14 @@ void consultar_partidas() {
     Partida **partidas = retornar_partidas(times, modo);
     free(times);
 
+    if (partidas[0] == NULL) {
+        printf("Nenhuma partida encontrada\n");
+        return;
+    }
+
     // Imprime os dados formatados em tabela
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
-    for (int i = 0; i < _MAX_PARTIDAS && partidas[i] != NULL; i++) {
+    for (int i = 0; i < MAX_PARTIDAS && partidas[i] != NULL; i++) {
         Partida *partida = partidas[i];
         printf(
             "%d\t%9s\t%d\tx\t%d\t%9s\n",
@@ -161,7 +166,7 @@ void consultar_partidas() {
 
 // Função para desalocar a memória de todas as partidas
 void apagar_partidas() {
-    for (int i = 0; i < _MAX_PARTIDAS; i++) {
+    for (int i = 0; i < MAX_PARTIDAS; i++) {
         apagar_partida(_partidas[i]);
     }
 }

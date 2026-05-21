@@ -6,7 +6,7 @@
 #include "bd_partida.h"
 
 void calcular_resultados() {
-    for (int i = 0; i < _MAX_PARTIDAS && lista_partidas()[i] != NULL; i++) {
+    for (int i = 0; i < MAX_PARTIDAS && lista_partidas()[i] != NULL; i++) {
         Partida *partida = _partidas[i];
 
         Time *time1 = partida->time1;
