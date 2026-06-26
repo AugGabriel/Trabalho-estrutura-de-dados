@@ -90,6 +90,9 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome) {
 }
 
 void bdt_imprimir_times(BDTimes *bdt) {
+    // Imprime o cabeçalho
+    printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+    // Imprime a lista de times
     ll_print(bdt->lista_times);
 }
 

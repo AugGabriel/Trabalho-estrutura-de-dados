@@ -16,6 +16,40 @@ BDPartidas *bdp_criar()
     return bdp; 
 }
 
+// Função interna para cálculo dos resultados a partir dos dados carregados
+void _calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
+    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
+        Partida *partida = bdp_obter_partida(bdp, i);
+
+        Time *time1 = partida_time(partida, 1);
+        Time *time2 = partida_time(partida, 2);
+
+        int gols_time1 = partida_gols(partida, 1);
+        int gols_time2 = partida_gols(partida, 2);
+
+        // Gols marcados
+        time_alterar_gols_marcados(time1, gols_time1);
+        time_alterar_gols_marcados(time2, gols_time2);
+        
+        // Gols sofridos
+        time_alterar_gols_sofridos(time1, gols_time2);
+        time_alterar_gols_sofridos(time2, gols_time1);
+        
+        if (gols_time1 == gols_time2) {       // Empate
+            time_alterar_empates(time1, 1);
+            time_alterar_empates(time2, 1);
+        }
+        else if (gols_time1 > gols_time2) {   // Vitória do time 1
+            time_alterar_vitorias(time1, 1);
+            time_alterar_derrotas(time2, 1);
+        }
+        else {                                // Vitória do time 2
+            time_alterar_vitorias(time2, 1);
+            time_alterar_derrotas(time1, 1);                                
+        }
+    }
+}
+
 BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
     BDPartidas *bdp = bdp_criar();
     
@@ -42,6 +76,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
             &gols_mand, 
             &gols_visit
         ) == EOF) {
+            _calcular_resultados(bdp, bdt);
             return bdp;
         }
 
@@ -60,37 +95,6 @@ int bdp_quant_partidas(BDPartidas *bdp) {
 Partida *bdp_obter_partida(BDPartidas *bdp, int i) {
     return ll_get(bdp->lista_partidas, i);
 }
-
-// TODO:
-//void TODO_USE_AS_REFERENCE_THEN_DELETE_calcular_resultados(BDPartidas *bdp) {
-//    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
-//        Partida *partida = bdp_obter_partida(bdp, i);
-//
-//        Time *time1 = partida->time1;
-//        Time *time2 = partida->time2;
-//
-//        // Gols marcados
-//        time1->gols_marcados += partida->gols_time1;
-//        time2->gols_marcados += partida->gols_time2;
-//
-//        // Gols sofridos
-//        time1->gols_sofridos += partida->gols_time2;
-//        time2->gols_sofridos += partida->gols_time1;
-//
-//        if (partida->gols_time1 == partida->gols_time2) {       // Empate
-//            time1->empates++;
-//            time2->empates++;
-//        }
-//        else if (partida->gols_time1 > partida->gols_time2) {   // Vitória do time 1
-//            time1->vitorias++;
-//            time2->derrotas++;
-//        }
-//        else {                                                  // Vitória do time 2
-//            time1->derrotas++;
-//            time2->vitorias++;
-//        }
-//    }
-//}
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista

@@ -1,5 +1,6 @@
 #include "linkedlist.h"
 #include "time.h"
+#include "partida.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -66,14 +67,9 @@ void *ll_get(LinkedList *l, int pos) {
 
 // Display all elements of the linked list.
 void ll_print(LinkedList *l) {
-    int cabecalho = 1;
     for (ListNode *p = l->first; p != NULL; p = p->next) {
         if (p->type == TYPE_TIME) {
-            if (cabecalho) {
-                printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
-                cabecalho = 0;
-            }
-            time_print(p->info); // Print the information of each Student structure.
+            time_print(p->info); // Print the information of each Time structure.
         }
     }
     printf("\n"); // Print a newline character to separate the output.
@@ -82,12 +78,16 @@ void ll_print(LinkedList *l) {
 // Function to free the memory used by the linked list.
 void ll_free(LinkedList *l)
 {
-    ListNode *p = l->first;
-    while (p != NULL)
-    {
-        ListNode *t = p->next; // Store a reference to the next node.
-        free(p);               // Free the memory allocated for the current node.
-        p = t;                 // Move to the next node.
+    ListNode *node = l->first;
+    while (node != NULL) {
+        ListNode *next_node = node->next; // Store a reference to the next node.
+        // Free the memory allocated for the node value structure.
+        if (node->type == TYPE_TIME)
+            time_limpar(node->info);
+        else if (node->type == TYPE_PARTIDA)
+            partida_limpar(node->info);
+        free(node);               // Free the memory allocated for the current node.
+        node = next_node;         // Move to the next node.
     }
     free(l); // Free the memory allocated for the list structure itself.
 }
