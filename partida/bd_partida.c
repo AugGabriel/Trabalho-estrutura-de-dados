@@ -68,8 +68,8 @@ Partida **retornar_partidas(Time **times, const int modo) {
     for (int i = 0; i < MAX_PARTIDAS && _partidas[i] != NULL; i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
         for (int j = 0; j < QUANT_TIMES && times[j] != NULL; j++) {        // Mesma ideia aqui, considera que passa a ser nulo
             if (
-                (modo != TIME_VISITANTE && _partidas[i]->time1 == times[j])    // Time mandante na partida
-                || (modo != TIME_MANDANTE && _partidas[i]->time2 == times[j])  // Time visitante na partida
+                (modo != TIME_VISITANTE && get_time1(_partidas[i]) == times[j])    // Time mandante na partida
+                || (modo != TIME_MANDANTE && get_time2(_partidas[i]) == times[j])  // Time visitante na partida
             ) {
                 partidas[k++] = _partidas[i];
             }
@@ -145,14 +145,7 @@ void consultar_partidas() {
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
     for (int i = 0; i < MAX_PARTIDAS && partidas[i] != NULL; i++) {
         Partida *partida = partidas[i];
-        printf(
-            "%d\t%9s\t%d\tx\t%d\t%9s\n",
-            partida->id,
-            partida->time1->nome,
-            partida->gols_time1,
-            partida->gols_time2,
-            partida->time2->nome
-        );
+        imprimir_partida(partida);
     }
     printf("\n");
 }

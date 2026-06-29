@@ -4,28 +4,32 @@ void calcular_resultados() {
     for (int i = 0; i < MAX_PARTIDAS && lista_partidas()[i] != NULL; i++) {
         Partida *partida = lista_partidas()[i];
 
-        Time *time1 = partida->time1;
-        Time *time2 = partida->time2;
+        Time *time1 = get_time1(partida);
+        Time *time2 = get_time2(partida);
 
         // Gols marcados
-        time1->gols_marcados += partida->gols_time1;
-        time2->gols_marcados += partida->gols_time2;
+        int gm1 = get_gols_marcados(time1) + get_gols_time1(partida);
+        int gm2 = get_gols_marcados(time2) + get_gols_time2(partida);
+        set_gols_time1(partida, gm1);
+        set_gols_time2(partida, gm2);
 
         // Gols sofridos
-        time1->gols_sofridos += partida->gols_time2;
-        time2->gols_sofridos += partida->gols_time1;
-
-        if (partida->gols_time1 == partida->gols_time2) {       // Empate
-            time1->empates++;
-            time2->empates++;
+        int gs1 = get_gols_sofridos(time1) + get_gols_time1(partida);
+        int gs2 = get_gols_sofridos(time2) + get_gols_time2(partida);
+        set_gols_sofridos(time1, gs1);
+        set_gols_sofridos(time2, gs2);
+        
+        if (get_gols_time1(partida) == get_gols_time2(partida)) {       // Empate
+            set_empates(time1, get_empates(time1) + 1);
+            set_empates(time2, get_empates(time2) + 1);
         }
-        else if (partida->gols_time1 > partida->gols_time2) {   // Vitória do time 1
-            time1->vitorias++;
-            time2->derrotas++;
+        else if (get_gols_time1(partida) > get_gols_time2(partida)) {   // Vitória do time 1
+            set_vitorias(time1, get_vitorias(time1) + 1);
+            set_derrotas(time2, get_derrotas(time2) + 1);
         }
         else {                                                  // Vitória do time 2
-            time1->derrotas++;
-            time2->vitorias++;
+            set_derrotas(time1, get_derrotas(time1) + 1);
+            set_vitorias(time2, get_vitorias(time2) + 1);
         }
     }
 }

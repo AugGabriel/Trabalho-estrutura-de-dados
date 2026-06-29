@@ -58,11 +58,11 @@ Time **retornar_times(const char *nome) {
     int j = 0;
 
     for (int i = 0; i < QUANT_TIMES; i++) {
-        char *prefixo = _monta_prefixo(_times[i]->nome, strlen(nome));
+        char *prefixo = _monta_prefixo(get_nome(_times[i]), strlen(nome));
 
         if (
-            strcmp(_times[i]->nome, nome) == 0          // Entrada bate com o nome
-            || strcmp(prefixo, nome) == 0               // Entrada bate com o prefixo
+            string_comp_insensitive(get_nome(_times[i]), nome) == 0         // Entrada bate com o nome
+            || string_comp_insensitive(prefixo, nome) == 0                  // Entrada bate com o prefixo
         ) {
             times[j++] = _times[i];
         }
@@ -79,11 +79,7 @@ void imprimir_times(Time **times) {
     
     for (int i = 0; times[i] != NULL && i < QUANT_TIMES; i++) {
         Time *time = times[i];
-        printf(
-            "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
-            time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
-            saldo_de_gols(time), pontos_ganhos(time)
-        );
+        imprimir_time(time);
     }
 
     printf("\n");
