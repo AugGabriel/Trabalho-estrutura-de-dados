@@ -1,1 +1,0 @@
-void inicializa_string(char *string, const int tamanho);

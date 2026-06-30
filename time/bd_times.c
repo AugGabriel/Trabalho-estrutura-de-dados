@@ -77,8 +77,8 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome) {
         char *prefixo = _monta_prefixo(time_atual_nome, strlen(nome));
         
         if (
-            strcmp(time_atual_nome, nome) == 0    // Entrada bate com o nome
-            || strcmp(prefixo, nome) == 0               // Entrada bate com o prefixo
+            string_comp_insensitive(time_nome(bdt_obter_time(bdt, i)), nome) == 0         // Entrada bate com o nome
+            || string_comp_insensitive(prefixo, nome) == 0                        // Entrada bate com o prefixo
         ) {
             ll_insert(resultados, time_atual, TYPE_TIME);
         }

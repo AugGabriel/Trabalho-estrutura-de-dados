@@ -7,7 +7,6 @@
 #include "bd_times.h"
 #include "partida.h"
 #include "bd_partidas.h"
-//#include "tabela_classificacao.h"
 
 #define TAMANHO_MAX_ENTRADA 15
 

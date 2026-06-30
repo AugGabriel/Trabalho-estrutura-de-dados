@@ -71,7 +71,7 @@ void time_alterar_gols_marcados(Time *t, int valor) {
 }
 
 void time_alterar_gols_sofridos(Time *t, int valor) {
-    t->gols_sofridos += valor;
+    t->gols_sofridos += valor;  
 }
 
 void time_alterar_vitorias(Time *t, int valor) {
