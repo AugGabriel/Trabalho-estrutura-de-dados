@@ -30,6 +30,9 @@ Time *bdt_get(BDTime *bdt, int index);
 // Apagar BDTime, seus nós e as partidas dentro
 void bdt_free(BDTime *bdp);
 
+// Apagar BDTime, seus nós e os times dentro
+void bdt_end(BDTime *bdt);
+
 // Função que traz os dados do arquivo de texto para a lista de times
 BDTime *bdt_carregar_dados(BDTime *bdt);
 

@@ -29,6 +29,9 @@ Partida *bdp_get(BDPartida *bdp, int index);
 // Apagar BDPartida, seus nós e as partidas dentro
 void bdp_free(BDPartida *bdp);
 
+// Apagar BDPartida, seus nós e as partidas dentro
+void bdt_end(BDTime *bdt);
+
 // Função para carregar os dados do arquivo de texto para a lista de partidas
 BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt);
 

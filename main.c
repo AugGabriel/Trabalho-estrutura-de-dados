@@ -65,8 +65,8 @@ int main() {
     }
 
     // Liberação de memória
-    bdt_free(bdt);
-    bdp_free(bdp);
+    bdt_end(bdt);
+    bdp_end(bdp);
 
     return 0;
 }

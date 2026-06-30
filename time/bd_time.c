@@ -74,17 +74,30 @@ int bdt_append(BDTime *bdt, Time *info) {
     return index;
 }
 
-// Apagar BDTime e seus nós
-void bdt_free(BDTime *bdt) {
+// Apagar BDTime e seus nós, e opcionalmente os times também
+void _bdt_free(BDTime *bdt, int end) {
     BDTimeNode *node = bdt->first;
 
     while (node != NULL) {
+        if (end) {
+            apagar_time(node->info);
+        }
         BDTimeNode *next = node->next;
         free(node);
         node = next;
     }
 
     free(bdt);
+}
+
+// Apagar BDTime e seus nós
+void bdt_free(BDTime *bdt) {
+    _bdt_free(bdt, 0);
+}
+
+// Apagar BDTime, seus nós e os times dentro
+void bdt_end(BDTime *bdt) {
+    _bdt_free(bdt, 1);
 }
 
 // Função que traz os dados do arquivo de texto para a lista _times
