@@ -14,8 +14,8 @@
 int main() {
    
     // Funções de inicialização do sistema
-    BDTime *bdt = bdt_criar_usando_arquivo(CAMINHO_BD_TIME);
-    BDPartida *bdp = bdp_criar_usando_arquivo(CAMINHO_BD_PARTIDA, bdt);
+    BDTimes *bdt = bdt_criar_usando_arquivo(CAMINHO_BD_TIME);
+    BDPartidas *bdp = bdp_criar_usando_arquivo(CAMINHO_BD_PARTIDA, bdt);
 
     // Variável de entrada do usuário
     char escolha = '0';

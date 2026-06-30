@@ -1,6 +1,6 @@
 #include "tabela_classificacao.h"
 
-void tabela_classificacao_carregar(BDPartida *bdp) {
+void tabela_classificacao_carregar(BDPartidas *bdp) {
     for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {
         Partida *partida = bdp_get(bdp, i);
 

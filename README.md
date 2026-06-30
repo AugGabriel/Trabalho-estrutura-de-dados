@@ -18,8 +18,8 @@ Para mudar as partidas que serão carregadas no sistema, basta copiar e colar os
 
 O projeto está organizado por diretórios, com arquivos `.c` e `.h` em cada um. Estão separados em:
 
-* **`time`**: onde estão depositados os TADs Time e BDTime.
-* **`partida`**: onde estão depositados os TADs Partida e BDPartida.
+* **`time`**: onde estão depositados os TADs Time e BDTimes.
+* **`partida`**: onde estão depositados os TADs Partida e BDPartidas.
 * **`auxiliares`**: onde estão uma macro e uma função usados por todo o sistema.
 * **`tabela_classificação`**: onde estão os arquivos `.c` e `.h` para a terceira funcionalidade, de imprimir a tabela de classificação.
 * **`tabelas`**: onde estão os arquivos de texto com os dados de time e partida.
@@ -31,9 +31,9 @@ E na pasta raíz, ainda há o arquivo com a função principal (`main.c`), que �
 Os principais TADs (Tipo Abstrato de Dados) utilizados foram:
 
 * **Time**, que é responsável por armazenar os dados de um único time por vez.
-* **BDTime**, responsável por armazenar todos os times, e processar informações referentes a mais de um time por vez.
+* **BDTimes**, responsável por armazenar todos os times, e processar informações referentes a mais de um time por vez.
 * **Partida**, que assim como Time, é responsável por armazenar os dados de uma única partida por vez.
-* e **BDPartida**, responsável por armazenar todos os times, e processar informações referentes a mais de um time por vez.
+* e **BDPartidas**, responsável por armazenar todos os times, e processar informações referentes a mais de um time por vez.
 
 Durante a implementação do sistema, a reutilização de código foi uma prioridade, uma vez que a segunda funcionalidade utiliza funções já implementadas pela primeira, e o mesmo acontece entre a terceira e a segunda. Outras boas práticas da programação também foram base, como a não repetição de funcionalidades, agrupamento de responsabilidades e modularização.
 

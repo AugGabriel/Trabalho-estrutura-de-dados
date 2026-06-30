@@ -5,6 +5,6 @@
 #include "partida.h"
 #include "bd_partida.h"
 
-void tabela_classificacao_carregar(BDPartida *bdp);
+void tabela_classificacao_carregar(BDPartidas *bdp);
 
 #endif

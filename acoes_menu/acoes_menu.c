@@ -3,7 +3,7 @@
 #include "acoes_menu.h"
 
 // Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(BDTime *bdt) {
+void consultar_times(BDTimes *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
@@ -36,7 +36,7 @@ void consultar_times(BDTime *bdt) {
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDPartida *bdp, BDTime *bdt) {
+void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
@@ -114,7 +114,7 @@ void consultar_partidas(BDPartida *bdp, BDTime *bdt) {
 }
 
 // Funcionalidade 3, para atualizar uma partida
-void atualizar_partida(BDTime *bdt, BDPartida *bdp) {
+void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
     consultar_partidas(bdt, bdp);
 
@@ -141,7 +141,7 @@ void atualizar_partida(BDTime *bdt, BDPartida *bdp) {
 }
 
 // Funcionalidade 4, para remoção de partida
-void remover_partida(BDTime *bdt, BDPartida *bdp) {
+void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
     consultar_partidas(bdt, bdp);
 
@@ -168,7 +168,7 @@ void remover_partida(BDTime *bdt, BDPartida *bdp) {
 void inserir_partida() {}
 
 // Funcionalidade 6, para imprimir a tabela de classificação
-void imprimir_tabela_classificacao(BDTime *bdt) {
+void imprimir_tabela_classificacao(BDTimes *bdt) {
     printf("\nImprimindo classificação: \n");
     imprimir_times(bdt);
 }
