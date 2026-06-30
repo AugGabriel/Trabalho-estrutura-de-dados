@@ -1,12 +1,5 @@
 #include "bd_partida.h"
 
-// Enumerate para modos de pesquisa de time, na funcionalidade 2
-enum filtro_pesquisa_partida {
-    TIME_MANDANTE,
-    TIME_VISITANTE,
-    AMBOS,
-} FILTRO_PESQUISA_PARTIDA;
-
 // Definição do struct do nó para BDPartida
 struct bd_partida_node {
     Partida *info;
@@ -97,7 +90,7 @@ void bdp_free(BDPartida *bdp) {
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
 BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt) {
-    FILE *arquivo = fopen("tabelas/partidas.csv", "r");
+    FILE *arquivo = fopen("tabelas/bd_partida.csv", "r");
 
     // Validação do arquivo
     if (arquivo == NULL) {
@@ -150,77 +143,4 @@ BDPartida *retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
     }
 
     return partidas;
-}
-
-// Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
-
-    // Entrada do usuário
-    char nome[TAMANHO_MAX_ENTRADA];
-    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
-
-    printf("Digite o nome ou o apelido do time: ");
-    scanf(" %s", nome);
-    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
-
-    // Validação da entrada
-    if (nome[0] == '\0') {
-        printf("Você não digitou nada...\n");
-        return;
-    }
-
-    BDTime *times = retornar_times(bdt, nome);
-
-    // Validação da lista de times
-    if (bdt_get(times, 0) == NULL) { 
-        printf("\nTime não encontrado\n\n");
-        return;
-    }
-
-    // Nova entrada do usuário
-    int escolha;
-    printf("Escolha o modo de consulta: \
-        \n\t1) Por time mandante \
-        \n\t2) Por time visitante \
-        \n\t3) Por time mandante ou visitante \
-        \n\t4) Retornar ao menu principal\n");
-    scanf(" %d", &escolha);
-
-    // Escolhe o modo de filtro
-    int modo;
-    switch(escolha) {
-        case 1:
-            modo = TIME_MANDANTE;
-            break;
-        case 2:
-            modo = TIME_VISITANTE;
-            break;
-        case 3:
-            modo = AMBOS;
-            break;
-        case 4: 
-            return;
-        default:
-            printf("Opção inválida\n");
-            return;
-    }
-
-    // Chama a função de retornar partidas
-    BDPartida *partidas = retornar_partidas(bdp, times, modo);
-    bdt_free(times);
-
-    if (bdp_get(partidas, 0) == NULL) {
-        printf("Nenhuma partida encontrada\n");
-        return;
-    }
-
-    // Imprime os dados formatados em tabela
-    printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
-    for (int i = 0; i < MAX_PARTIDAS && bdp_get(partidas, i) != NULL; i++) {
-        Partida *partida = bdp_get(partidas, i);
-        imprimir_partida(partida);
-    }
-    printf("\n");
-
-    bdp_free(partidas);
 }

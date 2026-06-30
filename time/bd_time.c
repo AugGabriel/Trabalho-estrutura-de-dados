@@ -102,7 +102,7 @@ void bdt_end(BDTime *bdt) {
 
 // Função que traz os dados do arquivo de texto para a lista _times
 BDTime *bdt_carregar_dados(BDTime *bdt) {
-    FILE *arquivo = fopen("tabelas/times.csv", "r");
+    FILE *arquivo = fopen("tabelas/bd_time.csv", "r");
     
     // Validação do arquivo
     if (arquivo == NULL) {
@@ -167,37 +167,4 @@ void imprimir_times(BDTime *bdt) {
     printf("%-5s %-15s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
     bdt_print(bdt);
     printf("\n");
-}
-
-// Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(BDTime *bdt) {
-
-    // Entrada do usuário
-    char nome[TAMANHO_MAX_ENTRADA];
-    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
-
-    printf("Digite o nome ou o apelido do time: ");
-    scanf(" %s", nome);
-    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
-    
-    // Validação da entrada
-    if (nome[0] == '\0') {
-        printf("Você não digitou nada...\n");
-        return;
-    }
-
-    // Retorno da lista de ponteiros para times
-    BDTime *times = retornar_times(bdt, nome);
-
-    // Validação da lista
-    if (bdt_get(times, 0) == NULL) {
-        printf("\nNenhum time encontrado\n\n");
-        return;
-    }
-
-    // Impressão da lista
-    imprimir_times(times);
-
-    // Liberação de memória da lista alocada dinamicamente
-    bdt_free(times);
 }

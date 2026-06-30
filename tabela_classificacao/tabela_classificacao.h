@@ -7,7 +7,4 @@
 
 void tabela_classificacao_carregar(BDPartida *bdp);
 
-// Funcionalidade 3, para imprimir a tabela de classificação
-void imprimir_tabela_classificacao(BDTime *bdt);
-
 #endif

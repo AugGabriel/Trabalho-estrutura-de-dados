@@ -42,7 +42,4 @@ BDTime *retornar_times(BDTime *bdt, const char *nome);
 // Função para imprimir vários times em sequência, com cabeçalho
 void imprimir_times(BDTime *bdt);
 
-// Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(BDTime *bdt);
-
 #endif

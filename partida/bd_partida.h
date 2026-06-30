@@ -8,6 +8,13 @@
 // Quantidade máxima de partidas permitida
 #define MAX_PARTIDAS 100
 
+// Enumerate para modos de pesquisa de time, na funcionalidade 2
+enum filtro_pesquisa_partida {
+    TIME_MANDANTE,
+    TIME_VISITANTE,
+    AMBOS,
+} FILTRO_PESQUISA_PARTIDA;
+
 // Definição de BDPartidaNode
 typedef struct bd_partida_node BDPartidaNode;
 
@@ -38,8 +45,5 @@ BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt);
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
 BDPartida *retornar_partidas(BDPartida *bdp, BDTime *bdt, const int modo);
-
-// Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDTime *bdt, BDPartida *bdp);
 
 #endif
