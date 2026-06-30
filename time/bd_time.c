@@ -102,7 +102,7 @@ void bdt_end(BDTime *bdt) {
 
 // Função que traz os dados do arquivo de texto para a lista _times
 BDTime *bdt_carregar_dados(BDTime *bdt) {
-    FILE *arquivo = fopen("tabelas/bd_time.csv", "r");
+    FILE *arquivo = fopen(CAMINHO_BD_TIME, "r");
     
     // Validação do arquivo
     if (arquivo == NULL) {

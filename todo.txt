@@ -1,0 +1,2 @@
+Validações de entrada nos linkedlist
+Excluir inicialização de string

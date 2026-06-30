@@ -75,6 +75,23 @@ int bdp_append(BDPartida *bdp, Partida *info) {
     return index;
 }
 
+// Remover elemento do BDPartida
+void bdp_remove(BDPartida *bdp, int id) {
+    BDPartidaNode *prev = bdp->first;
+
+    for (int i = 1; i < id; i++) {
+        prev = prev->next;
+
+        if (prev == NULL) {
+            return;
+        }
+    }
+
+    BDPartidaNode *node = prev->next;
+    prev->next = node->next;
+    free(node);
+}
+
 // Apagar BDPartida e seus nós
 void bdp_free(BDPartida *bdp) {
     BDPartidaNode *node = bdp->first;
@@ -90,7 +107,7 @@ void bdp_free(BDPartida *bdp) {
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
 BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt) {
-    FILE *arquivo = fopen("tabelas/bd_partida.csv", "r");
+    FILE *arquivo = fopen(CAMINHO_BD_PARTIDA, "r");
 
     // Validação do arquivo
     if (arquivo == NULL) {
@@ -143,4 +160,8 @@ BDPartida *retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
     }
 
     return partidas;
+}
+
+void aplicar_alteracoes_partida(BDPartida *bdp) {
+
 }
