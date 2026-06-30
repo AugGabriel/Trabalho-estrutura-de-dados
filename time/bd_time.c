@@ -21,10 +21,13 @@ BDTime *bdt_create() {
 // Obtenção de elemento de BDTime. Se index for fora de BDTime, retorno é NULL
 Time *bdt_get(BDTime *bdt, int index) {
     BDTimeNode *node = bdt->first;
-    int i = 0;
 
-    while (node != NULL && i < index) {
-        i++;
+    for (int i = 0; i < index; i++) {
+        node = node->next;
+
+        if (node == NULL) {
+            return NULL;
+        }
     }
 
     return node->info;
@@ -50,24 +53,28 @@ int bdt_append(BDTime *bdt, Time *info) {
     }
     else {
         // Encontra o último nó, e adiciona à frente
-        BDTimeNode *last = bdt->first, *prev = NULL;
-        while (last != NULL) {
-            prev = last;
+        BDTimeNode *last = bdt->first;
+
+        while (last->next != NULL) {
             last = last->next;
             index++;
         }
-        prev->next = node;
+        last->next = node;
     }
 
     return index;
 }
 
-// Apagar BDTime, seus nós e os times dentro
+// Apagar BDTime e seus nós
 void bdt_free(BDTime *bdt) {
-    for (BDTimeNode *node = bdt->first; node != NULL; node = node->next) {
-        apagar_time(node->info);
+    BDTimeNode *node = bdt->first;
+
+    while (node != NULL) {
+        BDTimeNode *next = node->next;
         free(node);
+        node = next;
     }
+
     free(bdt);
 }
 
@@ -90,7 +97,9 @@ BDTime *carregar_dados_times() {
 
         fscanf(arquivo, " %d,%s", &id, nome);
 
-        bdt_append(bdt, criar_time(id, nome));
+        Time *time = criar_time(id, nome);
+
+        bdt_append(bdt, time);
     }
 
     // Fecha o arquivo
@@ -121,7 +130,7 @@ BDTime *retornar_times(BDTime *bdt, const char *nome) {
 
         if (
             string_comp_insensitive(get_nome(bdt_get(bdt, i)), nome) == 0         // Entrada bate com o nome
-            || string_comp_insensitive(prefixo, nome) == 0                  // Entrada bate com o prefixo
+            || string_comp_insensitive(prefixo, nome) == 0                        // Entrada bate com o prefixo
         ) {
             bdt_append(times, bdt_get(bdt, i));
         }
@@ -134,13 +143,8 @@ BDTime *retornar_times(BDTime *bdt, const char *nome) {
 
 // Função para imprimir vários times em sequência, com cabeçalho
 void imprimir_times(BDTime *bdt) {
-    printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
-    
-    for (int i = 0; bdt_get(bdt, i) != NULL && i < QUANT_TIMES; i++) {
-        Time *time = bdt_get(bdt, i);
-        imprimir_time(time);
-    }
-
+    printf("%-5s %-15s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+    bdt_print(bdt);
     printf("\n");
 }
 

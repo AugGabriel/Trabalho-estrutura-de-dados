@@ -29,12 +29,9 @@ void bdp_free(BDPartida *bdp);
 // Função para carregar os dados do arquivo de texto para a lista de partidas
 BDPartida *carregar_dados_partidas(BDTime *bdt);
 
-// Função auxiliar usada para criar e inicializar lista vazia de partidas
-Partida **_inicializa_lista_partidas();
-
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
-Partida **retornar_partidas(BDPartida *bdp, BDTime *bdt, const int modo);
+BDPartida *retornar_partidas(BDPartida *bdp, BDTime *bdt, const int modo);
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
 void consultar_partidas(BDTime *bdt, BDPartida *bdp);

@@ -68,7 +68,7 @@ Time *criar_time(const int id, char *nome) {
 // Impressão de time
 void imprimir_time(Time *time) {
     printf(
-        "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", time->id, time->nome, time->vitorias,
+        "%-5d %-15s %-5d %-5d %-5d %-5d %-5d %-5d %-5d\n", time->id, time->nome, time->vitorias,
         time->empates, time->derrotas, time->gols_marcados, time->gols_sofridos, 
         saldo_de_gols(time), pontos_ganhos(time)
     );

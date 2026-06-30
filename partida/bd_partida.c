@@ -28,10 +28,13 @@ BDPartida *bdp_create() {
 // Obtenção de elemento de BDPartida. Se index for fora de BDPartida, retorno é NULL
 Partida *bdp_get(BDPartida *bdp, int index) {
     BDPartidaNode *node = bdp->first;
-    int i = 0;
 
-    while (node != NULL && i < index) {
-        i++;
+    for (int i = 0; i < index; i++) {
+        node = node->next;
+
+        if (node == NULL) {
+            return NULL;
+        }
     }
 
     return node->info;
@@ -57,24 +60,29 @@ int bdp_append(BDPartida *bdp, Partida *info) {
     }
     else {
         // Encontra o último nó, e adiciona à frente
-        BDPartidaNode *last = bdp->first, *prev = NULL;
-        while (last != NULL) {
-            prev = last;
+        BDPartidaNode *last = bdp->first;
+
+        while (last->next != NULL) {
             last = last->next;
             index++;
         }
-        prev->next = node;
+        last->next = node;
+        index++;
     }
 
     return index;
 }
 
-// Apagar BDPartida, seus nós e as partidas dentro
+// Apagar BDPartida e seus nós
 void bdp_free(BDPartida *bdp) {
-    for (BDPartidaNode *node = bdp->first; node != NULL; node = node->next) {
-        apagar_partida(node->info);
+    BDPartidaNode *node = bdp->first;
+
+    while (node != NULL) {
+        BDPartidaNode *next = node->next;
         free(node);
+        node = next;
     }
+
     free(bdp);
 }
 
@@ -117,22 +125,10 @@ BDPartida *carregar_dados_partidas(BDTime *bdt) {
     return bdp;
 }
 
-// Função auxiliar usada para criar e inicializar lista vazia de partidas
-Partida **_inicializa_lista_partidas() {
-    Partida **partidas = (Partida**)malloc(MAX_PARTIDAS * sizeof(Partida*));
-
-    for (int i = 0; i < MAX_PARTIDAS; i++) {
-        partidas[i] = NULL;
-    }
-
-    return partidas;
-}
-
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
-Partida **retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
-    Partida **partidas = _inicializa_lista_partidas();
-    int k = 0;
+BDPartida *retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
+    BDPartida *partidas = bdp_create();
 
     for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {         // Aqui considera que a lista de partidas passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
         for (int j = 0; j < QUANT_TIMES && bdt_get(times, j) != NULL; j++) {             // Mesma ideia aqui, considera que passa a ser nulo
@@ -140,7 +136,7 @@ Partida **retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
                 (modo != TIME_VISITANTE && get_time1(bdp_get(bdp, i)) == bdt_get(times, j))    // Time mandante na partida
                 || (modo != TIME_MANDANTE && get_time2(bdp_get(bdp, i)) == bdt_get(times, j))  // Time visitante na partida
             ) {
-                partidas[k++] = bdp_get(bdp, i);
+                bdp_append(partidas, bdp_get(bdp, i));
             }
         }
     }
@@ -202,19 +198,21 @@ void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
     }
 
     // Chama a função de retornar partidas
-    Partida **partidas = retornar_partidas(bdp, times, modo);
+    BDPartida *partidas = retornar_partidas(bdp, times, modo);
     bdt_free(times);
 
-    if (partidas[0] == NULL) {
+    if (bdp_get(partidas, 0) == NULL) {
         printf("Nenhuma partida encontrada\n");
         return;
     }
 
     // Imprime os dados formatados em tabela
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
-    for (int i = 0; i < MAX_PARTIDAS && partidas[i] != NULL; i++) {
-        Partida *partida = partidas[i];
+    for (int i = 0; i < MAX_PARTIDAS && bdp_get(partidas, i) != NULL; i++) {
+        Partida *partida = bdp_get(partidas, i);
         imprimir_partida(partida);
     }
     printf("\n");
+
+    bdp_free(partidas);
 }
