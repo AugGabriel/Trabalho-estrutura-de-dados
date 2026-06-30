@@ -73,10 +73,10 @@ void imprimir_partida(Partida *partida) {
     printf(
         "%d\t%9s\t%d\tx\t%d\t%9s\n",
         partida->id,
-        get_nome(partida->time1),
+        time_nome(partida->time1),
         partida->gols_time1,
         partida->gols_time2,
-        get_nome(partida->time2)
+        time_nome(partida->time2)
     );
 }
 

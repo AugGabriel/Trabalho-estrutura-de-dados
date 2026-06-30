@@ -3,13 +3,13 @@
 void tabela_classificacao_carregar(BDPartidas *bdp) {
     for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {
         Partida *partida = bdp_get(bdp, i);
-
-        Time *time1 = get_time1(partida);
-        Time *time2 = get_time2(partida);
+        
+        Time *time1 = partida_time(partida, 1);
+        Time *time2 = partida_time(partida, 2);
 
         // Gols marcados
-        int gm1 = get_gols_marcados(time1) + get_gols_time1(partida);
-        int gm2 = get_gols_marcados(time2) + get_gols_time2(partida);
+        int gm1 = partida_gols(partida, 1) + get_gols_time1(partida);
+        int gm2 = partida_gols(partida, 2) + get_gols_time2(partida);
         set_gols_time1(partida, gm1);
         set_gols_time2(partida, gm2);
 

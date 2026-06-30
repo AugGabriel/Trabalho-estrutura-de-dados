@@ -133,11 +133,11 @@ void aplicar_alteracoes_partida(BDPartidas *bdp) {
 
         fprintf(
             "%d,%d,%d,%d,%d\n", 
-            get_partida_id(partida),
-            get_time1(partida),
-            get_time2(partida),
-            get_gols_time1(partida),
-            get_gols_time2(partida)
+            partida_id(partida),
+            partida_time(partida, 1),
+            partida_time(partida, 2),
+            partida_gols(partida, 1),
+            partida_gols(partida, 2)
         );
     }
 }
