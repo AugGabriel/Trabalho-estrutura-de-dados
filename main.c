@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "acoes_menu.h"
 #include "auxiliares_globais.h"
-#include "time.h"
+#include "bd_partida.h"
 #include "bd_time.h"
 #include "partida.h"
-#include "bd_partida.h"
 #include "tabela_classificacao.h"
+#include "time.h"
 
 int main() {
 
@@ -43,13 +44,13 @@ int main() {
                 consultar_partidas(bdt, bdp);
                 break;
             case '3':
-                printf("Estamos em obras para poder te atender melhor :)\n\n");
+                atualizar_partida();
                 break;
             case '4':
-                printf("Estamos em obras para poder te atender melhor :)\n\n");
-                break;
+                remover_partida(bdt, bdp);
+            break;
             case '5':
-                printf("Estamos em obras para poder te atender melhor :)\n\n");
+                inserir_partida();
                 break;
             case '6':
                 imprimir_tabela_classificacao(bdt);
