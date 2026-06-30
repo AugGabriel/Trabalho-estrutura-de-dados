@@ -130,6 +130,9 @@ void atualizar_partida(BDTime *bdt, BDPartida *bdp) {
     if (pontos2 != '-') {
         set_gols_time2(bdp_get(bdp, id), (int)pontos2);
     }
+
+    // Mostrando o resultado
+    imprimir_partida(bdp_get(bdp, id));
 }
 
 // Funcionalidade 4, para remoção de partida

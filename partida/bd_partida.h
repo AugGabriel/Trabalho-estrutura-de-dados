@@ -1,6 +1,8 @@
 #ifndef _BD_PARTIDA_H
 #define _BD_PARTIDA_H
 
+#include <stdio.h>
+
 #include "time.h"
 #include "partida.h"
 #include "bd_time.h"
@@ -45,5 +47,8 @@ BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt);
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
 BDPartida *retornar_partidas(BDPartida *bdp, BDTime *bdt, const int modo);
+
+// Função para aplicar as alterações de partida no arquivo bd de partida
+void aplicar_alteracoes_partida(BDPartida *bdp);
 
 #endif

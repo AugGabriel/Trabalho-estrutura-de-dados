@@ -162,6 +162,19 @@ BDPartida *retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
     return partidas;
 }
 
+// Função para aplicar as alterações de partida no arquivo bd de partida
 void aplicar_alteracoes_partida(BDPartida *bdp) {
+    for (int i = 0; i < bdp_size(bdp); i++) {
+        Partida *partida = bdp_get(bdp, i);
+        FILE *bd = fopen(CAMINHO_BD_PARTIDA, 'w');
 
+        fprintf(
+            "%d,%d,%d,%d,%d\n", 
+            get_partida_id(partida),
+            get_time1(partida),
+            get_time2(partida),
+            get_gols_time1(partida),
+            get_gols_time2(partida)
+        );
+    }
 }
