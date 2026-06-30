@@ -13,8 +13,8 @@ int main() {
 
     // Funções de inicialização do sistema
     carregar_dados_times();
-    carregar_dados_partidas();
-    calcular_resultados();
+    BDPartida *bdp = carregar_dados_partidas();
+    calcular_resultados(bdp);
 
     // Variável de entrada do usuário
     char escolha = '0';
@@ -36,7 +36,7 @@ int main() {
                 consultar_times();
                 break;
             case '2':
-                consultar_partidas();
+                consultar_partidas(bdp);
                 break;
             case '3':
                 printf("Estamos em obras para poder te atender melhor :)\n\n");
@@ -62,7 +62,7 @@ int main() {
 
     // Liberação de memória
     apagar_times();
-    apagar_partidas();
+    bdp_free(bdp);
 
     return 0;
 }

@@ -1,8 +1,8 @@
 #include "tabela_classificacao.h"
 
-void calcular_resultados() {
-    for (int i = 0; i < MAX_PARTIDAS && lista_partidas()[i] != NULL; i++) {
-        Partida *partida = lista_partidas()[i];
+void calcular_resultados(BDPartida *bdp) {
+    for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {
+        Partida *partida = bdp_get(bdp, i);
 
         Time *time1 = get_time1(partida);
         Time *time2 = get_time2(partida);

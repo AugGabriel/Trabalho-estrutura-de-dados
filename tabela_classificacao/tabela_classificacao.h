@@ -5,7 +5,7 @@
 #include "partida.h"
 #include "bd_partida.h"
 
-void calcular_resultados();
+void calcular_resultados(BDPartida *bdp);
 
 // Funcionalidade 3, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao();
