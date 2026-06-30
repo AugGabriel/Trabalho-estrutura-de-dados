@@ -12,9 +12,13 @@
 int main() {
 
     // Funções de inicialização do sistema
-    BDTime *bdt = carregar_dados_times();
-    BDPartida *bdp = carregar_dados_partidas(bdt);
-    calcular_resultados(bdp);
+    BDTime *bdt = bdt_create();
+    bdt_carregar_dados(bdt);
+
+    BDPartida *bdp = bdp_create();
+    bdp_carregar_dados(bdp, bdt);
+
+    tabela_classificacao_carregar(bdp);
 
     // Variável de entrada do usuário
     char escolha = '0';

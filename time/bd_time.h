@@ -18,6 +18,9 @@ typedef struct bd_time BDTime;
 // Criação de BDTime
 BDTime *bdt_create();
 
+// Obtenção do tamanho de BDTime
+int bdt_size(BDTime *bdt);
+
 // Adição de elemento ao final de BDTime. Retorna o index aonde o elemento foi adicionado
 int bdt_append(BDTime *bdt, Time *info);
 
@@ -28,7 +31,7 @@ Time *bdt_get(BDTime *bdt, int index);
 void bdt_free(BDTime *bdp);
 
 // Função que traz os dados do arquivo de texto para a lista de times
-BDTime *carregar_dados_times();
+BDTime *bdt_carregar_dados(BDTime *bdt);
 
 // Função usada para montar lista de times a partir do nome ou do prefixo
 BDTime *retornar_times(BDTime *bdt, const char *nome);

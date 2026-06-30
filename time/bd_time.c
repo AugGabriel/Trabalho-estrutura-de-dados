@@ -18,6 +18,15 @@ BDTime *bdt_create() {
     return bdt;
 }
 
+// Obtenção do tamanho de BDTime
+int bdt_size(BDTime *bdt) {
+    int i = 0;
+    while (bdt_get(bdt, i) != NULL) {
+        i++;
+    }
+    return i;
+}
+
 // Obtenção de elemento de BDTime. Se index for fora de BDTime, retorno é NULL
 Time *bdt_get(BDTime *bdt, int index) {
     BDTimeNode *node = bdt->first;
@@ -79,8 +88,7 @@ void bdt_free(BDTime *bdt) {
 }
 
 // Função que traz os dados do arquivo de texto para a lista _times
-BDTime *carregar_dados_times() {
-    BDTime *bdt = bdt_create();
+BDTime *bdt_carregar_dados(BDTime *bdt) {
     FILE *arquivo = fopen("tabelas/times.csv", "r");
     
     // Validação do arquivo

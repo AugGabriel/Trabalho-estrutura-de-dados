@@ -17,6 +17,9 @@ typedef struct bd_partida BDPartida;
 // Criação de BDPartida
 BDPartida *bdp_create();
 
+// Obtenção do tamanho de BDPartida
+int bdp_size(BDPartida *bdp);
+
 // Adição de elemento ao final de BDPartida. Retorna o index aonde o elemento foi adicionado
 int bdp_append(BDPartida *bdp, Partida *info);
 
@@ -27,7 +30,7 @@ Partida *bdp_get(BDPartida *bdp, int index);
 void bdp_free(BDPartida *bdp);
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
-BDPartida *carregar_dados_partidas(BDTime *bdt);
+BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt);
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista

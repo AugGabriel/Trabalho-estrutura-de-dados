@@ -25,6 +25,15 @@ BDPartida *bdp_create() {
     return bdp;
 }
 
+// Obtenção do tamanho de BDPartida
+int bdp_size(BDPartida *bdp) {
+    int i = 0;
+    while (bdp_get(bdp, i) != NULL) {
+        i++;
+    }
+    return i;
+}
+
 // Obtenção de elemento de BDPartida. Se index for fora de BDPartida, retorno é NULL
 Partida *bdp_get(BDPartida *bdp, int index) {
     BDPartidaNode *node = bdp->first;
@@ -87,8 +96,7 @@ void bdp_free(BDPartida *bdp) {
 }
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
-BDPartida *carregar_dados_partidas(BDTime *bdt) {
-    BDPartida *bdp = bdp_create();
+BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt) {
     FILE *arquivo = fopen("tabelas/partidas.csv", "r");
 
     // Validação do arquivo
@@ -130,8 +138,8 @@ BDPartida *carregar_dados_partidas(BDTime *bdt) {
 BDPartida *retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
     BDPartida *partidas = bdp_create();
 
-    for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {         // Aqui considera que a lista de partidas passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
-        for (int j = 0; j < QUANT_TIMES && bdt_get(times, j) != NULL; j++) {             // Mesma ideia aqui, considera que passa a ser nulo
+    for (int i = 0; i < bdp_size(bdp); i++) {
+        for (int j = 0; j < bdp_size(bdp); j++) {
             if (
                 (modo != TIME_VISITANTE && get_time1(bdp_get(bdp, i)) == bdt_get(times, j))    // Time mandante na partida
                 || (modo != TIME_MANDANTE && get_time2(bdp_get(bdp, i)) == bdt_get(times, j))  // Time visitante na partida
