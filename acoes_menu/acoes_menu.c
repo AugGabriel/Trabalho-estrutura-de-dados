@@ -20,23 +20,23 @@ void consultar_times(BDTime *bdt) {
     }
 
     // Retorno da lista de ponteiros para times
-    BDTime *times = retornar_times(bdt, nome);
+    LinkedList *times = bdt_encontrar_times(bdt, nome);
 
     // Validação da lista
-    if (bdt_get(times, 0) == NULL) {
+    if (ll_is_empty(times)) {
         printf("\nNenhum time encontrado\n\n");
         return;
     }
 
     // Impressão da lista
-    imprimir_times(times);
+    ll_print(times);
 
     // Liberação de memória da lista alocada dinamicamente
-    bdt_free(times);
+    free(times);
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
+void consultar_partidas(BDPartida *bdp, BDTime *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
@@ -52,10 +52,10 @@ void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
         return;
     }
 
-    BDTime *times = retornar_times(bdt, nome);
+    LinkedList *times = bdt_encontrar_times(bdt, nome);
 
     // Validação da lista de times
-    if (bdt_get(times, 0) == NULL) { 
+    if (ll_is_empty(times)) { 
         printf("\nTime não encontrado\n\n");
         return;
     }
@@ -89,23 +89,28 @@ void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
     }
 
     // Chama a função de retornar partidas
-    BDPartida *partidas = retornar_partidas(bdp, times, modo);
-    bdt_free(times);
+    LinkedList *partidas = bdp_encontrar_partidas(bdp, times, modo);
+    ll_free(times);
 
-    if (bdp_get(partidas, 0) == NULL) {
+    if (ll_is_empty(partidas)) {
         printf("Nenhuma partida encontrada\n");
         return;
     }
 
     // Imprime os dados formatados em tabela
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
-    for (int i = 0; i < MAX_PARTIDAS && bdp_get(partidas, i) != NULL; i++) {
-        Partida *partida = bdp_get(partidas, i);
-        imprimir_partida(partida);
+    for (int i = 0; i < ll_size(partidas); i++) {
+        Partida *partida = ll_get(partidas, i);
+        printf(
+            "%d\t%9s\t%d\tx\t%d\t%9s\n",
+            partida_id(partida),
+            time_nome(partida_time(partida, 1)),
+            partida_gols(partida, 1),
+            partida_gols(partida, 2),
+            time_nome(partida_time(partida, 2))
+        );
     }
     printf("\n");
-
-    bdp_free(partidas);
 }
 
 // Funcionalidade 3, para atualizar uma partida

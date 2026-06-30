@@ -1,4 +1,4 @@
-#include "bd_partidas.h"
+#include "bd_partida.h"
 #include <stdio.h>
 #include <stdlib.h>
 

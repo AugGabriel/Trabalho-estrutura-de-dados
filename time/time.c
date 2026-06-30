@@ -51,10 +51,6 @@ void time_print(Time *time) {
     );
 }
 
-char *time_nome(Time *t) {
-    return t->nome;
-}
-
 // Propriedade de time, que determina os pontos ganhos
 int time_pontos_ganhos(const Time *time) {
     int VALOR_VITORIA = 3, VALOR_EMPATE = 1;    // Não tenho certeza dos valores
@@ -64,6 +60,11 @@ int time_pontos_ganhos(const Time *time) {
 // Propriedade de time, que determina o saldo de gols
 int time_saldo_de_gols(const Time *time) {
     return time->gols_marcados - time->gols_sofridos;
+}
+
+// Atributos de time
+char *time_nome(Time *t) {
+    return t->nome;
 }
 
 void time_alterar_gols_marcados(Time *t, int valor) {

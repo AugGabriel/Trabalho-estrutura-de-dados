@@ -1,6 +1,6 @@
 #include "partida.h"
 #include "time.h"
-#include "bd_times.h"
+#include "bd_time.h"
 #include <stdlib.h>
 #include <stdio.h>
 

@@ -2,7 +2,7 @@
 #define PARTIDA_H
 
 #include "time.h"
-#include "bd_times.h"
+#include "bd_time.h"
 
 // Estrutura de partida
 typedef struct partida Partida;
@@ -20,6 +20,8 @@ Partida *partida_criar(
             const int gols_time1, const int gols_time2,
             BDTimes *bdt
     );
+
+void imprimir_partida(Partida *partida);
 
 // Função para liberar memória alocada para partida
 void partida_limpar(Partida *partida);

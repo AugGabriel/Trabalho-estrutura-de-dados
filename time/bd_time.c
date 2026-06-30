@@ -1,4 +1,4 @@
-#include "bd_times.h"
+#include "bd_time.h"
 #include "auxiliares_globais.h"
 #include <stdlib.h>
 #include <stdio.h>

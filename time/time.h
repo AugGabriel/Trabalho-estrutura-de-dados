@@ -15,14 +15,11 @@ int time_pontos_ganhos(const Time *time);
 // Propriedade de time, que determina o saldo de gols
 int time_saldo_de_gols(const Time *time);
 
+// Atributos de time
 void time_alterar_gols_marcados(Time *t, int valor);
-
 void time_alterar_gols_sofridos(Time *t, int valor);
-
 void time_alterar_vitorias(Time *t, int valor);
-
 void time_alterar_derrotas(Time *t, int valor);
-
 void time_alterar_empates(Time *t, int valor);
 
 // Função para imprimir time
