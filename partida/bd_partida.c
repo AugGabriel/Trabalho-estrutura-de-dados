@@ -79,7 +79,7 @@ void bdp_free(BDPartida *bdp) {
 }
 
 // Função para carregar os dados do arquivo de texto para a lista de partidas
-BDPartida *carregar_dados_partidas() {
+BDPartida *carregar_dados_partidas(BDTime *bdt) {
     BDPartida *bdp = bdp_create();
     FILE *arquivo = fopen("tabelas/partidas.csv", "r");
 
@@ -107,7 +107,7 @@ BDPartida *carregar_dados_partidas() {
             break;
         }
 
-        bdp_append(bdp, criar_partida(id, id_mandante, id_visitante, gols_mand, gols_visit));
+        bdp_append(bdp, criar_partida(bdt, id, id_mandante, id_visitante, gols_mand, gols_visit));
     }
 
     // Fecha o arquivo
@@ -130,15 +130,15 @@ Partida **_inicializa_lista_partidas() {
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
-Partida **retornar_partidas(BDPartida *bdp, Time **times, const int modo) {
+Partida **retornar_partidas(BDPartida *bdp, BDTime *times, const int modo) {
     Partida **partidas = _inicializa_lista_partidas();
     int k = 0;
 
     for (int i = 0; i < MAX_PARTIDAS && bdp_get(bdp, i) != NULL; i++) {         // Aqui considera que a lista de partidas passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
-        for (int j = 0; j < QUANT_TIMES && times[j] != NULL; j++) {             // Mesma ideia aqui, considera que passa a ser nulo
+        for (int j = 0; j < QUANT_TIMES && bdt_get(times, j) != NULL; j++) {             // Mesma ideia aqui, considera que passa a ser nulo
             if (
-                (modo != TIME_VISITANTE && get_time1(bdp_get(bdp, i)) == times[j])    // Time mandante na partida
-                || (modo != TIME_MANDANTE && get_time2(bdp_get(bdp, i)) == times[j])  // Time visitante na partida
+                (modo != TIME_VISITANTE && get_time1(bdp_get(bdp, i)) == bdt_get(times, j))    // Time mandante na partida
+                || (modo != TIME_MANDANTE && get_time2(bdp_get(bdp, i)) == bdt_get(times, j))  // Time visitante na partida
             ) {
                 partidas[k++] = bdp_get(bdp, i);
             }
@@ -149,7 +149,7 @@ Partida **retornar_partidas(BDPartida *bdp, Time **times, const int modo) {
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDPartida *bdp) {
+void consultar_partidas(BDTime *bdt, BDPartida *bdp) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
@@ -165,10 +165,10 @@ void consultar_partidas(BDPartida *bdp) {
         return;
     }
 
-    Time **times = retornar_times(nome);
+    BDTime *times = retornar_times(bdt, nome);
 
     // Validação da lista de times
-    if (times[0] == NULL) { 
+    if (bdt_get(times, 0) == NULL) { 
         printf("\nTime não encontrado\n\n");
         return;
     }
@@ -203,7 +203,7 @@ void consultar_partidas(BDPartida *bdp) {
 
     // Chama a função de retornar partidas
     Partida **partidas = retornar_partidas(bdp, times, modo);
-    free(times);
+    bdt_free(times);
 
     if (partidas[0] == NULL) {
         printf("Nenhuma partida encontrada\n");

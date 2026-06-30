@@ -9,22 +9,34 @@
 // Macro para definir a quantidade de times
 #define QUANT_TIMES 10
 
-// Função para acessar valores da lista privada
-Time **lista_times();
+// Definição de BDTimeNode
+typedef struct bd_time_node BDTimeNode;
 
-// Função que traz os dados do arquivo de texto para a lista _times
-void carregar_dados_times();
+// Definição de BDTime
+typedef struct bd_time BDTime;
+
+// Criação de BDTime
+BDTime *bdt_create();
+
+// Adição de elemento ao final de BDTime. Retorna o index aonde o elemento foi adicionado
+int bdt_append(BDTime *bdt, Time *info);
+
+// Obtenção de elemento de BDTime. Se index for fora de BDTime, retorno é NULL
+Time *bdt_get(BDTime *bdt, int index);
+
+// Apagar BDTime, seus nós e as partidas dentro
+void bdt_free(BDTime *bdp);
+
+// Função que traz os dados do arquivo de texto para a lista de times
+BDTime *carregar_dados_times();
 
 // Função usada para montar lista de times a partir do nome ou do prefixo
-Time **retornar_times(const char *nome);
+BDTime *retornar_times(BDTime *bdt, const char *nome);
 
 // Função para imprimir vários times em sequência, com cabeçalho
-void imprimir_times(Time **times);
+void imprimir_times(BDTime *bdt);
 
 // Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times();
-
-// Funcionalidade para desalocar todos os times
-void apagar_times();
+void consultar_times(BDTime *bdt);
 
 #endif

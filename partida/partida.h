@@ -23,7 +23,7 @@ void set_gols_time2(Partida *partida, int gols);
 
 // Construtor de partida
 Partida *criar_partida(
-    const int id, 
+    BDTime *bdt, const int id, 
     const int id_time1, const int id_time2, 
     const int gols_time1, const int gols_time2
 );

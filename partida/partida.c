@@ -26,7 +26,7 @@ void set_gols_time2(Partida *partida, int gols) { partida->gols_time2 = gols; }
 
 // Construtor de partida
 Partida *criar_partida(
-            const int id, 
+            BDTime *bdt, const int id, 
             const int id_time1, const int id_time2, 
             const int gols_time1, const int gols_time2
     ) {
@@ -42,8 +42,8 @@ Partida *criar_partida(
 
     // Inicialização
     partida->id = id;
-    partida->time1 = lista_times()[id_time1];
-    partida->time2 = lista_times()[id_time2];
+    partida->time1 = bdt_get(bdt, id_time1);
+    partida->time2 = bdt_get(bdt, id_time2);
     partida->gols_time1 = gols_time1;
     partida->gols_time2 = gols_time2;
 

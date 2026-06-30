@@ -35,7 +35,7 @@ void calcular_resultados(BDPartida *bdp) {
 }
 
 // Funcionalidade 3, para imprimir a tabela de classificação
-void imprimir_tabela_classificacao() {
+void imprimir_tabela_classificacao(BDTime *bdt) {
     printf("\nImprimindo classificação: \n");
-    imprimir_times(lista_times());
+    imprimir_times(bdt);
 }

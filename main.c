@@ -12,8 +12,8 @@
 int main() {
 
     // Funções de inicialização do sistema
-    carregar_dados_times();
-    BDPartida *bdp = carregar_dados_partidas();
+    BDTime *bdt = carregar_dados_times();
+    BDPartida *bdp = carregar_dados_partidas(bdt);
     calcular_resultados(bdp);
 
     // Variável de entrada do usuário
@@ -33,10 +33,10 @@ int main() {
 
         switch(escolha) {
             case '1':
-                consultar_times();
+                consultar_times(bdt);
                 break;
             case '2':
-                consultar_partidas(bdp);
+                consultar_partidas(bdt, bdp);
                 break;
             case '3':
                 printf("Estamos em obras para poder te atender melhor :)\n\n");
@@ -48,7 +48,7 @@ int main() {
                 printf("Estamos em obras para poder te atender melhor :)\n\n");
                 break;
             case '6':
-                imprimir_tabela_classificacao();
+                imprimir_tabela_classificacao(bdt);
                 break;
             case 'Q':
             case 'q':
@@ -61,7 +61,7 @@ int main() {
     }
 
     // Liberação de memória
-    apagar_times();
+    bdt_free(bdt);
     bdp_free(bdp);
 
     return 0;
