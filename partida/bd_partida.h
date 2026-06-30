@@ -6,49 +6,36 @@
 #include "time.h"
 #include "partida.h"
 #include "bd_time.h"
+#include "auxiliares_globais.h"
 
 // Quantidade máxima de partidas permitida
 #define MAX_PARTIDAS 100
 
 // Enumerate para modos de pesquisa de time, na funcionalidade 2
-enum filtro_pesquisa_partida {
+typedef enum filtro_pesquisa_partida {
     TIME_MANDANTE,
     TIME_VISITANTE,
     AMBOS,
 } FILTRO_PESQUISA_PARTIDA;
 
-// Definição de BDPartidaNode
-typedef struct bd_partida_node BDPartidaNode;
+typedef struct bdpartidas BDPartidas;
 
-// Definição de BDPartida
-typedef struct bd_partida BDPartida;
+BDPartidas *bdp_criar();
 
-// Criação de BDPartida
-BDPartida *bdp_create();
+BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt);
 
-// Obtenção do tamanho de BDPartida
-int bdp_size(BDPartida *bdp);
+int bdp_quant_partidas(BDPartidas *bdp);
 
-// Adição de elemento ao final de BDPartida. Retorna o index aonde o elemento foi adicionado
-int bdp_append(BDPartida *bdp, Partida *info);
-
-// Obtenção de elemento de BDPartida. Se index for fora de BDPartida, retorno é NULL
-Partida *bdp_get(BDPartida *bdp, int index);
-
-// Apagar BDPartida, seus nós e as partidas dentro
-void bdp_free(BDPartida *bdp);
-
-// Apagar BDPartida, seus nós e as partidas dentro
-void bdt_end(BDTime *bdt);
-
-// Função para carregar os dados do arquivo de texto para a lista de partidas
-BDPartida *bdp_carregar_dados(BDPartida *bdp, BDTime *bdt);
+Partida *bdp_obter_partida(BDPartidas *bdp, int i);
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
-BDPartida *retornar_partidas(BDPartida *bdp, BDTime *bdt, const int modo);
+LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int modo);
+
+// Função para desalocar a memória de todas as partidas
+void bdp_limpar(BDPartidas *bdp);
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
-void aplicar_alteracoes_partida(BDPartida *bdp);
+void aplicar_alteracoes_partida(BDPartidas *bdp);
 
 #endif

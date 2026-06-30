@@ -1,45 +1,28 @@
-#ifndef _BD_TIME_H
-#define _BD_TIME_H
+#ifndef BDTIMES_H
+#define BDTIMES_H
 
-#include <string.h>
-
+#include "linkedlist.h"
 #include "time.h"
-#include "auxiliares_globais.h"
 
-// Macro para definir a quantidade de times
-#define QUANT_TIMES 10
+typedef struct bdtimes BDTimes;
 
-// Definição de BDTimeNode
-typedef struct bd_time_node BDTimeNode;
+BDTimes *bdt_criar();
 
-// Definição de BDTime
-typedef struct bd_time BDTime;
+BDTimes *bdt_criar_usando_arquivo(char nome_arquivo[]);
 
-// Criação de BDTime
-BDTime *bdt_create();
+int bdt_quant_times(BDTimes *bdt);
 
-// Obtenção do tamanho de BDTime
-int bdt_size(BDTime *bdt);
+Time *bdt_obter_time(BDTimes *bdt, int i);
 
-// Adição de elemento ao final de BDTime. Retorna o index aonde o elemento foi adicionado
-int bdt_append(BDTime *bdt, Time *info);
-
-// Obtenção de elemento de BDTime. Se index for fora de BDTime, retorno é NULL
-Time *bdt_get(BDTime *bdt, int index);
-
-// Apagar BDTime, seus nós e as partidas dentro
-void bdt_free(BDTime *bdp);
-
-// Apagar BDTime, seus nós e os times dentro
-void bdt_end(BDTime *bdt);
-
-// Função que traz os dados do arquivo de texto para a lista de times
-BDTime *bdt_carregar_dados(BDTime *bdt);
+// Função auxiliar para montar prefixo, para consulta de time
+char *_monta_prefixo(char *nome, const int tamanho);
 
 // Função usada para montar lista de times a partir do nome ou do prefixo
-BDTime *retornar_times(BDTime *bdt, const char *nome);
+LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome);
 
-// Função para imprimir vários times em sequência, com cabeçalho
-void imprimir_times(BDTime *bdt);
+void bdt_imprimir_times(BDTimes *bdt);
+
+// Funcionalidade para desalocar todos os times
+void bdt_limpar(BDTimes *bdt);
 
 #endif

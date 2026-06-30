@@ -124,20 +124,3 @@ void bdp_limpar(BDPartidas *bdp) {
     ll_free(bdp->lista_partidas);
     free(bdp);
 }
-
-// Função para aplicar as alterações de partida no arquivo bd de partida
-void aplicar_alteracoes_partida(BDPartidas *bdp) {
-    for (int i = 0; i < bdp_size(bdp); i++) {
-        Partida *partida = bdp_get(bdp, i);
-        FILE *bd = fopen(CAMINHO_BD_PARTIDA, 'w');
-
-        fprintf(
-            "%d,%d,%d,%d,%d\n", 
-            get_partida_id(partida),
-            get_time1(partida),
-            get_time2(partida),
-            get_gols_time1(partida),
-            get_gols_time2(partida)
-        );
-    }
-}

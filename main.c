@@ -1,25 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "linkedlist.h"
 
 #include "acoes_menu.h"
 #include "auxiliares_globais.h"
 #include "bd_partida.h"
 #include "bd_time.h"
+#include "time.h"
+#include "bd_times.h"
 #include "partida.h"
 #include "tabela_classificacao.h"
 #include "time.h"
 
 int main() {
-
+   
     // Funções de inicialização do sistema
-    BDTime *bdt = bdt_create();
-    bdt_carregar_dados(bdt);
-
-    BDPartida *bdp = bdp_create();
-    bdp_carregar_dados(bdp, bdt);
-
-    tabela_classificacao_carregar(bdp);
+    BDTimes *bdt = bdt_criar_usando_arquivo("tabelas/times.csv");
+    BDPartidas *bdp = bdp_criar_usando_arquivo("tabelas/partidas.csv", bdt);
 
     // Variável de entrada do usuário
     char escolha = '0';
@@ -41,7 +39,7 @@ int main() {
                 consultar_times(bdt);
                 break;
             case '2':
-                consultar_partidas(bdt, bdp);
+                consultar_partidas(bdp, bdt);
                 break;
             case '3':
                 atualizar_partida();
@@ -66,8 +64,8 @@ int main() {
     }
 
     // Liberação de memória
-    bdt_end(bdt);
-    bdp_end(bdp);
+    bdt_limpar(bdt);
+    bdp_limpar(bdp);
 
     return 0;
 }
