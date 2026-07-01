@@ -38,7 +38,7 @@ int main() {
                 consultar_partidas(bdp, bdt);
                 break;
             case '3':
-                atualizar_partida();
+                atualizar_partida(bdt, bdp);
                 break;
             case '4':
                 remover_partida(bdt, bdp);
@@ -58,7 +58,10 @@ int main() {
                 break;
         }
     }
-    
+
+    // Aplicação das alterações no arquivo de partidas
+    bdp_salvar_em_arquivo(bdp);
+
     // Liberação de memória
     bdt_encerrar(bdt);
     bdp_encerrar(bdp);

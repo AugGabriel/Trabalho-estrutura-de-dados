@@ -63,6 +63,9 @@ int time_saldo_de_gols(const Time *time) {
 }
 
 // Getters
+int time_id(Time *t) {
+    return t->id;
+}
 char *time_nome(Time *t) {
     return t->nome;
 }

@@ -36,28 +36,20 @@ void consultar_times(BDTimes *bdt) {
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
+int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
-    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
-    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
-
-    // Validação da entrada
-    if (nome[0] == '\0') {
-        printf("Você não digitou nada...\n");
-        return;
-    }
 
     LinkedList *times = bdt_encontrar_times(bdt, nome);
 
     // Validação da lista de times
     if (ll_is_empty(times)) { 
         printf("\nTime não encontrado\n\n");
-        return;
+        return 0;
     }
 
     // Nova entrada do usuário
@@ -82,10 +74,10 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
             modo = AMBOS;
             break;
         case 4: 
-            return;
+            return 0;
         default:
             printf("Opção inválida\n");
-            return;
+            return 0;
     }
 
     // Chama a função de retornar partidas
@@ -93,7 +85,7 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     
     if (ll_is_empty(partidas)) {
         printf("Nenhuma partida encontrada\n");
-        return;
+        return 0;
     }
 
     // Imprime os dados formatados em tabela
@@ -107,40 +99,54 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     int apagar_informacoes = 0;
     ll_free(times, apagar_informacoes);
     ll_free(partidas, apagar_informacoes);
+
+    // valido
+    return 1;
 }
 
 // Funcionalidade 3, para atualizar uma partida
 void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
-    consultar_partidas(bdp, bdt);
+
+    // int valido = consultar_partidas(bdp, bdt);
+    // if (!valido) {
+    //     return;
+    // }
 
     // Entrada do id da partida a ser alterada
     int id;
     printf("\nDigite o ID do registro a ser atualizado: ");
     scanf("%i", &id);
 
+    // Mostrando a partida selecionada
+    printf("\nPartida selecionada para alteração: \n");
+    partida_imprimir(bdp_obter_por_id(bdp, id));
+
     // Entrada da quantidade de pontos em char, para aceitar o caractere '-'
     char pontos1, pontos2;
-    printf("Digite o novo valor para os campos Placar1 e Placar2\npara manter o valor atual de um campo, digite '-'\n");
-    scanf("%c", &pontos1);
-    scanf("%c", &pontos2);
+    printf("\nDigite o novo valor para os campos Placar1 e Placar2\npara manter o valor atual de um campo, digite '-'\n");
+    scanf(" %c", &pontos1);
+    scanf(" %c", &pontos2);
 
     // Tratamento das entradas possíveis
     if (pontos1 != '-') {
-        partida_definir_gols(bdp_obter_partida(bdp, id), 1, (int)pontos1);
+        partida_definir_gols(bdp_obter_por_id(bdp, id), 1, pontos1 - '0');
     }
     if (pontos2 != '-') {
-        partida_definir_gols(bdp_obter_partida(bdp, id), 2, (int)pontos2);
+        partida_definir_gols(bdp_obter_por_id(bdp, id), 2, pontos2 - '0');
     }
 
     // Mostrando o resultado
-    partida_imprimir(bdp_obter_partida(bdp, id));
+    partida_imprimir(bdp_obter_por_id(bdp, id));
 }
 
 // Funcionalidade 4, para remoção de partida
 void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
-    consultar_partidas(bdp, bdt);
+    int valido = consultar_partidas(bdp, bdt);
+    if (!valido) {
+        return;
+    }
 
     // Entrada do id da partida a ser alterada
     int id;
