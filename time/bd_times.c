@@ -33,7 +33,6 @@ BDTimes *bdt_criar_usando_arquivo(char nome_arquivo[]) {
     for (int i = 0; i < QUANT_TIMES; i++) {
         int id;
         char *nome = (char*)malloc(15 * sizeof(char));
-        inicializa_string(nome, 15);
 
         fscanf(arquivo, " %d,%s", &id, nome);
 

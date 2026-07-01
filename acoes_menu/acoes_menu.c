@@ -7,17 +7,9 @@ void consultar_times(BDTimes *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
-    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
-    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
-    
-    // Validação da entrada
-    if (nome[0] == '\0') {
-        printf("Você não digitou nada...\n");
-        return;
-    }
 
     // Retorno da lista de ponteiros para times
     LinkedList *times = bdt_encontrar_times(bdt, nome);
@@ -108,10 +100,10 @@ int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
 
-    // int valido = consultar_partidas(bdp, bdt);
-    // if (!valido) {
-    //     return;
-    // }
+    int valido = consultar_partidas(bdp, bdt);
+    if (!valido) {
+        return;
+    }
 
     // Entrada do id da partida a ser alterada
     int id;
@@ -155,17 +147,18 @@ void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
 
     // Entrada da confirmação
     char confirm;
-    printf("\nTem certeza que deseja excluir o registro abaixo? (s/N)");
-    partida_imprimir(bdp_obter_partida(bdp, id));
-    scanf("%c", &confirm);
+    printf("\nTem certeza que deseja excluir o registro abaixo? (S/N)\n");
+    partida_imprimir(bdp_obter_por_id(bdp, id));
+    scanf(" %c", &confirm);
 
     // Cancelou a exclusão
     if (confirm != 's' && confirm == 'S') {
+        printf("\nOperação cancelada\n\n");
         return;
     }
     
-    // TODO
-    //bdp_remove(bdp, id);
+    bdp_remover_por_id(bdp, id);
+    printf("\nRegistro excluído!\n\n");
 }
 
 // Funcionalidade 5, para inserção de partida

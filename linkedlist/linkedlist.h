@@ -42,10 +42,11 @@ void ll_insert(LinkedList *l, void *data, NodeType type);
 /**
  * Remove the first occurrence of a specific element from the linked list.
  *
- * @param l   - A pointer to the linked list.
- * @param cpf - The CPF of the element to be removed.
+ * @param l    - A pointer to the linked list.
+ * @param info - A pointer to the element to be removed.
+ * @return     - The position of the removed element in the list.
  */
-//void ll_remove(LinkedList *l, const char *cpf);
+int ll_remove(LinkedList *l, void *info);
 
 /**
  * Remove all elements that match a specific value from the linked list.

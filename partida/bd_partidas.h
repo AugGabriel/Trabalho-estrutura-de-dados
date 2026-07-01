@@ -34,6 +34,9 @@ void *bdp_obter_por_id(BDPartidas *bdp, int id);
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista
 LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int modo);
 
+// Remove o elemento da lista a partir do id
+void bdp_remover_por_id(BDPartidas *bdp, int id);
+
 // Função para desalocar a memória de todas as partidas
 void bdp_encerrar(BDPartidas *bdp);
 
