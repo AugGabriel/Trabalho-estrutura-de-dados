@@ -16,8 +16,11 @@ BDPartidas *bdp_criar()
     return bdp; 
 }
 
-// Função interna para cálculo dos resultados a partir dos dados carregados
-void _calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
+// Função para cálculo dos resultados a partir dos dados das partidas
+void bdp_calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
+    // Primeiro, zera os times, para que os valores sejam recalculados
+    bdt_zerar_times(bdt);
+    
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida = bdp_obter_por_index(bdp, i);
 
@@ -76,7 +79,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
             &gols_mand, 
             &gols_visit
         ) == EOF) {
-            _calcular_resultados(bdp, bdt);
+            bdp_calcular_resultados(bdp, bdt);
             return bdp;
         }
 

@@ -21,4 +21,4 @@ void remover_partida(BDTimes *bdt, BDPartidas *bdp);
 void inserir_partida();
 
 // Funcionalidade 6, para imprimir a tabela de classificação
-void imprimir_tabela_classificacao(BDTimes *bdt);
+void imprimir_tabela_classificacao(BDTimes *bdt, BDPartidas *bdp);

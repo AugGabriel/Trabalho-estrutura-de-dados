@@ -25,6 +25,8 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome);
 
 void bdt_imprimir_times(BDTimes *bdt);
 
+void bdt_zerar_times(BDTimes *bdt);
+
 // Funcionalidade para desalocar todos os times
 void bdt_encerrar(BDTimes *bdt);
 

@@ -24,6 +24,8 @@ BDPartidas *bdp_criar();
 
 BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt);
 
+void bdp_calcular_resultados(BDPartidas *bdp, BDTimes *bdt);
+
 int bdp_quant_partidas(BDPartidas *bdp);
 
 Partida *bdp_obter_por_index(BDPartidas *bdp, int i);

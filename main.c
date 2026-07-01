@@ -46,7 +46,7 @@ int main() {
                 inserir_partida();
                 break;
             case '6':
-                imprimir_tabela_classificacao(bdt);
+                imprimir_tabela_classificacao(bdt, bdp);
                 break;
             case 'Q':
             case 'q':
