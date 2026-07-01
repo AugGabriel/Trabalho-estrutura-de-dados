@@ -1,15 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "linkedlist.h"
 #include "acoes_menu.h"
 #include "auxiliares_globais.h"
-#include "bd_partida.h"
-#include "bd_time.h"
+#include "bd_partidas.h"
+#include "bd_times.h"
 #include "time.h"
 #include "partida.h"
-#include "tabela_classificacao.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main() {
    

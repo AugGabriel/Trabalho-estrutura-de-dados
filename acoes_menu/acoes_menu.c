@@ -101,14 +101,7 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
     for (int i = 0; i < ll_size(partidas); i++) {
         Partida *partida = ll_get(partidas, i);
-        printf(
-            "%d\t%9s\t%d\tx\t%d\t%9s\n",
-            partida_id(partida),
-            time_nome(partida_time(partida, 1)),
-            partida_gols(partida, 1),
-            partida_gols(partida, 2),
-            time_nome(partida_time(partida, 2))
-        );
+        partida_imprimir(partida);
     }
     printf("\n");
 }
@@ -116,52 +109,54 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 // Funcionalidade 3, para atualizar uma partida
 void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
-    consultar_partidas(bdt, bdp);
+    consultar_partidas(bdp, bdt);
 
     // Entrada do id da partida a ser alterada
     int id;
     printf("\nDigite o ID do registro a ser atualizado: ");
-    scanf("%d", id);
+    scanf("%i", &id);
 
     // Entrada da quantidade de pontos em char, para aceitar o caractere '-'
     char pontos1, pontos2;
     printf("Digite o novo valor para os campos Placar1 e Placar2\npara manter o valor atual de um campo, digite '-'\n");
-    scanf("%c %c", pontos1, pontos2);
+    scanf("%c", &pontos1);
+    scanf("%c", &pontos2);
 
     // Tratamento das entradas possíveis
     if (pontos1 != '-') {
-        set_gols_time1(bdp_get(bdp, id), (int)pontos1);
+        partida_definir_gols(bdp_obter_partida(bdp, id), 1, (int)pontos1);
     }
     if (pontos2 != '-') {
-        set_gols_time2(bdp_get(bdp, id), (int)pontos2);
+        partida_definir_gols(bdp_obter_partida(bdp, id), 2, (int)pontos2);
     }
 
     // Mostrando o resultado
-    imprimir_partida(bdp_get(bdp, id));
+    partida_imprimir(bdp_obter_partida(bdp, id));
 }
 
 // Funcionalidade 4, para remoção de partida
 void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
-    consultar_partidas(bdt, bdp);
+    consultar_partidas(bdp, bdt);
 
     // Entrada do id da partida a ser alterada
     int id;
     printf("\nDigite o ID do registro a ser atualizado: ");
-    scanf("%d", id);
+    scanf("%i", &id);
 
     // Entrada da confirmação
     char confirm;
     printf("\nTem certeza que deseja excluir o registro abaixo? (s/N)");
-    imprimir_partida(bdp_get(bdp, id));
-    scanf(" %c", confirm);
+    partida_imprimir(bdp_obter_partida(bdp, id));
+    scanf("%c", &confirm);
 
     // Cancelou a exclusão
     if (confirm != 's' && confirm == 'S') {
         return;
     }
-
-    bdp_remove(bdp, id);
+    
+    // TODO
+    //bdp_remove(bdp, id);
 }
 
 // Funcionalidade 5, para inserção de partida
@@ -170,5 +165,5 @@ void inserir_partida() {}
 // Funcionalidade 6, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao(BDTimes *bdt) {
     printf("\nImprimindo classificação: \n");
-    imprimir_times(bdt);
+    bdt_imprimir_times(bdt);
 }

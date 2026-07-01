@@ -7,8 +7,6 @@ typedef struct time Time;
 // Construtor de time
 Time *time_criar(const int id, char *nome);
 
-char *time_nome(Time *t);
-
 // Propriedade de time, que determina os pontos ganhos
 int time_pontos_ganhos(const Time *time);
 
@@ -16,11 +14,17 @@ int time_pontos_ganhos(const Time *time);
 int time_saldo_de_gols(const Time *time);
 
 // Atributos de time
-void time_alterar_gols_marcados(Time *t, int valor);
-void time_alterar_gols_sofridos(Time *t, int valor);
-void time_alterar_vitorias(Time *t, int valor);
-void time_alterar_derrotas(Time *t, int valor);
-void time_alterar_empates(Time *t, int valor);
+char *time_nome(Time *t);
+int time_gols_marcados(Time *t);
+int time_gols_sofridos(Time *t);
+int time_vitorias(Time *t);
+int time_derrotas(Time *t);
+int time_empates(Time *t);
+void time_definir_gols_marcados(Time *t, int valor);
+void time_definir_gols_sofridos(Time *t, int valor);
+void time_definir_vitorias(Time *t, int valor);
+void time_definir_derrotas(Time *t, int valor);
+void time_definir_empates(Time *t, int valor);
 
 // Função para imprimir time
 void time_print(Time *time);

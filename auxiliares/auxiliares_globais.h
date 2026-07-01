@@ -5,8 +5,8 @@
 #include <stdio.h>
 
 // Caminho dos arquivos de bd
-#define CAMINHO_BD_PARTIDA "tabelas/bd_partida.csv"
-#define CAMINHO_BD_TIME "tabelas/bd_time.csv"
+#define CAMINHO_BD_PARTIDA "tabelas/partidas.csv"
+#define CAMINHO_BD_TIME "tabelas/times.csv"
 
 // Define o tamanho máximo da entrada do usuário
 #define TAMANHO_MAX_ENTRADA 15

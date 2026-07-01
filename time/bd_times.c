@@ -1,4 +1,4 @@
-#include "bd_time.h"
+#include "bd_times.h"
 #include "auxiliares_globais.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -91,7 +91,7 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome) {
 
 void bdt_imprimir_times(BDTimes *bdt) {
     // Imprime o cabeçalho
-    printf("%-5s %-15s %-5s %-5s %-5s %-5s %-5s %-5s %-5s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+    printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
     // Imprime a lista de times
     ll_print(bdt->lista_times);
 }

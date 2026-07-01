@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 
-#include "bd_time.h"
-#include "bd_partida.h"
+#include "bd_times.h"
+#include "bd_partidas.h"
 
 // Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
 void consultar_times(BDTimes *bdt);

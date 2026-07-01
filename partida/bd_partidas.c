@@ -1,4 +1,4 @@
-#include "bd_partida.h"
+#include "bd_partidas.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,24 +28,24 @@ void _calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
         int gols_time2 = partida_gols(partida, 2);
 
         // Gols marcados
-        time_alterar_gols_marcados(time1, gols_time1);
-        time_alterar_gols_marcados(time2, gols_time2);
+        time_definir_gols_marcados(time1, time_gols_marcados(time1) + gols_time1);
+        time_definir_gols_marcados(time2, time_gols_marcados(time2) + gols_time2);
         
         // Gols sofridos
-        time_alterar_gols_sofridos(time1, gols_time2);
-        time_alterar_gols_sofridos(time2, gols_time1);
+        time_definir_gols_sofridos(time1, time_gols_sofridos(time1) + gols_time2);
+        time_definir_gols_sofridos(time2, time_gols_sofridos(time2) + gols_time1);
         
         if (gols_time1 == gols_time2) {       // Empate
-            time_alterar_empates(time1, 1);
-            time_alterar_empates(time2, 1);
+            time_definir_empates(time1, time_empates(time1) + 1);
+            time_definir_empates(time2, time_empates(time2) + 1);
         }
         else if (gols_time1 > gols_time2) {   // Vitória do time 1
-            time_alterar_vitorias(time1, 1);
-            time_alterar_derrotas(time2, 1);
+            time_definir_vitorias(time1, time_vitorias(time1) + 1);
+            time_definir_derrotas(time2, time_derrotas(time2) + 1);
         }
         else {                                // Vitória do time 2
-            time_alterar_vitorias(time2, 1);
-            time_alterar_derrotas(time1, 1);                                
+            time_definir_vitorias(time2, time_vitorias(time2) + 1);
+            time_definir_derrotas(time1, time_derrotas(time1) + 1);                              
         }
     }
 }
@@ -127,17 +127,10 @@ void bdp_limpar(BDPartidas *bdp) {
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
 void aplicar_alteracoes_partida(BDPartidas *bdp) {
-    for (int i = 0; i < bdp_size(bdp); i++) {
-        Partida *partida = bdp_get(bdp, i);
-        FILE *bd = fopen(CAMINHO_BD_PARTIDA, 'w');
+    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
+        Partida *partida = bdp_obter_partida(bdp, i);
+        FILE *bd = fopen(CAMINHO_BD_PARTIDA, "w");
 
-        fprintf(
-            "%d,%d,%d,%d,%d\n", 
-            partida_id(partida),
-            partida_time(partida, 1),
-            partida_time(partida, 2),
-            partida_gols(partida, 1),
-            partida_gols(partida, 2)
-        );
+        partida_imprimir(partida);
     }
 }

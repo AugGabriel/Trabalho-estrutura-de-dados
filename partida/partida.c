@@ -1,6 +1,6 @@
 #include "partida.h"
 #include "time.h"
-#include "bd_time.h"
+#include "bd_times.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,32 +14,6 @@ struct partida {
     int gols_time1;
     int gols_time2;
 };
-
-int partida_id(Partida *p) {
-    return p->id;
-}
-
-Time *partida_time(Partida *p, int numero_time) {
-    if (numero_time == 1)
-        return p->time1;
-    if (numero_time == 2)
-        return p->time2;
-    else {
-        perror("Opção inválida na obtenção de time da partida.");
-        exit(EXIT_FAILURE);
-    }
-}
-
-int partida_gols(Partida *p, int numero_time) {
-    if (numero_time == 1)
-        return p->gols_time1;
-    if (numero_time == 2)
-        return p->gols_time2;
-    else {
-        perror("Opção de time inválida na obtenção de gols da partida.");
-        exit(EXIT_FAILURE);
-    }
-}
 
 // Construtor de partida
 Partida *partida_criar(
@@ -68,8 +42,46 @@ Partida *partida_criar(
     return partida;
 }
 
+
+// Getters
+int partida_id(Partida *p) {
+    return p->id;
+}
+Time *partida_time(Partida *p, int numero_time) {
+    if (numero_time == 1)
+        return p->time1;
+    if (numero_time == 2)
+        return p->time2;
+    else {
+        perror("Opção inválida na obtenção de time da partida.");
+        exit(EXIT_FAILURE);
+    }
+}
+int partida_gols(Partida *p, int numero_time) {
+    if (numero_time == 1)
+        return p->gols_time1;
+    if (numero_time == 2)
+        return p->gols_time2;
+    else {
+        perror("Opção de time inválida na obtenção de gols da partida.");
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Setters
+void partida_definir_gols(Partida *p, int numero_time, int gols) {
+    if (numero_time == 1)
+        p->gols_time1 = gols;
+    if (numero_time == 2)
+        p->gols_time2 = gols;
+    else {
+        perror("Opção de time inválida na definição de gols da partida.");
+        exit(EXIT_FAILURE);
+    }
+}
+
 // Impressão de partida
-void imprimir_partida(Partida *partida) {
+void partida_imprimir(Partida *partida) {
     printf(
         "%d\t%9s\t%d\tx\t%d\t%9s\n",
         partida->id,

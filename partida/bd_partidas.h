@@ -5,7 +5,7 @@
 
 #include "time.h"
 #include "partida.h"
-#include "bd_time.h"
+#include "bd_times.h"
 #include "auxiliares_globais.h"
 
 // Quantidade máxima de partidas permitida

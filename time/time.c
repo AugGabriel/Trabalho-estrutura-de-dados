@@ -38,7 +38,7 @@ Time *time_criar(const int id, char *nome) {
 
 void time_print(Time *time) {
     printf(
-        "%-5d %-15s %-5d %-5d %-5d %-5d %-5d %-5d %-5d\n", 
+        "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", 
         time->id, 
         time->nome, 
         time->vitorias,
@@ -62,29 +62,41 @@ int time_saldo_de_gols(const Time *time) {
     return time->gols_marcados - time->gols_sofridos;
 }
 
-// Atributos de time
+// Getters
 char *time_nome(Time *t) {
     return t->nome;
 }
-
-void time_alterar_gols_marcados(Time *t, int valor) {
-    t->gols_marcados += valor;
+int time_gols_marcados(Time *t) {
+    return t->gols_marcados;
+}
+int time_gols_sofridos(Time *t) {
+    return t->gols_sofridos;  
+}
+int time_vitorias(Time *t) {
+    return t->vitorias;
+}
+int time_derrotas(Time *t) {
+    return t->derrotas;
+}
+int time_empates(Time *t) {
+    return t->empates;
 }
 
-void time_alterar_gols_sofridos(Time *t, int valor) {
-    t->gols_sofridos += valor;  
+// Setters
+void time_definir_gols_marcados(Time *t, int valor) {
+    t->gols_marcados = valor;
 }
-
-void time_alterar_vitorias(Time *t, int valor) {
-    t->vitorias += valor;
+void time_definir_gols_sofridos(Time *t, int valor) {
+    t->gols_sofridos = valor;  
 }
-
-void time_alterar_derrotas(Time *t, int valor) {
-    t->derrotas += valor;
+void time_definir_vitorias(Time *t, int valor) {
+    t->vitorias = valor;
 }
-
-void time_alterar_empates(Time *t, int valor) {
-    t->empates += valor;
+void time_definir_derrotas(Time *t, int valor) {
+    t->derrotas = valor;
+}
+void time_definir_empates(Time *t, int valor) {
+    t->empates = valor;
 }
 
 // Função para liberar memória alocada para time

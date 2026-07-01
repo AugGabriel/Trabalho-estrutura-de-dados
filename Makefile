@@ -8,7 +8,7 @@ CFLAGS = -Wall
 DEPFLAGS = -MMD -MP
 
 # Diretórios de include
-INCDIRS = acoes_menu auxiliares linkedlist partida tabela_classificacao tabelas time
+INCDIRS = acoes_menu auxiliares linkedlist partida time
 
 # Adiciona automaticamente -I antes de cada diretório
 INC_FLAGS = $(addprefix -I,$(INCDIRS))
