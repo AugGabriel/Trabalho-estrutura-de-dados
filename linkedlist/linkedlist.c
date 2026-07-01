@@ -53,6 +53,36 @@ void ll_insert(LinkedList *l, void *info, NodeType type)
     l->count++;
 }
 
+// Remove the first occurrence of a specific element from the linked list.
+int ll_remove(LinkedList *l, void *info) {
+    ListNode *node = l->first, *prev = NULL;
+
+    if (node == NULL) {
+        return -1;
+    }
+
+    int index = 0;
+    while (node != NULL) {
+        if (node->info == info) {
+            if (index == 0) {
+                l->first = node->next;
+            }
+            else {
+                prev->next = node->next;
+            }
+            free(node);
+            l->count--;
+            return index;
+        }
+
+        index++;
+        prev = node;
+        node = node->next;
+    }
+
+    return -1;
+}
+
 // Insert an element at the end of the linked list. void ll_append(LinkedList *l, void *info, NodeType type) { ListNode *node = (ListNode *)malloc(sizeof(ListNode)); node->type = type; node->info = info; node->next = NULL; ListNode *last = l->first; while (last->next != NULL) { last = last->next; } last->next = node; l->count++; }
 
 void *ll_get(LinkedList *l, int pos) {

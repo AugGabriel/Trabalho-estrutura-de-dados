@@ -126,6 +126,11 @@ LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int
     return partidas;
 }
 
+// Remove o elemento da lista a partir do id
+void bdp_remover_por_id(BDPartidas *bdp, int id) {
+    ll_remove(bdp->lista_partidas, bdp_obter_por_id(bdp, id));
+}
+
 // Função para desalocar a memória de todas as partidas
 void bdp_limpar(BDPartidas *bdp) {
     ll_free(bdp->lista_partidas);
