@@ -10,7 +10,6 @@
 #include <string.h>
 
 int main() {
-   
     // Funções de inicialização do sistema
     BDTimes *bdt = bdt_criar_usando_arquivo(CAMINHO_BD_TIME);
     BDPartidas *bdp = bdp_criar_usando_arquivo(CAMINHO_BD_PARTIDA, bdt);
@@ -60,7 +59,7 @@ int main() {
     }
 
     // Aplicação das alterações no arquivo de partidas
-    bdp_salvar_em_arquivo(bdp);
+    bdp_salvar_em_arquivo(bdp, CAMINHO_BD_PARTIDA);
 
     // Liberação de memória
     bdt_encerrar(bdt);

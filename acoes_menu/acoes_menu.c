@@ -108,10 +108,13 @@ void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     int id;
     printf("\nDigite o ID do registro a ser atualizado: ");
     scanf("%i", &id);
-
+    
+    // Obtenção da Partida selecionada
+    Partida *partida = bdp_obter_por_id(bdp, id);
+    
     // Mostrando a partida selecionada
     printf("\nPartida selecionada para alteração: \n");
-    partida_imprimir(bdp_obter_por_id(bdp, id));
+    partida_imprimir(partida);
 
     // Entrada da quantidade de pontos em char, para aceitar o caractere '-'
     char pontos1, pontos2;
@@ -121,14 +124,14 @@ void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
 
     // Tratamento das entradas possíveis
     if (pontos1 != '-') {
-        partida_definir_gols(bdp_obter_por_id(bdp, id), 1, pontos1 - '0');
+        partida_definir_gols(partida, /* Time: */ 1, pontos1 - '0');
     }
     if (pontos2 != '-') {
-        partida_definir_gols(bdp_obter_por_id(bdp, id), 2, pontos2 - '0');
+        partida_definir_gols(partida, /* Time: */ 2, pontos2 - '0');
     }
 
     // Mostrando o resultado
-    partida_imprimir(bdp_obter_por_id(bdp, id));
+    partida_imprimir(partida);
 }
 
 // Funcionalidade 4, para remoção de partida
