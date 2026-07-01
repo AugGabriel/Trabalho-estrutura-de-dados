@@ -120,13 +120,14 @@ LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int
 }
 
 // Função para desalocar a memória de todas as partidas
-void bdp_limpar(BDPartidas *bdp) {
-    ll_free(bdp->lista_partidas);
+void bdp_encerrar(BDPartidas *bdp) {
+    int apagar_informacoes = 1;
+    ll_free(bdp->lista_partidas, apagar_informacoes);
     free(bdp);
 }
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
-void aplicar_alteracoes_partida(BDPartidas *bdp) {
+void bdp_salvar_em_arquivo(BDPartidas *bdp) {
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida = bdp_obter_partida(bdp, i);
         FILE *bd = fopen(CAMINHO_BD_PARTIDA, "w");

@@ -108,6 +108,6 @@ void ll_print(LinkedList *l);
  *
  * @param l - A pointer to the linked list to be freed.
  */
-void ll_free(LinkedList *l);
+void ll_free(LinkedList *l, int apagar_informacoes);
 
 #endif

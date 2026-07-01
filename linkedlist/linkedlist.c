@@ -76,16 +76,17 @@ void ll_print(LinkedList *l) {
 }
 
 // Function to free the memory used by the linked list.
-void ll_free(LinkedList *l)
-{
+void ll_free(LinkedList *l, int apagar_informacoes) {
     ListNode *node = l->first;
     while (node != NULL) {
         ListNode *next_node = node->next; // Store a reference to the next node.
         // Free the memory allocated for the node value structure.
-        if (node->type == TYPE_TIME)
-            time_limpar(node->info);
-        else if (node->type == TYPE_PARTIDA)
-            partida_limpar(node->info);
+        if (apagar_informacoes) {
+            if (node->type == TYPE_TIME)
+                time_limpar(node->info);
+            else if (node->type == TYPE_PARTIDA)
+                partida_limpar(node->info);
+        }
         free(node);               // Free the memory allocated for the current node.
         node = next_node;         // Move to the next node.
     }

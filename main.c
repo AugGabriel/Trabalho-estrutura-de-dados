@@ -52,16 +52,16 @@ int main() {
             case 'Q':
             case 'q':
                 printf("Obrigado pela preferência, volte sempre!\n");
-                return 0;
+                break;
             default:
                 printf("Entrada inválida\n\n");
                 break;
         }
     }
-
+    
     // Liberação de memória
-    bdt_limpar(bdt);
-    bdp_limpar(bdp);
+    bdt_encerrar(bdt);
+    bdp_encerrar(bdp);
 
     return 0;
 }

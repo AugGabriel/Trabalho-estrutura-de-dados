@@ -33,9 +33,9 @@ Partida *bdp_obter_partida(BDPartidas *bdp, int i);
 LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int modo);
 
 // Função para desalocar a memória de todas as partidas
-void bdp_limpar(BDPartidas *bdp);
+void bdp_encerrar(BDPartidas *bdp);
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
-void aplicar_alteracoes_partida(BDPartidas *bdp);
+void bdp_salvar_em_arquivo(BDPartidas *bdp);
 
 #endif

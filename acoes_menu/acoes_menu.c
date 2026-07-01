@@ -31,9 +31,8 @@ void consultar_times(BDTimes *bdt) {
     // Impressão da lista
     ll_print(times);
 
-    // TODO: criar free que não exclui o info dos nós ou pensar em outra coisa
-    // Liberação de memória da lista alocada dinamicamente
-    free(times);
+    int apagar_informacoes = 0;
+    ll_free(times, apagar_informacoes);
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
@@ -105,9 +104,9 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     }
     printf("\n");
     
-    // TODO: criar free que não exclui o info dos nós ou pensar em outra coisa
-    free(times);
-    free(partidas);
+    int apagar_informacoes = 0;
+    ll_free(times, apagar_informacoes);
+    ll_free(partidas, apagar_informacoes);
 }
 
 // Funcionalidade 3, para atualizar uma partida

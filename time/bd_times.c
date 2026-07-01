@@ -77,7 +77,7 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome) {
         char *prefixo = _monta_prefixo(time_atual_nome, strlen(nome));
         
         if (
-            string_comp_insensitive(time_nome(bdt_obter_time(bdt, i)), nome) == 0         // Entrada bate com o nome
+            string_comp_insensitive(time_nome(bdt_obter_time(bdt, i)), nome) == 0 // Entrada bate com o nome
             || string_comp_insensitive(prefixo, nome) == 0                        // Entrada bate com o prefixo
         ) {
             ll_insert(resultados, time_atual, TYPE_TIME);
@@ -97,7 +97,8 @@ void bdt_imprimir_times(BDTimes *bdt) {
 }
 
 // Funcionalidade para desalocar todos os times
-void bdt_limpar(BDTimes *bdt) {
-    ll_free(bdt->lista_times);
+void bdt_encerrar(BDTimes *bdt) {
+    int apagar_informacoes = 1;
+    ll_free(bdt->lista_times, apagar_informacoes);
     free(bdt);
 }
