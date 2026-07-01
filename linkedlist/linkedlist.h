@@ -26,7 +26,7 @@ LinkedList *ll_create();
  *
  * @param l    - A pointer to the linked list.
  * @param data - A pointer to the data to be inserted.
- * @param type - The type of the data node (Student or Professor).
+ * @param type - The type of the data node (Partida or Time).
  */
 void ll_insert(LinkedList *l, void *data, NodeType type);
 
@@ -35,7 +35,7 @@ void ll_insert(LinkedList *l, void *data, NodeType type);
  *
  * @param l    - A pointer to the linked list.
  * @param data - A pointer to the data to be appended.
- * @param type - The type of the data node (Student or Professor).
+ * @param type - The type of the data node (Partida or Time).
  */
 //void ll_append(LinkedList *l, void *data, NodeType type);
 
@@ -95,6 +95,15 @@ int ll_is_empty(LinkedList *l);
  * @return    - A pointer to the data at the specified position.
  */
 void *ll_get(LinkedList *l, int pos);
+
+/**
+ * Get the data with the specific id in the linked list.
+ *
+ * @param l   - A pointer to the linked list.
+ * @param id  - The index of the element to retrieve.
+ * @return    - A pointer to the data at the specified position.
+ */
+void *ll_get_by_id(LinkedList *l, int id);
 
 /**
  * Display all elements of the linked list.

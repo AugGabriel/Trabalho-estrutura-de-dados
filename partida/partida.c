@@ -70,10 +70,12 @@ int partida_gols(Partida *p, int numero_time) {
 
 // Setters
 void partida_definir_gols(Partida *p, int numero_time, int gols) {
-    if (numero_time == 1)
+    if (numero_time == 1) {
         p->gols_time1 = gols;
-    if (numero_time == 2)
+    }
+    else if (numero_time == 2) {
         p->gols_time2 = gols;
+    }
     else {
         perror("Opção de time inválida na definição de gols da partida.");
         exit(EXIT_FAILURE);

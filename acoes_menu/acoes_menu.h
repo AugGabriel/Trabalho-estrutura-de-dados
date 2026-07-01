@@ -9,10 +9,10 @@
 void consultar_times(BDTimes *bdt);
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
-void consultar_partidas(BDPartidas *bdp, BDTimes *bdt);
+int consultar_partidas(BDPartidas *bdp, BDTimes *bdt);
 
 // Funcionalidade 3, para atualizar uma partida
-void atualizar_partida();
+void atualizar_partida(BDTimes *bdt, BDPartidas *bdp);
 
 // Funcionalidade 4, para remoção de partida
 void remover_partida(BDTimes *bdt, BDPartidas *bdp);

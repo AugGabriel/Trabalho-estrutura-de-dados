@@ -86,6 +86,9 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
 
     // Fecha o arquivo
     fclose(arquivo);
+
+    // Retorno do bdp
+    return bdp;
 }
 
 int bdp_quant_partidas(BDPartidas *bdp) {
@@ -94,6 +97,10 @@ int bdp_quant_partidas(BDPartidas *bdp) {
 
 Partida *bdp_obter_partida(BDPartidas *bdp, int i) {
     return ll_get(bdp->lista_partidas, i);
+}
+
+void *bdp_obter_por_id(BDPartidas *bdp, int id) {
+    return ll_get_by_id(bdp->lista_partidas, id);
 }
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
@@ -127,10 +134,21 @@ void bdp_limpar(BDPartidas *bdp) {
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
 void aplicar_alteracoes_partida(BDPartidas *bdp) {
+    FILE *arquivo = fopen(CAMINHO_BD_PARTIDA, "w");
+
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida = bdp_obter_partida(bdp, i);
-        FILE *bd = fopen(CAMINHO_BD_PARTIDA, "w");
 
-        partida_imprimir(partida);
+        fprintf(
+            arquivo, 
+            "%d,%d,%d,%d,%d\n", 
+            partida_id(partida),
+            time_id(partida_time(partida, 1)),
+            time_id(partida_time(partida, 2)),
+            partida_gols(partida, 1),
+            partida_gols(partida, 2)
+        );
     }
+
+    fclose(arquivo);
 }

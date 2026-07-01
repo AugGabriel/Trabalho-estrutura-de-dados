@@ -38,7 +38,7 @@ int main() {
                 consultar_partidas(bdp, bdt);
                 break;
             case '3':
-                atualizar_partida();
+                atualizar_partida(bdt, bdp);
                 break;
             case '4':
                 remover_partida(bdt, bdp);
@@ -52,12 +52,15 @@ int main() {
             case 'Q':
             case 'q':
                 printf("Obrigado pela preferência, volte sempre!\n");
-                return 0;
+                break;
             default:
                 printf("Entrada inválida\n\n");
                 break;
         }
     }
+
+    // Aplicação das alterações no arquivo de partidas
+    aplicar_alteracoes_partida(bdp);
 
     // Liberação de memória
     bdt_limpar(bdt);

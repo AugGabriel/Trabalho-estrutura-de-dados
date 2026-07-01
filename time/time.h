@@ -14,6 +14,7 @@ int time_pontos_ganhos(const Time *time);
 int time_saldo_de_gols(const Time *time);
 
 // Atributos de time
+int time_id(Time *t);
 char *time_nome(Time *t);
 int time_gols_marcados(Time *t);
 int time_gols_sofridos(Time *t);

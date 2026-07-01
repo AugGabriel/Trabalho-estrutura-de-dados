@@ -46,11 +46,14 @@ void ll_insert(LinkedList *l, void *info, NodeType type)
     ListNode *node = (ListNode *)malloc(sizeof(ListNode));
     node->type = type;
     node->info = info;
-    node->next = l->first;
 
+    node->next = l->first;
     l->first = node;
+
     l->count++;
 }
+
+// Insert an element at the end of the linked list. void ll_append(LinkedList *l, void *info, NodeType type) { ListNode *node = (ListNode *)malloc(sizeof(ListNode)); node->type = type; node->info = info; node->next = NULL; ListNode *last = l->first; while (last->next != NULL) { last = last->next; } last->next = node; l->count++; }
 
 void *ll_get(LinkedList *l, int pos) {
     int i = 0;    
@@ -63,6 +66,27 @@ void *ll_get(LinkedList *l, int pos) {
     }
     perror("Posição fora dos limites da LinkedList.");
     exit(EXIT_FAILURE);
+}
+
+void *ll_get_by_id(LinkedList *l, int id) {
+    ListNode *node = l->first;
+
+    if (l->first->type == TYPE_PARTIDA) {
+        while (node != NULL && partida_id(node->info) != id) {
+            node = node->next;
+        }
+    }
+    else {
+        while (node != NULL && time_id(node->info) != id) {
+            node = node->next;
+        }
+    }
+
+    if (node != NULL) {
+        return node->info;
+    }
+
+    return NULL;
 }
 
 // Display all elements of the linked list.
