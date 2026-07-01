@@ -31,6 +31,7 @@ void consultar_times(BDTimes *bdt) {
     // Impressão da lista
     ll_print(times);
 
+    // TODO: criar free que não exclui o info dos nós ou pensar em outra coisa
     // Liberação de memória da lista alocada dinamicamente
     free(times);
 }
@@ -90,8 +91,7 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 
     // Chama a função de retornar partidas
     LinkedList *partidas = bdp_encontrar_partidas(bdp, times, modo);
-    ll_free(times);
-
+    
     if (ll_is_empty(partidas)) {
         printf("Nenhuma partida encontrada\n");
         return;
@@ -104,6 +104,10 @@ void consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
         partida_imprimir(partida);
     }
     printf("\n");
+    
+    // TODO: criar free que não exclui o info dos nós ou pensar em outra coisa
+    free(times);
+    free(partidas);
 }
 
 // Funcionalidade 3, para atualizar uma partida
