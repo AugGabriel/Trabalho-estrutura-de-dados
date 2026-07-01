@@ -7,17 +7,9 @@ void consultar_times(BDTimes *bdt) {
 
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
-    inicializa_string(nome, TAMANHO_MAX_ENTRADA);
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
-    nome[TAMANHO_MAX_ENTRADA - 1] = '\0';
-    
-    // Validação da entrada
-    if (nome[0] == '\0') {
-        printf("Você não digitou nada...\n");
-        return;
-    }
 
     // Retorno da lista de ponteiros para times
     LinkedList *times = bdt_encontrar_times(bdt, nome);
@@ -46,12 +38,6 @@ int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     scanf(" %s", nome);
 
     LinkedList *times = bdt_encontrar_times(bdt, nome);
-
-    // Validação da lista de times
-    if (ll_is_empty(times)) { 
-        printf("\nTime não encontrado\n\n");
-        return 0;
-    }
 
     // Nova entrada do usuário
     int escolha;
