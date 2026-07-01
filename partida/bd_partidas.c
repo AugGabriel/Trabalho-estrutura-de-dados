@@ -101,10 +101,10 @@ Partida *bdp_obter_partida(BDPartidas *bdp, int i) {
 LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int modo) {
     LinkedList *partidas = ll_create();
 
-    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {       // Aqui considera que _partidas[] passa a ter valores nulos a partir de certo ponto, não funciona se não for assim
+    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida_atual = bdp_obter_partida(bdp, i);
         
-        for (int j = 0; j < ll_size(times); j++) {        // Mesma ideia aqui, considera que passa a ser nulo
+        for (int j = 0; j < ll_size(times); j++) { 
             Time *time_atual = ll_get(times, j);
             if (
                 (modo != TIME_VISITANTE && partida_time(partida_atual, 1) == time_atual)    // Time mandante na partida

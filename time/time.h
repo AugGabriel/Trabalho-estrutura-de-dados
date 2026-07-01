@@ -27,7 +27,7 @@ void time_definir_derrotas(Time *t, int valor);
 void time_definir_empates(Time *t, int valor);
 
 // Função para imprimir time
-void time_print(Time *time);
+void time_imprimir(Time *time);
 
 // Função para liberar memória alocada para time
 void time_limpar(Time *time);

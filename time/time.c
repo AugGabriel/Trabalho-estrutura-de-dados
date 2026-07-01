@@ -36,7 +36,7 @@ Time *time_criar(const int id, char *nome) {
     return time;
 }
 
-void time_print(Time *time) {
+void time_imprimir(Time *time) {
     printf(
         "%d\t%9s\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", 
         time->id, 

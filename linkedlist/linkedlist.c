@@ -69,7 +69,7 @@ void *ll_get(LinkedList *l, int pos) {
 void ll_print(LinkedList *l) {
     for (ListNode *p = l->first; p != NULL; p = p->next) {
         if (p->type == TYPE_TIME) {
-            time_print(p->info); // Print the information of each Time structure.
+            time_imprimir(p->info); // Print the information of each Time structure.
         }
     }
     printf("\n"); // Print a newline character to separate the output.
