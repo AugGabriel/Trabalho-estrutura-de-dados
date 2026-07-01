@@ -2,45 +2,47 @@
 
 #include "acoes_menu.h"
 
-// Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
-void consultar_times(BDTimes *bdt) {
-
+// Função interna para 
+// Se nada for encontrado, imprime aviso, libera a lista vazia e retorna NULL.
+// Se encontrar, retorna a lista (o chamador deve dar free()).
+LinkedList *_buscar_retornar_times(BDTimes *bdt) {
     // Entrada do usuário
     char nome[TAMANHO_MAX_ENTRADA];
 
     printf("Digite o nome ou o apelido do time: ");
     scanf(" %s", nome);
 
-    // Retorno da lista de ponteiros para times
     LinkedList *times = bdt_encontrar_times(bdt, nome);
 
-    // Validação da lista
+    // Validação da lista de times: tratamento único do "não encontrado"
     if (ll_is_empty(times)) {
-        printf("\nNenhum time encontrado\n\n");
-        return;
+        printf("\nTime não encontrado\n\n");
+        ll_free(times, 0);   // libera a lista vazia aqui mesmo
+        return NULL;         // sinal único de "não achou"
     }
 
-    // Impressão da lista
-    ll_print(times);
+    return times;
+}
 
-    int apagar_informacoes = 0;
-    ll_free(times, apagar_informacoes);
+// Funcionalidade 1, para consultar e imprimir os times a partir do nome ou prefixo
+void consultar_times(BDTimes *bdt) {
+    LinkedList *resultados = _buscar_retornar_times(bdt);
+    // Validação da lista. Vem como NULL, caso nenhum time encontrado
+    if (resultados) {
+        // Imprime o cabeçalho
+        printf("%s\t%9s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", "ID", "Time", "V", "E", "D", "GM", "GS", "S", "PG");
+        // Imprime a lista de times encontrada
+        ll_print(resultados);
+        // Limpa a memória da lista alocada dinamicamente, sem excluir os dados dos nós
+        ll_free(resultados, /*Apagar informações? Falso: */ 0);
+    }
 }
 
 // Funcionalidade 2, para consultar partidas a partir do nome de um time
 int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
-
-    // Entrada do usuário
-    char nome[TAMANHO_MAX_ENTRADA];
-
-    printf("Digite o nome ou o apelido do time: ");
-    scanf(" %s", nome);
-
-    LinkedList *times = bdt_encontrar_times(bdt, nome);
-
-    // Validação da lista de times
-    if (ll_is_empty(times)) { 
-        printf("\nTime não encontrado\n\n");
+    // Busca pelos times
+    LinkedList *times = _buscar_retornar_times(bdt);
+    if (!times) {
         return 0;
     }
 
@@ -82,10 +84,7 @@ int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 
     // Imprime os dados formatados em tabela
     printf("%s\t%9s\t\t\t%9s\n", "ID", "Time1", "Time2");
-    for (int i = 0; i < ll_size(partidas); i++) {
-        Partida *partida = ll_get(partidas, i);
-        partida_imprimir(partida);
-    }
+    ll_print(partidas);
     printf("\n");
     
     int apagar_informacoes = 0;

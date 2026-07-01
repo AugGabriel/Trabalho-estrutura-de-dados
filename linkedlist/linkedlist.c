@@ -124,6 +124,8 @@ void ll_print(LinkedList *l) {
     for (ListNode *p = l->first; p != NULL; p = p->next) {
         if (p->type == TYPE_TIME) {
             time_imprimir(p->info); // Print the information of each Time structure.
+        } else if (p->type == TYPE_PARTIDA) {
+            partida_imprimir(p->info); // Print the information of each Time structure.
         }
     }
     printf("\n"); // Print a newline character to separate the output.
