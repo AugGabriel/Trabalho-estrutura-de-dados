@@ -25,19 +25,20 @@ LinkedList *ll_create();
  * Insert an element at the beginning of the linked list.
  *
  * @param l    - A pointer to the linked list.
- * @param data - A pointer to the data to be inserted.
+ * @param info - A pointer to the data to be inserted.
  * @param type - The type of the data node (Partida or Time).
  */
 void ll_insert(LinkedList *l, void *data, NodeType type);
+
 
 /**
  * Append an element to the end of the linked list.
  *
  * @param l    - A pointer to the linked list.
- * @param data - A pointer to the data to be appended.
+ * @param info - A pointer to the data to be inserted.
  * @param type - The type of the data node (Partida or Time).
  */
-//void ll_append(LinkedList *l, void *data, NodeType type);
+void ll_append(LinkedList *l, void *info, NodeType type);
 
 /**
  * Remove the first occurrence of a specific element from the linked list.

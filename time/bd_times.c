@@ -36,7 +36,7 @@ BDTimes *bdt_criar_usando_arquivo(char nome_arquivo[]) {
 
         fscanf(arquivo, " %d,%s", &id, nome);
 
-        ll_insert(bdt->lista_times, time_criar(id, nome), TYPE_TIME);
+        ll_append(bdt->lista_times, time_criar(id, nome), TYPE_TIME);
     }
 
     // Fecha o arquivo
@@ -49,8 +49,13 @@ int bdt_quant_times(BDTimes *bdt) {
     return ll_size(bdt->lista_times);
 }
 
-Time *bdt_obter_time(BDTimes *bdt, int i) {
+Time *bdt_obter_por_index(BDTimes *bdt, int i) {
     return ll_get(bdt->lista_times, i);
+}
+
+// Obtém um time pelo seu id (independe da ordem de inserção na lista)
+Time *bdt_obter_por_id(BDTimes *bdt, int id) {
+    return ll_get_by_id(bdt->lista_times, id);
 }
 
 // Função auxiliar para montar prefixo, para consulta de time
@@ -70,16 +75,16 @@ LinkedList *bdt_encontrar_times(BDTimes *bdt, const char *nome) {
     LinkedList *resultados = ll_create();
 
     for (int i = 0; i < bdt_quant_times(bdt); i++) {
-        Time *time_atual = bdt_obter_time(bdt, i);
+        Time *time_atual = bdt_obter_por_index(bdt, i);
         char *time_atual_nome = time_nome(time_atual);
         
         char *prefixo = _monta_prefixo(time_atual_nome, strlen(nome));
         
         if (
-            string_comp_insensitive(time_nome(bdt_obter_time(bdt, i)), nome) == 0 // Entrada bate com o nome
+            string_comp_insensitive(time_nome(bdt_obter_por_index(bdt, i)), nome) == 0 // Entrada bate com o nome
             || string_comp_insensitive(prefixo, nome) == 0                        // Entrada bate com o prefixo
         ) {
-            ll_insert(resultados, time_atual, TYPE_TIME);
+            ll_append(resultados, time_atual, TYPE_TIME);
         }
 
         free(prefixo);

@@ -19,7 +19,7 @@ BDPartidas *bdp_criar()
 // Função interna para cálculo dos resultados a partir dos dados carregados
 void _calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
-        Partida *partida = bdp_obter_partida(bdp, i);
+        Partida *partida = bdp_obter_por_index(bdp, i);
 
         Time *time1 = partida_time(partida, 1);
         Time *time2 = partida_time(partida, 2);
@@ -81,7 +81,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
         }
 
         Partida *nova_partida = partida_criar(id, id_mandante, id_visitante, gols_mand, gols_visit, bdt);
-        ll_insert(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
+        ll_append(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
     }
 
     // Fecha o arquivo
@@ -95,7 +95,7 @@ int bdp_quant_partidas(BDPartidas *bdp) {
     return ll_size(bdp->lista_partidas);
 }
 
-Partida *bdp_obter_partida(BDPartidas *bdp, int i) {
+Partida *bdp_obter_por_index(BDPartidas *bdp, int i) {
     return ll_get(bdp->lista_partidas, i);
 }
 
@@ -109,7 +109,7 @@ LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int
     LinkedList *partidas = ll_create();
 
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
-        Partida *partida_atual = bdp_obter_partida(bdp, i);
+        Partida *partida_atual = bdp_obter_por_index(bdp, i);
         
         for (int j = 0; j < ll_size(times); j++) { 
             Time *time_atual = ll_get(times, j);
@@ -117,7 +117,7 @@ LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int
                 (modo != TIME_VISITANTE && partida_time(partida_atual, 1) == time_atual)    // Time mandante na partida
                 || (modo != TIME_MANDANTE && partida_time(partida_atual, 2) == time_atual)  // Time visitante na partida
             ) {
-                ll_insert(partidas, partida_atual, TYPE_PARTIDA);
+                ll_append(partidas, partida_atual, TYPE_PARTIDA);
             }
         }
         
@@ -139,11 +139,11 @@ void bdp_encerrar(BDPartidas *bdp) {
 }
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
-void bdp_salvar_em_arquivo(BDPartidas *bdp) {
-    FILE *arquivo = fopen(CAMINHO_BD_PARTIDA, "w");
+void bdp_salvar_em_arquivo(BDPartidas *bdp, char nome_arquivo[]) {
+    FILE *arquivo = fopen(nome_arquivo, "w");
 
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
-        Partida *partida = bdp_obter_partida(bdp, i);
+        Partida *partida = bdp_obter_por_index(bdp, i);
 
         fprintf(
             arquivo, 

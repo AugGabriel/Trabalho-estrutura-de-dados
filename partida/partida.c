@@ -34,8 +34,8 @@ Partida *partida_criar(
 
     // Inicialização
     partida->id = id;
-    partida->time1 = bdt_obter_time(bdt, id_time1);
-    partida->time2 = bdt_obter_time(bdt, id_time2);
+    partida->time1 = bdt_obter_por_id(bdt, id_time1);
+    partida->time2 = bdt_obter_por_id(bdt, id_time2);
     partida->gols_time1 = gols_time1;
     partida->gols_time2 = gols_time2;
 

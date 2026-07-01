@@ -26,7 +26,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt);
 
 int bdp_quant_partidas(BDPartidas *bdp);
 
-Partida *bdp_obter_partida(BDPartidas *bdp, int i);
+Partida *bdp_obter_por_index(BDPartidas *bdp, int i);
 
 void *bdp_obter_por_id(BDPartidas *bdp, int id);
 
@@ -41,6 +41,6 @@ void bdp_remover_por_id(BDPartidas *bdp, int id);
 void bdp_encerrar(BDPartidas *bdp);
 
 // Função para aplicar as alterações de partida no arquivo bd de partida
-void bdp_salvar_em_arquivo(BDPartidas *bdp);
+void bdp_salvar_em_arquivo(BDPartidas *bdp, char nome_arquivo[]);
 
 #endif

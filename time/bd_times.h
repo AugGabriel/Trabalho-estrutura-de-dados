@@ -12,7 +12,10 @@ BDTimes *bdt_criar_usando_arquivo(char nome_arquivo[]);
 
 int bdt_quant_times(BDTimes *bdt);
 
-Time *bdt_obter_time(BDTimes *bdt, int i);
+Time *bdt_obter_por_index(BDTimes *bdt, int i);
+
+// Obtém um time pelo seu id (independe da ordem de inserção na lista)
+Time *bdt_obter_por_id(BDTimes *bdt, int id);
 
 // Função auxiliar para montar prefixo, para consulta de time
 char *_monta_prefixo(char *nome, const int tamanho);
