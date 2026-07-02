@@ -99,15 +99,6 @@ int ll_is_empty(LinkedList *l);
 void *ll_get(LinkedList *l, int pos);
 
 /**
- * Get the data with the specific id in the linked list.
- *
- * @param l   - A pointer to the linked list.
- * @param id  - The index of the element to retrieve.
- * @return    - A pointer to the data at the specified position.
- */
-void *ll_get_by_id(LinkedList *l, int id);
-
-/**
  * Display all elements of the linked list.
  *
  * @param l - A pointer to the linked list to be printed.

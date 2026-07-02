@@ -55,7 +55,13 @@ Time *bdt_obter_por_index(BDTimes *bdt, int i) {
 
 // Obtém um time pelo seu id (independe da ordem de inserção na lista)
 Time *bdt_obter_por_id(BDTimes *bdt, int id) {
-    return ll_get_by_id(bdt->lista_times, id);
+    for (int i = 0; i < bdt_quant_times(bdt); i++) {
+        Time *time = bdt_obter_por_index(bdt, i);
+        if (time_id(time) == id) {
+            return time;
+        }
+    }
+    return NULL;
 }
 
 // Função auxiliar para montar prefixo, para consulta de time
@@ -103,11 +109,7 @@ void bdt_imprimir_times(BDTimes *bdt) {
 void bdt_zerar_times(BDTimes *bdt) {
     for (int i = 0; i < bdt_quant_times(bdt); i++) {
         Time *time = bdt_obter_por_index(bdt, i);
-        time_definir_derrotas(time, 0);
-        time_definir_empates(time, 0);
-        time_definir_gols_marcados(time, 0);
-        time_definir_gols_sofridos(time, 0);
-        time_definir_vitorias(time, 0);
+        time_zerar(time);
     }
 }
 

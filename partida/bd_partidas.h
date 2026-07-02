@@ -26,11 +26,13 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt);
 
 void bdp_calcular_resultados(BDPartidas *bdp, BDTimes *bdt);
 
+void bdp_adicionar_partida(BDPartidas *bdp, BDTimes *bdt, int id_time1, int id_time2, int placar1, int placar2);
+
 int bdp_quant_partidas(BDPartidas *bdp);
 
 Partida *bdp_obter_por_index(BDPartidas *bdp, int i);
 
-void *bdp_obter_por_id(BDPartidas *bdp, int id);
+Partida *bdp_obter_por_id(BDPartidas *bdp, int id);
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar
 // Para cada partida, para cada time, se o time tiver jogado na partida, e na posição solicitada (mandante ou visitante), ele será adicionado à lista

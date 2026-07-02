@@ -164,7 +164,33 @@ void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
 }
 
 // Funcionalidade 5, para inserção de partida
-void inserir_partida() {}
+void inserir_partida(BDPartidas *bdp, BDTimes *bdt) {
+    printf("Para inserir um novo registro, digite os valores para os campos Time1, Time2, Placar1 e Placar2:\n");
+    
+    char *msg_erro = "Time inválido.\n\n";
+    
+    int id_time1;
+    scanf("%i", &id_time1);
+    if(!bdt_obter_por_id(bdt, id_time1)) {
+        printf("%s", msg_erro);
+        return;
+    }
+    
+    int id_time2;
+    scanf("%i", &id_time2);
+    if(!bdt_obter_por_id(bdt, id_time2)) {
+        printf("%s", msg_erro); 
+        return;
+    }
+    
+    int placar1;
+    scanf("%i", &placar1);
+    
+    int placar2;
+    scanf("%i", &placar2); 
+    
+    bdp_adicionar_partida(bdp, bdt, id_time1, id_time2, placar1, placar2);
+}
 
 // Funcionalidade 6, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao(BDTimes *bdt, BDPartidas *bdp) {

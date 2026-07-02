@@ -58,9 +58,9 @@ void ll_append(LinkedList *l, void *info, NodeType type) {
     // Se nova lista ainda vazia, insere como primeiro elemento
     if (ll_is_empty(l)) {
         ll_insert(l, info, type);
-
+    } 
     // Se já contém algum elemento:
-    } else {
+    else {
         // Cria o novo node
         ListNode *new_node = (ListNode *)malloc(sizeof(ListNode));
         new_node->type = type;
@@ -120,27 +120,6 @@ void *ll_get(LinkedList *l, int pos) {
     }
     perror("Posição fora dos limites da LinkedList.");
     exit(EXIT_FAILURE);
-}
-
-void *ll_get_by_id(LinkedList *l, int id) {
-    ListNode *node = l->first;
-
-    if (l->first->type == TYPE_PARTIDA) {
-        while (node != NULL && partida_id(node->info) != id) {
-            node = node->next;
-        }
-    }
-    else {
-        while (node != NULL && time_id(node->info) != id) {
-            node = node->next;
-        }
-    }
-
-    if (node != NULL) {
-        return node->info;
-    }
-
-    return NULL;
 }
 
 // Display all elements of the linked list.

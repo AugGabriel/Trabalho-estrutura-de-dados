@@ -102,6 +102,14 @@ void time_definir_empates(Time *t, int valor) {
     t->empates = valor;
 }
 
+void time_zerar(Time *time) {
+    time_definir_derrotas(time, 0);
+    time_definir_empates(time, 0);
+    time_definir_gols_marcados(time, 0);
+    time_definir_gols_sofridos(time, 0);
+    time_definir_vitorias(time, 0);
+}
+
 // Função para liberar memória alocada para time
 void time_limpar(Time *time) {
     free(time);

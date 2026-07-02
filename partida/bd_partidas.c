@@ -83,7 +83,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
             return bdp;
         }
 
-        Partida *nova_partida = partida_criar(id, id_mandante, id_visitante, gols_mand, gols_visit, bdt);
+        Partida *nova_partida = partida_criar(bdt, id, id_mandante, id_visitante, gols_mand, gols_visit);
         ll_append(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
     }
 
@@ -94,6 +94,19 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
     return bdp;
 }
 
+void bdp_adicionar_partida(BDPartidas *bdp, BDTimes *bdt, int id_time1, int id_time2, int placar1, int placar2) {
+    int maior_id = 0;
+    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
+        Partida *partida = bdp_obter_por_index(bdp, i);
+        int id = partida_id(partida);
+        if (partida_id(partida) > maior_id) {
+            maior_id = id;
+        }
+    }
+    Partida *nova_partida = partida_criar(bdt, maior_id+1, id_time1, id_time2, placar1, placar2);
+    ll_append(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
+}
+
 int bdp_quant_partidas(BDPartidas *bdp) {
     return ll_size(bdp->lista_partidas);
 }
@@ -102,8 +115,14 @@ Partida *bdp_obter_por_index(BDPartidas *bdp, int i) {
     return ll_get(bdp->lista_partidas, i);
 }
 
-void *bdp_obter_por_id(BDPartidas *bdp, int id) {
-    return ll_get_by_id(bdp->lista_partidas, id);
+Partida *bdp_obter_por_id(BDPartidas *bdp, int id) {
+    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
+        Partida *partida = bdp_obter_por_index(bdp, i);
+        if (partida_id(partida) == id) {
+            return partida;
+        }
+    }
+    return NULL;
 }
 
 // Função usada para montar lista de partidas, a partir do modo de pesquisa e dos times para consultar

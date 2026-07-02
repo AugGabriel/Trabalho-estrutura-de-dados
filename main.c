@@ -43,7 +43,7 @@ int main() {
                 remover_partida(bdt, bdp);
             break;
             case '5':
-                inserir_partida();
+                inserir_partida(bdp, bdt);
                 break;
             case '6':
                 imprimir_tabela_classificacao(bdt, bdp);

@@ -9,10 +9,10 @@ typedef struct partida Partida;
 
 // Construtor de partida
 Partida *partida_criar(
+        BDTimes *bdt,
         const int id, 
         const int id_time1, const int id_time2, 
-        const int gols_time1, const int gols_time2,
-        BDTimes *bdt
+        const int gols_time1, const int gols_time2
 );
 
 // Getters
