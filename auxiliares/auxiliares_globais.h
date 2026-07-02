@@ -11,22 +11,23 @@
 // Define o tamanho máximo da entrada do usuário
 #define TAMANHO_MAX_ENTRADA 15
 
-// Compara caracteres case-insensitive
+/**
+ * Compara dois caracteres de forma case-insensitive.
+ *
+ * @param chr1 - Primeiro caractere.
+ * @param chr2 - Segundo caractere.
+ * @return     - 1 se chr1 > chr2, -1 se chr1 < chr2, 0 se iguais.
+ */
 int char_comp_insensitive(char chr1, char chr2);
 
-// Compara strings case-insensitive
-int string_comp_insensitive(const char *str1, const char *str2);
-
-// Compara caracteres case-insensitive
-int char_comp_insensitive(char chr1, char chr2);
-
-// Compara strings case-insensitive
-int string_comp_insensitive(const char *str1, const char *str2);
-
-// Compara caracteres case-insensitive
-int char_comp_insensitive(char chr1, char chr2);
-
-// Compara strings case-insensitive
+/**
+ * Compara duas strings de forma case-insensitive.
+ *
+ * @param str1 - Primeira string.
+ * @param str2 - Segunda string.
+ * @return     - Diferença do primeiro caractere distinto, ou 0 se iguais até o
+ *               fim de uma delas.
+ */
 int string_comp_insensitive(const char *str1, const char *str2);
 
 #endif

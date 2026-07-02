@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-// Define an enumeration for different node types (e.g., Student or Professor).
+// Define an enumeration for different node types (Time or Partida).
 typedef enum
 {
     TYPE_TIME,
@@ -28,8 +28,7 @@ LinkedList *ll_create();
  * @param info - A pointer to the data to be inserted.
  * @param type - The type of the data node (Partida or Time).
  */
-void ll_insert(LinkedList *l, void *data, NodeType type);
-
+void ll_insert(LinkedList *l, void *info, NodeType type);
 
 /**
  * Append an element to the end of the linked list.
@@ -45,24 +44,9 @@ void ll_append(LinkedList *l, void *info, NodeType type);
  *
  * @param l    - A pointer to the linked list.
  * @param info - A pointer to the element to be removed.
- * @return     - The position of the removed element in the list.
+ * @return     - The position of the removed element, or -1 if not found.
  */
 int ll_remove(LinkedList *l, void *info);
-
-/**
- * Remove all elements that match a specific value from the linked list.
- *
- * @param l   - A pointer to the linked list.
- * @param cpf - The CPF to match and remove.
- */
-//void ll_remove_all(LinkedList *l, const char *cpf);
-
-/**
- * Remove all elements from the linked list.
- *
- * @param l - A pointer to the linked list to be cleared.
- */
-//void ll_clear(LinkedList *l);
 
 /**
  * Get the size (number of elements) of the linked list.
@@ -71,15 +55,6 @@ int ll_remove(LinkedList *l, void *info);
  * @return  - The number of elements in the linked list.
  */
 int ll_size(LinkedList *l);
-
-/**
- * Check whether a specific element is in the linked list.
- *
- * @param l   - A pointer to the linked list.
- * @param cpf - The CPF to check for.
- * @return    - 1 if the element is in the linked list, 0 otherwise.
- */
-//int ll_is_in(LinkedList *l, const char *cpf);
 
 /**
  * Check whether the linked list is empty.
@@ -108,7 +83,9 @@ void ll_print(LinkedList *l);
 /**
  * Free the memory used by the linked list.
  *
- * @param l - A pointer to the linked list to be freed.
+ * @param l                  - A pointer to the linked list to be freed.
+ * @param apagar_informacoes - If not zero, frees the data stored in each
+ *                             node; if zero, frees only the list structure.
  */
 void ll_free(LinkedList *l, int apagar_informacoes);
 

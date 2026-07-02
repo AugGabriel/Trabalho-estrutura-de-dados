@@ -58,8 +58,8 @@ void ll_append(LinkedList *l, void *info, NodeType type) {
     // Se nova lista ainda vazia, insere como primeiro elemento
     if (ll_is_empty(l)) {
         ll_insert(l, info, type);
-    } 
-    // Se já contém algum elemento:
+    }
+    /// Se já contém algum elemento:
     else {
         // Cria o novo node
         ListNode *new_node = (ListNode *)malloc(sizeof(ListNode));
@@ -82,6 +82,7 @@ void ll_append(LinkedList *l, void *info, NodeType type) {
 int ll_remove(LinkedList *l, void *info) {
     ListNode *node = l->first, *prev = NULL;
 
+    // Empty list: nothing to remove
     if (node == NULL) {
         return -1;
     }
@@ -109,8 +110,9 @@ int ll_remove(LinkedList *l, void *info) {
 }
 
 
+// Get data at a specific position.
 void *ll_get(LinkedList *l, int pos) {
-    int i = 0;    
+    int i = 0;
     ListNode *node = l->first;
     while (node != NULL) {
         if (i == pos)
@@ -128,7 +130,7 @@ void ll_print(LinkedList *l) {
         if (p->type == TYPE_TIME) {
             time_imprimir(p->info); // Print the information of each Time structure.
         } else if (p->type == TYPE_PARTIDA) {
-            partida_imprimir(p->info); // Print the information of each Time structure.
+            partida_imprimir(p->info); // Print the information of each Partida structure.
         }
     }
     printf("\n"); // Print a newline character to separate the output.

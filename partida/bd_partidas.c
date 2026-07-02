@@ -5,6 +5,7 @@
 // Quantidade máxima de partidas permitida
 #define MAX_PARTIDAS 100
 
+// Banco de dados de partidas. Guarda todas as partidas em uma lista simplesmente encadeada
 struct bdpartidas {
     LinkedList *lista_partidas;
 };
@@ -58,6 +59,7 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
 }
 
 void bdp_adicionar_partida(BDPartidas *bdp, BDTimes *bdt, int id_time1, int id_time2, int placar1, int placar2) {
+    // Gera o id da nova partida a partir do maior id já existente
     int maior_id = 0;
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida = bdp_obter_por_index(bdp, i);
@@ -81,6 +83,7 @@ Partida *bdp_obter_por_index(BDPartidas *bdp, int i) {
     return ll_get(bdp->lista_partidas, i);
 }
 
+// Busca pela partida com o id informado
 Partida *bdp_obter_por_id(BDPartidas *bdp, int id) {
     for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
         Partida *partida = bdp_obter_por_index(bdp, i);

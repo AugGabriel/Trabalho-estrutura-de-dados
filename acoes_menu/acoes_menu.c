@@ -92,7 +92,7 @@ int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
     ll_free(times, apagar_informacoes);
     ll_free(partidas, apagar_informacoes);
 
-    // valido
+    // Consulta bem-sucedida
     return 1;
 }
 

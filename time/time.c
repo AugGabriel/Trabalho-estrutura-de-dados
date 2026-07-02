@@ -53,7 +53,8 @@ void time_imprimir(Time *time) {
 
 // Propriedade de time, que determina os pontos ganhos
 int time_pontos_ganhos(const Time *time) {
-    int VALOR_VITORIA = 3, VALOR_EMPATE = 1;    // Não tenho certeza dos valores
+    // Regra de pontuação: 3 pontos por vitória, 1 por empate, 0 por derrota
+    int VALOR_VITORIA = 3, VALOR_EMPATE = 1;
     return time->vitorias * VALOR_VITORIA + time->empates * VALOR_EMPATE;
 }
 

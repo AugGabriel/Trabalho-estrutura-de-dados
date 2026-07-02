@@ -7,6 +7,7 @@
 // Macro para definir a quantidade de times
 #define QUANT_TIMES 10
 
+// Banco de dados de times. Guarda todos os times em uma lista simplesmente encadeada
 struct bdtimes {
     LinkedList *lista_times;
 };
