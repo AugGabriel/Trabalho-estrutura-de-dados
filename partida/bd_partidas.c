@@ -16,43 +16,6 @@ BDPartidas *bdp_criar()
     return bdp; 
 }
 
-// Função para cálculo dos resultados a partir dos dados das partidas
-void bdp_calcular_resultados(BDPartidas *bdp, BDTimes *bdt) {
-    // Primeiro, zera os times, para que os valores sejam recalculados
-    bdt_zerar_times(bdt);
-    
-    for (int i = 0; i < bdp_quant_partidas(bdp); i++) {
-        Partida *partida = bdp_obter_por_index(bdp, i);
-
-        Time *time1 = partida_time(partida, 1);
-        Time *time2 = partida_time(partida, 2);
-
-        int gols_time1 = partida_gols(partida, 1);
-        int gols_time2 = partida_gols(partida, 2);
-
-        // Gols marcados
-        time_definir_gols_marcados(time1, time_gols_marcados(time1) + gols_time1);
-        time_definir_gols_marcados(time2, time_gols_marcados(time2) + gols_time2);
-        
-        // Gols sofridos
-        time_definir_gols_sofridos(time1, time_gols_sofridos(time1) + gols_time2);
-        time_definir_gols_sofridos(time2, time_gols_sofridos(time2) + gols_time1);
-        
-        if (gols_time1 == gols_time2) {       // Empate
-            time_definir_empates(time1, time_empates(time1) + 1);
-            time_definir_empates(time2, time_empates(time2) + 1);
-        }
-        else if (gols_time1 > gols_time2) {   // Vitória do time 1
-            time_definir_vitorias(time1, time_vitorias(time1) + 1);
-            time_definir_derrotas(time2, time_derrotas(time2) + 1);
-        }
-        else {                                // Vitória do time 2
-            time_definir_vitorias(time2, time_vitorias(time2) + 1);
-            time_definir_derrotas(time1, time_derrotas(time1) + 1);                              
-        }
-    }
-}
-
 BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
     BDPartidas *bdp = bdp_criar();
     
@@ -79,12 +42,12 @@ BDPartidas *bdp_criar_usando_arquivo(char nome_arquivo[], BDTimes *bdt) {
             &gols_mand, 
             &gols_visit
         ) == EOF) {
-            bdp_calcular_resultados(bdp, bdt);
             return bdp;
         }
 
         Partida *nova_partida = partida_criar(bdt, id, id_mandante, id_visitante, gols_mand, gols_visit);
         ll_append(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
+        partida_aplicar_resultado(nova_partida, APLICAR_RESULTADO);
     }
 
     // Fecha o arquivo
@@ -105,6 +68,9 @@ void bdp_adicionar_partida(BDPartidas *bdp, BDTimes *bdt, int id_time1, int id_t
     }
     Partida *nova_partida = partida_criar(bdt, maior_id+1, id_time1, id_time2, placar1, placar2);
     ll_append(bdp->lista_partidas, nova_partida, TYPE_PARTIDA);
+
+    // Aplica o resultado da nova partida nas estatísticas dos times
+    partida_aplicar_resultado(nova_partida, APLICAR_RESULTADO);
 }
 
 int bdp_quant_partidas(BDPartidas *bdp) {
@@ -150,7 +116,16 @@ LinkedList *bdp_encontrar_partidas(BDPartidas *bdp, LinkedList *times, const int
 
 // Remove o elemento da lista a partir do id
 void bdp_remover_por_id(BDPartidas *bdp, int id) {
-    ll_remove(bdp->lista_partidas, bdp_obter_por_id(bdp, id));
+    Partida *partida = bdp_obter_por_id(bdp, id);
+    if (partida == NULL) {
+        return;
+    }
+
+    // Reverte o resultado da partida nas estatísticas
+    partida_aplicar_resultado(partida, REVERTER_RESULTADO);
+
+    ll_remove(bdp->lista_partidas, partida);
+    partida_limpar(partida);
 }
 
 // Função para desalocar a memória de todas as partidas

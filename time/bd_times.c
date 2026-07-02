@@ -106,13 +106,6 @@ void bdt_imprimir_times(BDTimes *bdt) {
     ll_print(bdt->lista_times);
 }
 
-void bdt_zerar_times(BDTimes *bdt) {
-    for (int i = 0; i < bdt_quant_times(bdt); i++) {
-        Time *time = bdt_obter_por_index(bdt, i);
-        time_zerar(time);
-    }
-}
-
 // Funcionalidade para desalocar todos os times
 void bdt_encerrar(BDTimes *bdt) {
     int apagar_informacoes = 1;

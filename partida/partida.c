@@ -82,6 +82,45 @@ void partida_definir_gols(Partida *p, int numero_time, int gols) {
     }
 }
 
+// Aplica ou reverte a contribuição da partida nas estatísticas dos dois times
+void partida_aplicar_resultado(Partida *p, ModoResultado modo) {
+    // Obter os times da partida
+    Time *time1 = p->time1;
+    Time *time2 = p->time2;
+    
+    // Obter os gols de cada time nessa partida
+    int gols_time1 = p->gols_time1;
+    int gols_time2 = p->gols_time2;
+    
+    // Determina se o resultado da partida deve ser aplicado ou revertido das estatísticas
+    int sinal;
+    if (modo == APLICAR_RESULTADO) {
+        sinal = +1;
+    } else if (modo == REVERTER_RESULTADO) {
+        sinal = -1;
+    }    
+
+    // Gols marcados e sofridos
+    time_definir_gols_marcados(time1, time_gols_marcados(time1) + sinal * gols_time1);
+    time_definir_gols_marcados(time2, time_gols_marcados(time2) + sinal * gols_time2);
+    time_definir_gols_sofridos(time1, time_gols_sofridos(time1) + sinal * gols_time2);
+    time_definir_gols_sofridos(time2, time_gols_sofridos(time2) + sinal * gols_time1);
+
+    // Empate, vitória ou derrota
+    if (gols_time1 == gols_time2) {           // Empate
+        time_definir_empates(time1, time_empates(time1) + sinal);
+        time_definir_empates(time2, time_empates(time2) + sinal);
+    }
+    else if (gols_time1 > gols_time2) {       // Vitória do time 1
+        time_definir_vitorias(time1, time_vitorias(time1) + sinal);
+        time_definir_derrotas(time2, time_derrotas(time2) + sinal);
+    }
+    else {                                    // Vitória do time 2
+        time_definir_vitorias(time2, time_vitorias(time2) + sinal);
+        time_definir_derrotas(time1, time_derrotas(time1) + sinal);
+    }
+}
+
 // Impressão de partida
 void partida_imprimir(Partida *partida) {
     printf(

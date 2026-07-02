@@ -2,7 +2,8 @@
 
 #include "acoes_menu.h"
 
-// Função interna para 
+// Função interna para receber entrada de busca do usuário e retornar times resultantes.
+// Usada tanto na Funcionalidade 1 quanto na 2.
 // Se nada for encontrado, imprime aviso, libera a lista vazia e retorna NULL.
 // Se encontrar, retorna a lista (o chamador deve dar free()).
 LinkedList *_buscar_retornar_times(BDTimes *bdt) {
@@ -98,7 +99,6 @@ int consultar_partidas(BDPartidas *bdp, BDTimes *bdt) {
 // Funcionalidade 3, para atualizar uma partida
 void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     // Consulta de partidas, para escolher a que será alterada
-
     int valido = consultar_partidas(bdp, bdt);
     if (!valido) {
         return;
@@ -123,11 +123,20 @@ void atualizar_partida(BDTimes *bdt, BDPartidas *bdp) {
     scanf(" %c", &pontos2);
 
     // Tratamento das entradas possíveis
-    if (pontos1 != '-') {
-        partida_definir_gols(partida, /* Time: */ 1, pontos1 - '0');
-    }
-    if (pontos2 != '-') {
-        partida_definir_gols(partida, /* Time: */ 2, pontos2 - '0');
+    if (pontos1 != '-' || pontos2 != '-') {
+        // Reverte o resultado antigo da partida
+        partida_aplicar_resultado(partida, REVERTER_RESULTADO);
+        
+        // Atualiza os dados da partida
+        if (pontos1 != '-') {
+            partida_definir_gols(partida, /* Time: */ 1, pontos1 - '0');
+        }
+        if (pontos2 != '-') {
+            partida_definir_gols(partida, /* Time: */ 2, pontos2 - '0');
+        }
+        
+        // Aplica o resultado novo da partida
+        partida_aplicar_resultado(partida, APLICAR_RESULTADO);
     }
 
     // Mostrando o resultado
@@ -159,7 +168,10 @@ void remover_partida(BDTimes *bdt, BDPartidas *bdp) {
         return;
     }
     
+    // Remove a partida do BDPartidas
+    // Essa função também reverte o resultado da partida removida
     bdp_remover_por_id(bdp, id);
+    
     printf("\nRegistro excluído!\n\n");
 }
 
@@ -194,7 +206,8 @@ void inserir_partida(BDPartidas *bdp, BDTimes *bdt) {
 
 // Funcionalidade 6, para imprimir a tabela de classificação
 void imprimir_tabela_classificacao(BDTimes *bdt, BDPartidas *bdp) {
+    // As estatísticas já são mantidas atualizadas incrementalmente a cada CRUD,
+    // então basta imprimir (sem recalcular tudo).
     printf("\nImprimindo classificação: \n");
-    bdp_calcular_resultados(bdp, bdt);
     bdt_imprimir_times(bdt);
 }

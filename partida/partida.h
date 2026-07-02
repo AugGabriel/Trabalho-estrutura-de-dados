@@ -23,6 +23,14 @@ int partida_gols(Partida *p, int numero_time);
 // Setters
 void partida_definir_gols(Partida *p, int numero_time, int gols);
 
+typedef enum {
+    APLICAR_RESULTADO,
+    REVERTER_RESULTADO,
+} ModoResultado;
+
+// Aplica ou reverte a contribuição da partida nas estatísticas dos dois times
+void partida_aplicar_resultado(Partida *p, ModoResultado modo);
+
 void partida_imprimir(Partida *partida);
 
 // Função para liberar memória alocada para partida
